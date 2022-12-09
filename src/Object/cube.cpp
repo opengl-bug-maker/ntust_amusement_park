@@ -16,30 +16,48 @@ void cube::init() {
 
     this->model_matrix = glm::scale(this->model_matrix, glm::vec3(1.0f, 1.0f, 1.0f));
 
-    this->vertexCount = 4;
+    this->vertexCount = 8;
 
     this->data_block_size = { 3, 3 };
 
     this->data = new float[] {
             //vertices
-            -0.5,  -1, 0,
-            0.5, -1, 0,
-            0.5, 1, 0,
-            -0.5, 1, 0,
+            -1,  -1, -1,
+            1, -1, -1,
+            1, 1, -1,
+            -1, 1, -1,
+            -1, 1, 1,
+            1, 1, 1,
+            1, -1, 1,
+            -1, -1, 1,
 
             //color
             1.0f, 0.5f, 0.2f,
             0.2f, 1.0f, 0.5f,
             0.5f, 0.2f, 1.0f,
             0.5f, 0.2f, 1.0f,
+            1.0f, 0.5f, 0.2f,
+            0.2f, 1.0f, 0.5f,
+            0.5f, 0.2f, 1.0f,
+            0.5f, 0.2f, 1.0f
 
     };
 
-    this->vao->element_amount = 2;
+    this->vao->element_amount = 12;
 
     element = new GLuint[]{
         0, 1, 2,
-        0, 2, 3
+        0, 2, 3,
+        2, 5, 4,
+        2, 4, 3,
+        4, 7, 0,
+        4, 0, 3,
+        0, 7, 6,
+        0, 6, 1,
+        2, 1, 6,
+        2, 6, 5,
+        4, 5, 6,
+        4, 6, 7
     };
 }
 
