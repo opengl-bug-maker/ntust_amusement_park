@@ -5,8 +5,6 @@ project(Utilities)
 add_library(Utilities
         3DUtils.h
         3DUtils.cpp
-        ArcBallCam.H
-        ArcBallCam.cpp
         Pnt3f.H
         Pnt3f.cpp)
 

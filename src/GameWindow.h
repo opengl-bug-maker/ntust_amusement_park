@@ -12,10 +12,14 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "Object/cube.h"
-#include "Utilities/ArcBallCam.H"
+#include "Camera/ArcBallCamera.h"
+#include "Camera/Camera.h"
+#include "Camera/FirstPersonCamera.h"
 
 class GameWindow : public sf::RenderWindow{
-    ArcBallCam arcBall;
+    ArcBallCamera arcBall;
+    FirstPersonCamera firstPersonCamera;
+    Camera* camera;
 
     std::vector<gpu_obj_t*> gpuObjs;
 

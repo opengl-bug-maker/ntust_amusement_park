@@ -25,21 +25,30 @@ GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : Ren
 //    setVerticalSyncEnabled(true);
 //    this->setActive(true);
 
-//    arcBall.setup(40, 8, .2, .4, 0);
+//    arcBall.setup(40, 8, .2, 0, 0);
+//    firstPersonCamera.setup(40, 8, .2, 0, 0);
+
+    arcBall.setup(40, 8, 0, 0, 0);
+    firstPersonCamera.setup(40, 8, 0, 0, 0);
+
+//    camera = &firstPersonCamera;
+    camera = &arcBall;
 
     gpuObjs.push_back(new cube());
+
+    camera->getEyePosition();
 }
 
 void GameWindow::run() {
-    for(auto objs : gpuObjs) objs->bind();
 
+    for(auto objs : gpuObjs) objs->bind();
 
     while (isOpen()) {
 
         sf::Event event;
         while (pollEvent(event)) {
 
-            arcBall.handle(event);
+            camera->handle(event);
 
             if (event.type == sf::Event::Closed)
                 close();
@@ -57,11 +66,20 @@ void GameWindow::run() {
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        gpu_obj_t::projection_matrix = arcBall.getPerspectiveMatrix();
-        gpu_obj_t::view_matrix = arcBall.getModelViewMatrix();
+        gpu_obj_t::projection_matrix = camera->getPerspectiveMatrix();
+        gpu_obj_t::view_matrix = camera->getModelViewMatrix();
 
         for(auto objs : gpuObjs) objs->draw();
 
         display();
+
+        for(int i = 0; i < 3; i++){
+            cout << camera->getEyePosition()[i] << "";
+        }
+        cout << "\n";
+        for(int i = 0; i < 3; i++){
+            cout << camera->getEyeDirection()[i] << "";
+        }
+        cout << "\n\n";
     }
 }
