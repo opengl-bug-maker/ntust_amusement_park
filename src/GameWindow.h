@@ -23,6 +23,10 @@ class GameWindow : public sf::RenderWindow{
 
     std::vector<gpu_obj_t*> gpuObjs;
 
+    sf::Clock deltaClock;
+    sf::Time nowTime;
+    sf::Time prevTime;
+    sf::Time deltaTime;
 public:
     static GameWindow* magic;
 

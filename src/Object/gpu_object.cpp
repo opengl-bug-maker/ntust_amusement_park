@@ -30,6 +30,8 @@ void gpu_obj_t::bind() {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, vao->element_amount * 3 * sizeof(GLuint), element, GL_STATIC_DRAW);
 
     glBindVertexArray(0);
+
+    for(auto objs : children) objs->bind();
 }
 
 void gpu_obj_t::update(float* input_data, size_t index) {
@@ -61,9 +63,9 @@ void gpu_obj_t::draw(glm::mat4 modelMatrix) {
 	//todo multi parent modelMatrix
 	// modelMatrix * this->model_matrix
 	modelMatrix = modelMatrix * this->model_matrix;
-	/*for(auto child : children){
+	for(auto child : children){
 		child->draw(model_matrix);
-	}*/
+	}
 	//todo true draw
 	this->shader->Use();
 
@@ -81,4 +83,21 @@ void gpu_obj_t::draw(glm::mat4 modelMatrix) {
 	glBindVertexArray(0);
 
 	glUseProgram(0);
+}
+
+void gpu_obj_t::SetPosition(glm::vec3 position) {
+    this->model_matrix = glm::mat4(1);
+    this->model_matrix = glm::translate(this->model_matrix, position);
+}
+
+void gpu_obj_t::Translate(glm::vec3 translate) {
+    this->model_matrix = glm::translate(this->model_matrix, translate);
+}
+
+void gpu_obj_t::Scale(glm::vec3 scale) {
+    this->model_matrix = glm::scale(this->model_matrix, scale);
+}
+
+void gpu_obj_t::addChildren(gpu_obj_t* obj) {
+    children.push_back(obj);
 }

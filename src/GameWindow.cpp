@@ -25,25 +25,51 @@ GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : Ren
 //    setVerticalSyncEnabled(true);
 //    this->setActive(true);
 
+    prevTime = deltaClock.getElapsedTime();
+
 //    arcBall.setup(40, 8, .2, 0, 0);
 //    firstPersonCamera.setup(40, 8, .2, 0, 0);
 
     arcBall.setup(40, 8, 0, 0, 0);
     firstPersonCamera.setup(40, 8, 0, 0, 0);
 
-//    camera = &firstPersonCamera;
-    camera = &arcBall;
+    camera = &firstPersonCamera;
+//    camera = &arcBall;
 
-    gpuObjs.push_back(new cube());
 
-    camera->getEyePosition();
+    gpu_obj_t* cc = new cube();
+//    cc->Scale(glm::vec3(0.2, 0.2, 0.2));
+
+    gpu_obj_t* c = new cube();
+    c->Translate(glm::vec3(3, 0, 0));
+    c->Scale(glm::vec3(0.5, 0.5, 0.5));
+    cc->addChildren(c);
+    c = new cube();
+    c->Translate(glm::vec3(0, 3, 0));
+    c->Scale(glm::vec3(0.5, 0.5, 0.5));
+    cc->addChildren(c);
+    c = new cube();
+    c->Translate(glm::vec3(0, 0, 3));
+    c->Scale(glm::vec3(0.5, 0.5, 0.5));
+    cc->addChildren(c);
+
+    gpuObjs.push_back(cc);
+
+//    c = new cube();
+//    c->Scale(glm::vec3(0.2, 0.2, 0.2));
+//    gpuObjs.push_back(c);
+
 }
 
 void GameWindow::run() {
 
+    firstPersonCamera.lock();
+
     for(auto objs : gpuObjs) objs->bind();
 
     while (isOpen()) {
+        nowTime = deltaClock.getElapsedTime();
+        deltaTime = nowTime - prevTime;
 
         sf::Event event;
         while (pollEvent(event)) {
@@ -52,6 +78,11 @@ void GameWindow::run() {
 
             if (event.type == sf::Event::Closed)
                 close();
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+                close();
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Num1){
+                camera = (camera == &firstPersonCamera) ? ((Camera*)&arcBall) : ((Camera*)&firstPersonCamera);
+            }
         }
 
         clear();
@@ -73,13 +104,28 @@ void GameWindow::run() {
 
         display();
 
-        for(int i = 0; i < 3; i++){
-            cout << camera->getEyePosition()[i] << "";
-        }
-        cout << "\n";
-        for(int i = 0; i < 3; i++){
-            cout << camera->getEyeDirection()[i] << "";
-        }
-        cout << "\n\n";
+
+//        glm::vec3 dire = camera->getEyeDirection();
+//        for (int i = 0; i < 3; ++i) {
+//            cout << dire[i] << " ";
+//        }
+//        cout << "\n";
+//        for (int i = 0; i < 3; ++i) {
+//            dire[i] *= 8;
+//        }
+
+//        gpuObjs[1]->SetPosition(dire + camera->getEyePosition());
+
+//        glm::mat4 viewmatrix = camera->getModelViewMatrix();
+//        for (int i = 0; i < 4; ++i) {
+//            for (int j = 0; j < 4; ++j) {
+//                cout << viewmatrix[i][j] << " ";
+//            }
+//            cout << "\n";
+//        }
+//        cout << "\n";
+//        cout << "\n";
+
+        prevTime = nowTime;
     }
 }

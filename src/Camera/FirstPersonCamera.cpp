@@ -9,20 +9,29 @@ FirstPersonCamera::FirstPersonCamera() : Camera() {
 
 }
 
+void FirstPersonCamera::lock() {
+    sf::Mouse::setPosition(
+            sf::Vector2i(GameWindow::magic->getSize().x * 0.5,
+                         GameWindow::magic->getSize().y * 0.5)
+                         , *GameWindow::magic);
+    mode = Rotate;
+    down(0, 0);
+}
+
 int FirstPersonCamera::handle(sf::Event e) {
     switch (e.type) {
         case sf::Event::MouseButtonPressed:
-            mode = None;
-            // right mouse button down
-            if (e.mouseButton.button == sf::Mouse::Right){
-                float x, y;
-                getMouseNDC(x,y);
-                // Compute the mouse position
-                down(x, y);
-                // Set up the mode
-                mode = sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) ? Pan : Rotate;
-                return 1;
-            }
+//            mode = None;
+//            // right mouse button down
+//            if (e.mouseButton.button == sf::Mouse::Right){
+//                float x, y;
+//                getMouseNDC(x,y);
+//                // Compute the mouse position
+//                down(x, y);
+//                // Set up the mode
+//                mode = sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) ? Pan : Rotate;
+//                return 1;
+//            }
             break;
         case sf::Event::MouseButtonReleased:
             if (mode != None) {
@@ -31,32 +40,56 @@ int FirstPersonCamera::handle(sf::Event e) {
             }
             break;
         case sf::Event::MouseMoved:
-            if(mode != None) { // we're taking the drags
+//            cout << "move!" << endl;
+//            if(mode != None) { // we're taking the drags
                 float x,y;
                 getMouseNDC(x,y);
-                computeNow(x,y);
+//                x *= ; y *= ;
+                float xx;
+                xx = ((x - downX) * downX < 0 ? 0.5f * x : -0.5f * x);
+                float yy;
+                yy = ((y - downY) * downY < 0 ? 0.5f * y : -0.5f * y);
+
+                computeNow(xx + downX, yy + downY);
+
+                down(x, y);
+                if(abs(x) > 0.01 || abs(y) > 0.01)
+                    sf::Mouse::setPosition(sf::Vector2i(GameWindow::magic->getSize().x * 0.5,GameWindow::magic->getSize().y * 0.5)
+                        , *GameWindow::magic);
                 return 1;
-            }
+//            }
             break;
         case sf::Event::KeyPressed:
             switch (e.key.code) {
                 case sf::Keyboard::W:
-                    eyeZ -= moveSpeed;
+                    eyeX += moveSpeed * getEyeDirection()[0];
+                    eyeY += moveSpeed * getEyeDirection()[1];
+                    eyeZ += moveSpeed * getEyeDirection()[2];
                     return 1;
                 case sf::Keyboard::A:
-                    eyeX -= moveSpeed;
+                    eyeX -= moveSpeed * getRightDirection()[0];
+                    eyeY -= moveSpeed * getRightDirection()[1];
+                    eyeZ -= moveSpeed * getRightDirection()[2];
                     return 1;
                 case sf::Keyboard::S:
-                    eyeZ += moveSpeed;
+                    eyeX -= moveSpeed * getEyeDirection()[0];
+                    eyeY -= moveSpeed * getEyeDirection()[1];
+                    eyeZ -= moveSpeed * getEyeDirection()[2];
                     return 1;
                 case sf::Keyboard::D:
-                    eyeX += moveSpeed;
+                    eyeX += moveSpeed * getRightDirection()[0];
+                    eyeY += moveSpeed * getRightDirection()[1];
+                    eyeZ += moveSpeed * getRightDirection()[2];
                     return 1;
                 case sf::Keyboard::LShift:
-                    eyeY -= moveSpeed;
+                    eyeX -= moveSpeed * getTopDirection()[0];
+                    eyeY -= moveSpeed * getTopDirection()[1];
+                    eyeZ -= moveSpeed * getTopDirection()[2];
                     return 1;
                 case sf::Keyboard::Space:
-                    eyeY += moveSpeed;
+                    eyeX += moveSpeed * getTopDirection()[0];
+                    eyeY += moveSpeed * getTopDirection()[1];
+                    eyeZ += moveSpeed * getTopDirection()[2];
                     return 1;
                 default :
                     break;
@@ -85,13 +118,21 @@ glm::mat4 FirstPersonCamera::getModelViewMatrix() const {
     return ModelView;
 }
 
-//todo eyePosition
 glm::vec3 FirstPersonCamera::getEyePosition() const {
     return glm::vec4(eyeX, eyeY, eyeZ, 1);;
 }
 
 glm::vec3 FirstPersonCamera::getEyeDirection() const {
-    glm::vec4 direction = glm::vec4 (0, 0, 1, 0);
-    direction = getModelViewMatrix() * direction;
-    return direction;
+    glm::mat4 ModelView = (now * start).conjugate().toGLMMatrix();
+    return ModelView * glm::vec4 (0, 0, -1, 0);
+}
+
+glm::vec3 FirstPersonCamera::getTopDirection() const {
+    glm::mat4 ModelView = (now * start).conjugate().toGLMMatrix();
+    return ModelView * glm::vec4 (0, 1, 0, 0);
+}
+
+glm::vec3 FirstPersonCamera::getRightDirection() const {
+    glm::mat4 ModelView = (now * start).conjugate().toGLMMatrix();
+    return ModelView * glm::vec4 (1, 0, 0, 0);
 }

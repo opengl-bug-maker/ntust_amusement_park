@@ -81,7 +81,10 @@ glm::vec3 ArcBallCamera::getEyePosition() const {
 }
 
 glm::vec3 ArcBallCamera::getEyeDirection() const {
-    glm::vec4 direction = glm::vec4 (0, 0, 1, 0);
-    direction = getModelViewMatrix() * direction;
+    Quat qAll = now * start;
+    glm::mat4 q = qAll.toGLMMatrix();
+
+    glm::vec4 direction = glm::vec4 (0, 0, -1, 0);
+    direction = q * direction;
     return direction;
 }

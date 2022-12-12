@@ -40,6 +40,11 @@ public:
 	explicit gpu_obj_t(glm::mat4 model_matrix);
 	explicit gpu_obj_t(GLfloat* input_data, glm::mat4 model_matrix);
 
-	void draw(glm::mat4 modelMatrix = glm::mat4(1));
+    void SetPosition(glm::vec3 position);
+    void Translate(glm::vec3 translate);
+    void Scale(glm::vec3 scale);
+    void addChildren(gpu_obj_t* obj);
+
+    void draw(glm::mat4 modelMatrix = glm::mat4(1));
 
 };

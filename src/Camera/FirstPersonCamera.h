@@ -17,6 +17,8 @@ public:
 
     int handle(sf::Event e) override;
 
+    void lock();
+
     glm::mat4 getPerspectiveMatrix() const override;
 
     glm::mat4 getModelViewMatrix() const override;
@@ -24,6 +26,10 @@ public:
     glm::vec3 getEyePosition() const override;
 
     glm::vec3 getEyeDirection() const override;
+
+    glm::vec3 getTopDirection() const;
+
+    glm::vec3 getRightDirection() const;
 };
 
 
