@@ -10,10 +10,18 @@
 class GameWindow;
 
 class FirstPersonCamera : public Camera {
-
+private:
+    double theta = 0;// 0 ~ 360
+    double phi = 0; // -90 ~ 90
     float moveSpeed = 1.0f;
+
+protected:
+    void down(const float x, const float y) override;
+
 public:
     FirstPersonCamera();
+
+    void reset() override;
 
     int handle(sf::Event e) override;
 

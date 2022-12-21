@@ -12,17 +12,8 @@ class GameWindow;
 
 class Camera {
 protected:
-    Quat start, now;
 
     float downX, downY;
-
-    enum {
-        None,
-        Rotate,
-        Pan
-    } mode;
-
-    float panX, panY;
 
     float eyeX, eyeY, eyeZ;
 
@@ -30,11 +21,7 @@ protected:
 
     float isx, isy, isz;
 
-    void down(const float x, const float y);
-
-    void computeNow(const float nowX, const float nowY);
-
-    void spin(float x, float y, float z);
+    virtual void down(const float x, const float y);
 
     void getMouseNDC(float& x, float& y);
 
@@ -42,13 +29,13 @@ public:
 
     Camera();
 
-    void setup(
+    virtual void setup(
             float fieldOfView = 40.0,
             float eyeZ = 8.0,
             float isx = 0, float isy = 0, float isz = 0
     );
 
-    void reset();
+    virtual void reset();
 
     virtual int handle(sf::Event e);
 

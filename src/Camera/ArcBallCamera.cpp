@@ -5,9 +5,94 @@
 #include "ArcBallCamera.h"
 #include "GameWindow.h"
 
-ArcBallCamera::ArcBallCamera() : Camera() {
+ArcBallCamera::ArcBallCamera() : Camera(),
+        mode(None),
+        panX(0), panY(0){
 
 }
+
+void ArcBallCamera::setup(float fieldOfView, float eyeZ, float isx, float isy, float isz) {
+    Camera::setup(fieldOfView, eyeZ, isx, isy, isz);
+    reset();
+    spin(isx,isy,isz);
+}
+
+static void onUnitSphere(const float mx, const float my,
+                         float& x, float& y, float& z) {
+    x = mx;		// should divide radius
+    y = my;
+    float mag = x*x + y*y;
+    if (mag > 1.0f) {
+        float scale = 1.0f / ((float) sqrt(mag));
+        x *= scale;
+        y *= scale;
+        z = 0;
+    } else {
+        z = (float) sqrt(1 - mag);
+    }
+}
+
+void ArcBallCamera::computeNow(const float nowX, const float nowY) {
+    if (mode==Rotate) {
+        float dx,dy,dz;
+        float mx,my,mz;
+        onUnitSphere(downX, downY, dx, dy, dz);
+        onUnitSphere(nowX, nowY, mx, my, mz);
+
+        // here we compute the quaternion between these two points
+        now.x = dy*mz - dz*my;
+        now.y = dz*mx - dx*mz;
+        now.z = dx*my - dy*mx;
+        now.w = dx*mx + dy*my + dz*mz;
+
+        now.renorm();		// just in case...
+    }
+    else if (mode==Pan) {
+        float dx = (nowX-downX) * eyeZ;
+        float dy = (nowY-downY) * eyeZ;
+
+        eyeX += panX - dx;
+        eyeY += panY - dy;
+        panX = dx;
+        panY = dy;
+    }
+}
+
+void ArcBallCamera::spin(float x, float y, float z) {
+    // first, get rid of anything cached
+    start = now * start;
+    now = Quat();
+
+    float iw = x*x + y*y + z*z;
+    if (iw<1)
+        iw = sqrt(1-iw);
+    else
+        iw = 0;
+    Quat newq(x,y,z,iw);
+
+    newq.renorm();
+    start = newq * start;
+
+    start.renorm();
+}
+
+void ArcBallCamera::down(const float x, const float y) {
+    start = now * start;
+    now = Quat();		// identity
+
+    downX = x;
+    downY = y;
+
+    panX = 0;
+    panY = 0;
+}
+
+void ArcBallCamera::reset() {
+    start.x = start.y = start.z = 0; start.w = 1;
+
+    now.x = now.y = now.z = 0; now.w = 1;
+}
+
 
 int ArcBallCamera::handle(sf::Event e) {
     switch (e.type) {
