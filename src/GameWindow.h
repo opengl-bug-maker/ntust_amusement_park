@@ -29,6 +29,7 @@ class GameWindow : public sf::RenderWindow{
     sf::Time deltaTime;
 public:
     static GameWindow* magic;
+    static glm::vec3 FallDownVector;
 
     GameWindow();
 

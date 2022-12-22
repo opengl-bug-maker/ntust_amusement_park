@@ -29,6 +29,12 @@ protected:
 
 	void update(float* input_data, size_t index);
 
+    //Gaming
+
+    bool GravityObject = true;
+
+    glm::vec3 velocity = glm::vec3(0);
+
 public:
     static glm::mat4 projection_matrix;
     static glm::mat4 view_matrix;
@@ -47,4 +53,15 @@ public:
 
     void draw(glm::mat4 modelMatrix = glm::mat4(1));
 
+    //Gaming
+
+    void SetGravity(bool isGravity);
+
+    const glm::vec3 &getVelocity() const;
+
+    void setVelocity(const glm::vec3 &velocity);
+
+    void UpdatePosition(sf::Time deltaTime);
+
+    void FallDown(sf::Time deltaTime);
 };

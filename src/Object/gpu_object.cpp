@@ -1,4 +1,5 @@
 #include "gpu_object.h"
+#include "GameWindow.h"
 
 glm::mat4 gpu_obj_t::projection_matrix;
 glm::mat4 gpu_obj_t::view_matrix;
@@ -100,4 +101,29 @@ void gpu_obj_t::Scale(glm::vec3 scale) {
 
 void gpu_obj_t::addChildren(gpu_obj_t* obj) {
     children.push_back(obj);
+}
+
+void gpu_obj_t::SetGravity(bool isGravity) {
+    GravityObject = isGravity;
+}
+
+const glm::vec3 &gpu_obj_t::getVelocity() const {
+    return velocity;
+}
+
+void gpu_obj_t::setVelocity(const glm::vec3 &velocity) {
+    gpu_obj_t::velocity = velocity;
+}
+
+void gpu_obj_t::UpdatePosition(sf::Time deltaTime) {
+    if(GravityObject){
+        Translate(velocity * deltaTime.asSeconds());
+    } else {
+        velocity[0] = velocity[1] = velocity[2] = 0;
+    }
+}
+
+void gpu_obj_t::FallDown(sf::Time deltaTime) {
+    if(GravityObject)
+        velocity += GameWindow::FallDownVector * deltaTime.asSeconds();
 }

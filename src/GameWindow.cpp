@@ -5,6 +5,7 @@
 #include "GameWindow.h"
 
 GameWindow* GameWindow::magic;
+glm::vec3 GameWindow::FallDownVector = glm::vec3(0, -1, 0);
 
 GameWindow::GameWindow() {}
 
@@ -70,6 +71,10 @@ void GameWindow::run() {
     while (isOpen()) {
         nowTime = deltaClock.getElapsedTime();
         deltaTime = nowTime - prevTime;
+
+        for(auto objs : gpuObjs) objs->FallDown(deltaTime);
+
+        for(auto objs : gpuObjs) objs->UpdatePosition(deltaTime);
 
         sf::Event event;
         while (pollEvent(event)) {
