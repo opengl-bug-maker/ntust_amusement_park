@@ -2,29 +2,29 @@
 // Created by 林士傑 on 2022/12/7.
 //
 
-#include "empty.h"
+#include "empty_obj.h"
 
-empty::empty() {
+empty_obj::empty_obj() {
     init();
 }
 
-void empty::init() {
+void empty_obj::init() {
     gpu_obj_t::init();
 
-    this->model_matrix;
-
-    this->vertexCount;
-
-    this->data_block_size;
-
-    this->data;
-
-    this->vao->element_amount;
-
-    element;
+//    this->model_matrix;
+//
+//    this->vertexCount;
+//
+//    this->data_block_size;
+//
+//    this->data;
+//
+//    this->vao->element_amount;
+//
+//    element;
 }
 
-void empty::bind() {
+void empty_obj::bind() {
     if (this->shader) return;
 
     this->shader = new Shader(

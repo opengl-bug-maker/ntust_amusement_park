@@ -7,10 +7,6 @@ cube::cube() {
     init();
 }
 
-cube::cube(GLfloat *input_data) : gpu_obj_t(input_data) {
-    init();
-}
-
 void cube::init() {
     gpu_obj_t::init();
 

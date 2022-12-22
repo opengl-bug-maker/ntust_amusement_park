@@ -3,6 +3,7 @@
 //
 
 #include "GameWindow.h"
+#include "Object/gpu_object.h"
 
 GameWindow* GameWindow::magic;
 glm::vec3 GameWindow::FallDownVector = glm::vec3(0, -1, 0);
@@ -18,6 +19,7 @@ GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : Ren
         sf::ContextSettings::Core
 )) {
     GameWindow::magic = this;
+//region glSetting
     if (!gladLoadGL()) {
         printf("Something went wrong!\n");
         exit(-1);
@@ -25,21 +27,22 @@ GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : Ren
     printf("OpenGL %s, GLSL %s\n", glGetString(GL_VERSION), glGetString(GL_SHADING_LANGUAGE_VERSION));
 //    setVerticalSyncEnabled(true);
 //    this->setActive(true);
+//endregion
 
+//region setting
     prevTime = deltaClock.getElapsedTime();
-
-//    arcBall.setup(40, 8, .2, 0, 0);
-//    firstPersonCamera.setup(40, 8, .2, 0, 0);
 
     arcBall.setup(40, 8, 0, 0, 0);
     firstPersonCamera.setup(40, 8, 0, 0, 0);
+    firstPersonCamera.lock();
 
     camera = &firstPersonCamera;
 //    camera = &arcBall;
+//endregion
 
+//region object
 
     gpu_obj_t* cc = new cube();
-//    cc->Scale(glm::vec3(0.2, 0.2, 0.2));
 
     gpu_obj_t* c = new cube();
     c->Translate(glm::vec3(3, 0, 0));
@@ -55,10 +58,7 @@ GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : Ren
     cc->addChildren(c);
 
     gpuObjs.push_back(cc);
-
-//    c = new cube();
-//    c->Scale(glm::vec3(0.2, 0.2, 0.2));
-//    gpuObjs.push_back(c);
+//endregion
 
 }
 

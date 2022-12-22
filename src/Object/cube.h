@@ -13,7 +13,6 @@ class cube : public gpu_obj_t {
 public:
     void bind() override;
     cube();
-    cube(GLfloat* input_data);
 };
 
 

@@ -7,12 +7,12 @@
 
 #include "gpu_object.h"
 
-class empty : public gpu_obj_t {
+class empty_obj : public gpu_obj_t {
     void init() override;
 
 public:
     void bind() override;
-    empty();
+    empty_obj();
 };
 
 
