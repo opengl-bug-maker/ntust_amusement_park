@@ -41,8 +41,15 @@ GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : Ren
 //endregion
 
 //region object
+    gpu_obj_t* plane = new cube();
+    plane->Translate(glm::vec3(0, -10, 0));
+    plane->Scale(glm::vec3(10, 0.1, 10));
+    plane->SetGravity(false);
+    gpuObjs.push_back(plane);
 
     gpu_obj_t* cc = new cube();
+
+
 
     gpu_obj_t* c = new cube();
     c->Translate(glm::vec3(3, 0, 0));
@@ -63,9 +70,6 @@ GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : Ren
 }
 
 void GameWindow::run() {
-
-    firstPersonCamera.lock();
-
     for(auto objs : gpuObjs) objs->bind();
 
     while (isOpen()) {
@@ -73,6 +77,16 @@ void GameWindow::run() {
         deltaTime = nowTime - prevTime;
 
         for(auto objs : gpuObjs) objs->FallDown(deltaTime);
+
+        for(int i = 0; i < gpuObjs.size(); i++){
+            for(int j = i + 1; j < gpuObjs.size(); j++){
+                if(gpuObjs[i]->IsCollision(gpuObjs[j])){
+                    glm::vec3 tempV = gpuObjs[i]->getVelocity();
+                    gpuObjs[i]->setVelocity(gpuObjs[j]->getVelocity());
+                    gpuObjs[j]->setVelocity(tempV);
+                }
+            }
+        }
 
         for(auto objs : gpuObjs) objs->UpdatePosition(deltaTime);
 

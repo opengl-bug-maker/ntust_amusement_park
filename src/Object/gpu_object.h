@@ -9,6 +9,11 @@
 #include "glm/mat4x4.hpp"
 #include "glm/gtx/transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "Object/Collider/ICollider.h"
+//#include "cube.h"
+
+class empty_obj;
+class cube;
 
 class gpu_obj_t {
 protected:
@@ -31,6 +36,8 @@ protected:
 
     //Gaming
 
+    ICollider* collider = nullptr;
+
     bool GravityObject = true;
 
     glm::vec3 velocity = glm::vec3(0);
@@ -47,13 +54,15 @@ public:
 	explicit gpu_obj_t(GLfloat* input_data, glm::mat4 model_matrix);
 
     void SetPosition(glm::vec3 position);
-    void Translate(glm::vec3 translate);
-    void Scale(glm::vec3 scale);
+    virtual void Translate(glm::vec3 translate);
+    virtual void Scale(glm::vec3 scale);
     void addChildren(gpu_obj_t* obj);
 
     void draw(glm::mat4 modelMatrix = glm::mat4(1));
 
     //Gaming
+
+    bool IsCollision(gpu_obj_t* obj);
 
     void SetGravity(bool isGravity);
 

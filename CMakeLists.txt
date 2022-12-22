@@ -15,6 +15,10 @@ include_directories("${GLM_HOME}/include")
 
 file(GLOB OBJECT_HEADER src/Object/*.h)
 file(GLOB OBJECT_SOURCE src/Object/*.cpp)
+file(GLOB CUSTOM-OBJECT_HEADER src/Object/CustomObject/*.h)
+file(GLOB CUSTOM-OBJECT_SOURCE src/Object/CustomObject/*.cpp)
+file(GLOB OBJECT-COLLIDER_HEADER src/Object/Collider/*.h)
+file(GLOB OBJECT-COLLIDER_SOURCE src/Object/Collider/*.cpp)
 file(GLOB CAMERA_HEADER src/Camera/*.h)
 file(GLOB CAMERA_SOURCE src/Camera/*.cpp)
 file(GLOB Utilities_HEADER src/Utilities/*.h)
@@ -28,6 +32,8 @@ add_executable(AmusementPark
         src/GameWindow.cpp
         src/GameWindow.h
         ${OBJECT_HEADER} ${OBJECT_SOURCE}
+        ${CUSTOM-OBJECT_HEADER} ${CUSTOM-OBJECT_SOURCE}
+        ${OBJECT-COLLIDER_HEADER} ${OBJECT-COLLIDER_SOURCE}
         ${CAMERA_HEADER} ${CAMERA_SOURCE}
         ${Utilities_HEADER} ${Utilities_SOURCE}
         ${RenderUtilities_HEADER} ${RenderUtilities_SOURCE}

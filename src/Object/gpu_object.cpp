@@ -93,10 +93,12 @@ void gpu_obj_t::SetPosition(glm::vec3 position) {
 
 void gpu_obj_t::Translate(glm::vec3 translate) {
     this->model_matrix = glm::translate(this->model_matrix, translate);
+    this->collider->Translate(translate);
 }
 
 void gpu_obj_t::Scale(glm::vec3 scale) {
     this->model_matrix = glm::scale(this->model_matrix, scale);
+    this->collider->Scale(scale);
 }
 
 void gpu_obj_t::addChildren(gpu_obj_t* obj) {
@@ -126,4 +128,15 @@ void gpu_obj_t::UpdatePosition(sf::Time deltaTime) {
 void gpu_obj_t::FallDown(sf::Time deltaTime) {
     if(GravityObject)
         velocity += GameWindow::FallDownVector * deltaTime.asSeconds();
+}
+
+bool gpu_obj_t::IsCollision(gpu_obj_t* obj) {
+    if(this == obj){
+        std::cerr << "dont collision you self :X, loc at : " << this << std::endl;
+        return false;
+    }
+    if(this->collider == nullptr || obj->collider == nullptr){
+        return false;
+    }
+    return this->collider->IsCollision(obj->collider);
 }

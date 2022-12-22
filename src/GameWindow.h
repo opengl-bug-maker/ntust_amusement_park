@@ -15,6 +15,8 @@
 #include "Camera/ArcBallCamera.h"
 #include "Camera/Camera.h"
 #include "Camera/FirstPersonCamera.h"
+#include "Object/Collider/BoxCollider.h"
+#include "Object/Collider/BallCollider.h"
 
 class GameWindow : public sf::RenderWindow{
     ArcBallCamera arcBall;

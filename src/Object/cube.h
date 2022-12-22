@@ -6,6 +6,7 @@
 #define WATEROPENGL_CUBE_H
 
 #include "gpu_object.h"
+#include "Object/Collider/BoxCollider.h"
 
 class cube : public gpu_obj_t {
     void init() override;
