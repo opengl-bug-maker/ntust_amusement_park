@@ -15,10 +15,11 @@ class BallCollider;
 class ICollider {
 
 public:
-    virtual bool IsCollision(ICollider* collider) = 0;
-    virtual bool IsCollision(BoxCollider* collider) = 0;
-    virtual bool IsCollision(BallCollider* collider) = 0;
+    virtual bool IsCollision(ICollider* collider, glm::vec3& collisionVector) = 0;
+    virtual bool IsCollision(BoxCollider* collider, glm::vec3& collisionVector) = 0;
+    virtual bool IsCollision(BallCollider* collider, glm::vec3& collisionVector) = 0;
 
+    virtual void SetPosition(glm::vec3 position) = 0;
     virtual void Translate(glm::vec3 translate) = 0;
     virtual void Scale(glm::vec3 scale) = 0;
 };

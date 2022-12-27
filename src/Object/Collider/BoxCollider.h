@@ -14,11 +14,13 @@ public:
 
     BoxCollider(const glm::vec3 &center, const glm::vec3 &size);
 
-    bool IsCollision(ICollider *collider) override;
+    bool IsCollision(ICollider *collider, glm::vec3& collisionVector) override;
 
-    bool IsCollision(BoxCollider *collider) override;
+    bool IsCollision(BoxCollider *collider, glm::vec3& collisionVector) override;
 
-    bool IsCollision(BallCollider *collider) override;
+    bool IsCollision(BallCollider *collider, glm::vec3& collisionVector) override;
+
+    void SetPosition(glm::vec3 position) override;
 
     void Translate(glm::vec3 translate) override;
 

@@ -9,11 +9,11 @@
 
 class BallCollider : public ICollider {
 public:
-    bool IsCollision(ICollider *collider) override;
+    bool IsCollision(ICollider *collider, glm::vec3& collisionVector) override;
 
-    bool IsCollision(BoxCollider *collider) override;
+    bool IsCollision(BoxCollider *collider, glm::vec3& collisionVector) override;
 
-    bool IsCollision(BallCollider *collider) override;
+    bool IsCollision(BallCollider *collider, glm::vec3& collisionVector) override;
 
     void Translate(glm::vec3 translate) override;
 

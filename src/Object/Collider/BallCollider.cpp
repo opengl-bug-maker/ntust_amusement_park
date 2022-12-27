@@ -4,15 +4,15 @@
 
 #include "BallCollider.h"
 
-bool BallCollider::IsCollision(ICollider *collider) {
-    return collider->IsCollision(this);
+bool BallCollider::IsCollision(ICollider *collider, glm::vec3& collisionVector) {
+    return collider->IsCollision(this, collisionVector);
 }
 
-bool BallCollider::IsCollision(BoxCollider *collider) {
+bool BallCollider::IsCollision(BoxCollider *collider, glm::vec3& collisionVector) {
     return false;
 }
 
-bool BallCollider::IsCollision(BallCollider *collider) {
+bool BallCollider::IsCollision(BallCollider *collider, glm::vec3& collisionVector) {
     return false;
 }
 
