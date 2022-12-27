@@ -6,7 +6,7 @@
 #include "Object/gpu_object.h"
 
 GameWindow* GameWindow::magic;
-glm::vec3 GameWindow::FallDownVector = glm::vec3(0, -1, 0);
+glm::vec3 GameWindow::FallDownVector = glm::vec3(0, -20, 0);
 
 GameWindow::GameWindow() {}
 
@@ -25,7 +25,7 @@ GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : Ren
         exit(-1);
     }
     printf("OpenGL %s, GLSL %s\n", glGetString(GL_VERSION), glGetString(GL_SHADING_LANGUAGE_VERSION));
-//    setVerticalSyncEnabled(true);
+    setVerticalSyncEnabled(true);
 //    this->setActive(true);
 //endregion
 
@@ -33,40 +33,64 @@ GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : Ren
     prevTime = deltaClock.getElapsedTime();
 
     arcBall.setup(40, 8, 0, 0, 0);
-    firstPersonCamera.setup(40, 8, 0, 0, 0);
+    firstPersonCamera.setup(60, 8, 0, 0, 0);
     firstPersonCamera.lock();
 
     camera = &firstPersonCamera;
 //    camera = &arcBall;
 //endregion
 
+    InitObjects();
+}
+
+void GameWindow::InitObjects() {
 //region object
+    Player = new player();
+    Player->setName("player");
+//    Player = new cube();
+//    Player->SetGravity(false);
+    Player->SettingTransform(glm::vec3(0, 0, 8));
+    Player->SettingScale(glm::vec3(1, 2, 1));
+//    Player->SettingTransform(glm::vec3(0, 10, 0));
+    gpuObjs.push_back(Player);
+
     gpu_obj_t* plane = new cube();
-    plane->Translate(glm::vec3(0, -10, 0));
-    plane->Scale(glm::vec3(10, 0.1, 10));
+    plane->setName("plane");
+    plane->SettingTransform(glm::vec3(0, -10, 0));
+    plane->SettingScale(glm::vec3(10, 0.1, 10));
     plane->SetGravity(false);
     gpuObjs.push_back(plane);
 
+
     gpu_obj_t* cc = new cube();
-
-
+    cc->setName("big cube");
+//    cc->SetGravity(false);
+//    cc->SettingScale(glm::vec3(0.2,0.2,0.2));
 
     gpu_obj_t* c = new cube();
-    c->Translate(glm::vec3(3, 0, 0));
-    c->Scale(glm::vec3(0.5, 0.5, 0.5));
-    cc->addChildren(c);
+    c->setName("x cube");
+    c->SettingTransform(glm::vec3(3, 0, 0));
+    c->SettingScale(glm::vec3(0.5, 0.5, 0.5));
+//    c->SetGravity(false);
+    gpuObjs.push_back(c);
+//    cc->addChildren(c);
     c = new cube();
-    c->Translate(glm::vec3(0, 3, 0));
-    c->Scale(glm::vec3(0.5, 0.5, 0.5));
-    cc->addChildren(c);
+    c->setName("y cube");
+    c->SettingTransform(glm::vec3(0, 3, 0));
+    c->SettingScale(glm::vec3(0.5, 0.5, 0.5));
+//    c->SetGravity(false);
+    gpuObjs.push_back(c);
+//    cc->addChildren(c);
     c = new cube();
-    c->Translate(glm::vec3(0, 0, 3));
-    c->Scale(glm::vec3(0.5, 0.5, 0.5));
-    cc->addChildren(c);
+    c->setName("z cube");
+    c->SettingTransform(glm::vec3(0, 0, 3));
+    c->SettingScale(glm::vec3(0.5, 0.5, 0.5));
+//    c->SetGravity(false);
+    gpuObjs.push_back(c);
+//    cc->addChildren(c);
 
     gpuObjs.push_back(cc);
 //endregion
-
 }
 
 void GameWindow::run() {
@@ -76,19 +100,42 @@ void GameWindow::run() {
         nowTime = deltaClock.getElapsedTime();
         deltaTime = nowTime - prevTime;
 
+        for(auto objs : gpuObjs) objs->nextTick();
+
+        MoveEvent();
+
         for(auto objs : gpuObjs) objs->FallDown(deltaTime);
 
+        glm::vec3 collisionVec;
+
         for(int i = 0; i < gpuObjs.size(); i++){
-            for(int j = i + 1; j < gpuObjs.size(); j++){
-                if(gpuObjs[i]->IsCollision(gpuObjs[j])){
-                    glm::vec3 tempV = gpuObjs[i]->getVelocity();
-                    gpuObjs[i]->setVelocity(gpuObjs[j]->getVelocity());
-                    gpuObjs[j]->setVelocity(tempV);
+            for(int j = 0; j < gpuObjs.size(); j++){
+                if(gpuObjs[i]->IsCollision(gpuObjs[j], collisionVec)){
+                    if(glm::length(collisionVec) > 0.1)
+                        gpuObjs[i]->Move(collisionVec);
+                    glm::vec3 coll = glm::normalize(collisionVec);
+                    if(glm::abs(glm::length(coll)) > 0.000000001)
+                        gpuObjs[i]->addVelocity(coll * (-glm::dot(gpuObjs[i]->getVelocity(), coll)));
                 }
             }
         }
 
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && ((player*)Player)->state == player::ActionState::Floor){
+            cout << "jump" << endl;
+            ((player*)Player)->state = player::ActionState::Drop;
+            glm::vec3 jump = glm::vec3 (0, 10, 0);
+            jump[0] = Player->getVelocity()[0];
+            jump[2] = Player->getVelocity()[2];
+            Player->setVelocity(jump);
+        }
+
+
         for(auto objs : gpuObjs) objs->UpdatePosition(deltaTime);
+
+        firstPersonCamera.setPosition(Player->GetPosition() + glm::vec3(0, 1, 0));
+
+//        cout << "position : " << Player->GetPosition()[1] << endl;
+//        cout << "velocity : " << Player->getVelocity()[1] << endl;
 
         sf::Event event;
         while (pollEvent(event)) {
@@ -102,6 +149,11 @@ void GameWindow::run() {
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Num1){
                 camera = (camera == &firstPersonCamera) ? ((Camera*)&arcBall) : ((Camera*)&firstPersonCamera);
             }
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::L){
+                glm::vec3 dir = firstPersonCamera.getEyeDirection();
+                for(int i = 0; i < 3; i++) cout << dir[i] << " ";
+                cout << "\n";
+            }
         }
 
         clear();
@@ -111,7 +163,7 @@ void GameWindow::run() {
         glEnable(GL_DEPTH);
         glEnable(GL_DEPTH_TEST);
 
-        // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glViewport(0, 0, 800, 600);
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -121,30 +173,48 @@ void GameWindow::run() {
 
         for(auto objs : gpuObjs) objs->draw();
 
+
         display();
 
-
-//        glm::vec3 dire = camera->getEyeDirection();
-//        for (int i = 0; i < 3; ++i) {
-//            cout << dire[i] << " ";
-//        }
-//        cout << "\n";
-//        for (int i = 0; i < 3; ++i) {
-//            dire[i] *= 8;
-//        }
-
-//        gpuObjs[1]->SetPosition(dire + camera->getEyePosition());
-
-//        glm::mat4 viewmatrix = camera->getModelViewMatrix();
-//        for (int i = 0; i < 4; ++i) {
-//            for (int j = 0; j < 4; ++j) {
-//                cout << viewmatrix[i][j] << " ";
-//            }
-//            cout << "\n";
-//        }
-//        cout << "\n";
-//        cout << "\n";
-
         prevTime = nowTime;
+    }
+}
+
+void GameWindow::MoveEvent() {
+
+    float MoveSpeed = 7.0f;
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
+        glm::vec3 dir = firstPersonCamera.getEyeDirection();
+        glm::vec2 dir2(dir[0], dir[2]);
+        dir2 = glm::normalize(dir2);
+        glm::vec3 newSpeed = glm::vec3(dir2[0], 0, dir2[1]) * MoveSpeed * 1.0f;
+        newSpeed[1] = Player->getVelocity()[1];
+        Player->setVelocity(newSpeed);
+//        Player->Move(glm::vec3(dir2[0], 0, dir2[1]) * MoveSpeed * 0.01f);
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+        glm::vec3 dir = -firstPersonCamera.getEyeDirection();
+        glm::vec2 dir2(dir[0], dir[2]);
+        dir2 = glm::normalize(dir2);
+        glm::vec3 newSpeed = glm::vec3(dir2[0], 0, dir2[1]) * MoveSpeed * 1.0f;
+        newSpeed[1] = Player->getVelocity()[1];
+        Player->setVelocity(newSpeed);
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+        glm::vec3 dir = -firstPersonCamera.getRightDirection();
+        glm::vec2 dir2(dir[0], dir[2]);
+        dir2 = glm::normalize(dir2);
+        glm::vec3 newSpeed = glm::vec3(dir2[0], 0, dir2[1]) * MoveSpeed * 1.0f;
+        newSpeed[1] = Player->getVelocity()[1];
+        Player->setVelocity(newSpeed);
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
+        glm::vec3 dir = firstPersonCamera.getRightDirection();
+        glm::vec2 dir2(dir[0], dir[2]);
+        dir2 = glm::normalize(dir2);
+        glm::vec3 newSpeed = glm::vec3(dir2[0], 0, dir2[1]) * MoveSpeed * 1.0f;
+        newSpeed[1] = Player->getVelocity()[1];
+        Player->setVelocity(newSpeed);
     }
 }

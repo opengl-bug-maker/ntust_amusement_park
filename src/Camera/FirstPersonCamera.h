@@ -27,6 +27,8 @@ public:
 
     void lock();
 
+    void setPosition(glm::vec3 position);
+
     glm::mat4 getPerspectiveMatrix() const override;
 
     glm::mat4 getModelViewMatrix() const override;

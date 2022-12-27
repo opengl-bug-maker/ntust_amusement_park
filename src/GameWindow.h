@@ -10,6 +10,7 @@
 #include <iostream>
 #include <vector>
 #include <SFML/Window/Event.hpp>
+#include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "Object/cube.h"
 #include "Camera/ArcBallCamera.h"
@@ -17,11 +18,14 @@
 #include "Camera/FirstPersonCamera.h"
 #include "Object/Collider/BoxCollider.h"
 #include "Object/Collider/BallCollider.h"
+#include "Object/player.h"
+#include "Object/PhysicsObject.h"
 
 class GameWindow : public sf::RenderWindow{
     ArcBallCamera arcBall;
     FirstPersonCamera firstPersonCamera;
     Camera* camera;
+    gpu_obj_t* Player;
 
     std::vector<gpu_obj_t*> gpuObjs;
 
@@ -29,6 +33,12 @@ class GameWindow : public sf::RenderWindow{
     sf::Time nowTime;
     sf::Time prevTime;
     sf::Time deltaTime;
+
+    void InitObjects();
+
+    void MoveEvent();
+
+
 public:
     static GameWindow* magic;
     static glm::vec3 FallDownVector;
