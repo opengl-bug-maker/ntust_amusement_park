@@ -9,17 +9,16 @@
 #include "glm/mat4x4.hpp"
 #include "glm/gtx/transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
-#include "Object/Collider/ICollider.h"
-//#include "cube.h"
+#include "Object/PhysicsObject.h"
 
 class empty_obj;
 class cube;
 
-class gpu_obj_t {
+class gpu_obj_t : public PhysicsObject {
 protected:
-	Texture2D* texture = nullptr; //init
+    bool visible = true;
 
-    glm::mat4 model_matrix = glm::mat4(1); //for scale, rotation, translation
+	Texture2D* texture = nullptr; //init
 
 	VAO* vao = new VAO; //multiple vbos and 1 ebo
     GLuint* element = nullptr; //init
@@ -34,14 +33,6 @@ protected:
 
 	void update(float* input_data, size_t index);
 
-    //Gaming
-
-    ICollider* collider = nullptr;
-
-    bool GravityObject = true;
-
-    glm::vec3 velocity = glm::vec3(0);
-
 public:
     static glm::mat4 projection_matrix;
     static glm::mat4 view_matrix;
@@ -49,28 +40,10 @@ public:
 	virtual void bind();
 	Shader* shader = nullptr; //init
 	gpu_obj_t();
-	explicit gpu_obj_t(GLfloat* input_data);
-	explicit gpu_obj_t(glm::mat4 model_matrix);
-	explicit gpu_obj_t(GLfloat* input_data, glm::mat4 model_matrix);
 
-    void SetPosition(glm::vec3 position);
-    virtual void Translate(glm::vec3 translate);
-    virtual void Scale(glm::vec3 scale);
+	explicit gpu_obj_t(glm::mat4 model_matrix);
+
     void addChildren(gpu_obj_t* obj);
 
     void draw(glm::mat4 modelMatrix = glm::mat4(1));
-
-    //Gaming
-
-    bool IsCollision(gpu_obj_t* obj);
-
-    void SetGravity(bool isGravity);
-
-    const glm::vec3 &getVelocity() const;
-
-    void setVelocity(const glm::vec3 &velocity);
-
-    void UpdatePosition(sf::Time deltaTime);
-
-    void FallDown(sf::Time deltaTime);
 };

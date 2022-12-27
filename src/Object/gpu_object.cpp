@@ -4,6 +4,14 @@
 glm::mat4 gpu_obj_t::projection_matrix;
 glm::mat4 gpu_obj_t::view_matrix;
 
+gpu_obj_t::gpu_obj_t() {
+
+}
+
+gpu_obj_t::gpu_obj_t(glm::mat4 model_matrix) {
+    this->model_matrix = model_matrix;
+}
+
 void gpu_obj_t::init() {
 	
 }
@@ -46,28 +54,18 @@ void gpu_obj_t::update(float* input_data, size_t index) {
 	}
 }
 
-gpu_obj_t::gpu_obj_t() {
-
-}
-
-gpu_obj_t::gpu_obj_t(GLfloat* input_data) : data(input_data) {
-
-}
-
-gpu_obj_t::gpu_obj_t(glm::mat4 model_matrix) : model_matrix(model_matrix) {
-}
-
-gpu_obj_t::gpu_obj_t(GLfloat* input_data, glm::mat4 model_matrix) : data(input_data), model_matrix(model_matrix) {
+void gpu_obj_t::addChildren(gpu_obj_t* obj) {
+    children.push_back(obj);
 }
 
 void gpu_obj_t::draw(glm::mat4 modelMatrix) {
-	//todo multi parent modelMatrix
-	// modelMatrix * this->model_matrix
+    if(!visible)
+        return;
+
 	modelMatrix = modelMatrix * this->model_matrix;
 	for(auto child : children){
 		child->draw(model_matrix);
 	}
-	//todo true draw
 	this->shader->Use();
 
     glUniformMatrix4fv(
@@ -84,59 +82,4 @@ void gpu_obj_t::draw(glm::mat4 modelMatrix) {
 	glBindVertexArray(0);
 
 	glUseProgram(0);
-}
-
-void gpu_obj_t::SetPosition(glm::vec3 position) {
-    this->model_matrix = glm::mat4(1);
-    this->model_matrix = glm::translate(this->model_matrix, position);
-}
-
-void gpu_obj_t::Translate(glm::vec3 translate) {
-    this->model_matrix = glm::translate(this->model_matrix, translate);
-    this->collider->Translate(translate);
-}
-
-void gpu_obj_t::Scale(glm::vec3 scale) {
-    this->model_matrix = glm::scale(this->model_matrix, scale);
-    this->collider->Scale(scale);
-}
-
-void gpu_obj_t::addChildren(gpu_obj_t* obj) {
-    children.push_back(obj);
-}
-
-void gpu_obj_t::SetGravity(bool isGravity) {
-    GravityObject = isGravity;
-}
-
-const glm::vec3 &gpu_obj_t::getVelocity() const {
-    return velocity;
-}
-
-void gpu_obj_t::setVelocity(const glm::vec3 &velocity) {
-    gpu_obj_t::velocity = velocity;
-}
-
-void gpu_obj_t::UpdatePosition(sf::Time deltaTime) {
-    if(GravityObject){
-        Translate(velocity * deltaTime.asSeconds());
-    } else {
-        velocity[0] = velocity[1] = velocity[2] = 0;
-    }
-}
-
-void gpu_obj_t::FallDown(sf::Time deltaTime) {
-    if(GravityObject)
-        velocity += GameWindow::FallDownVector * deltaTime.asSeconds();
-}
-
-bool gpu_obj_t::IsCollision(gpu_obj_t* obj) {
-    if(this == obj){
-        std::cerr << "dont collision you self :X, loc at : " << this << std::endl;
-        return false;
-    }
-    if(this->collider == nullptr || obj->collider == nullptr){
-        return false;
-    }
-    return this->collider->IsCollision(obj->collider);
 }
