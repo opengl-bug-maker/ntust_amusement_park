@@ -86,6 +86,7 @@ bool PhysicsObject::IsCollision(PhysicsObject* obj, glm::vec3& collisionVector) 
     return this->collider->IsCollision(obj->collider, collisionVector);
 }
 
+
 bool PhysicsObject::isGravityObject() const {
     return GravityObject;
 }

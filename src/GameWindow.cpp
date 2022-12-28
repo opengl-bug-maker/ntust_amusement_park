@@ -3,7 +3,7 @@
 //
 
 #include "GameWindow.h"
-#include "Object/gpu_object.h"
+//#include "Object/gpu_object.h"
 
 GameWindow* GameWindow::magic;
 glm::vec3 GameWindow::FallDownVector = glm::vec3(0, -20, 0);

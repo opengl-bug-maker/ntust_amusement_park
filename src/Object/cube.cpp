@@ -6,7 +6,7 @@
 cube::cube() {
     init();
 }
-
+// gpu_object -> simple object -> something
 void cube::init() {
     gpu_obj_t::init();
 
@@ -14,11 +14,11 @@ void cube::init() {
 
     this->vertexCount = 8;
 
-    this->data_block_size = { 3, 3 };
+    this->data_block_size = { 3, 3, 2};
 
     this->data = new float[] {
             //vertices
-            -1,  -1, -1,
+        -1, -1, -1,
             1, -1, -1,
             1, 1, -1,
             -1, 1, -1,
@@ -35,7 +35,18 @@ void cube::init() {
             1.0f, 0.5f, 0.2f,
             0.2f, 1.0f, 0.5f,
             0.5f, 0.2f, 1.0f,
-            0.5f, 0.2f, 1.0f
+            0.5f, 0.2f, 1.0f,
+
+            //u, v
+            0.0f, 0.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+            0.0f, 1.0f,
+
+            1.0f, 0.0f,
+            0.0f, 0.0f,
+            1.0f, 1.0f,
+            0.0f, 1.0f
 
     };
 
@@ -64,9 +75,12 @@ void cube::bind() {
 
     this->shader = new
             Shader(
-            "test.vert",
+            "box.vert",
             nullptr, nullptr, nullptr,
-            "test.frag");
-
+            "box.frag");
+    this->texture = new Texture2D();
+    this->texture->set2dTexture("../Images/skybox/back.jpg");
+    this->texture->bind(0);
+    glUniform1i(glGetUniformLocation(this->shader->Program, "u_texture"), 0);
     gpu_obj_t::bind();
 }

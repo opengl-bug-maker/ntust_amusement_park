@@ -1,6 +1,6 @@
 #include "gpu_object.h"
 #include "GameWindow.h"
-
+#include "Object/PhysicsObject.h"
 glm::mat4 gpu_obj_t::projection_matrix;
 glm::mat4 gpu_obj_t::view_matrix;
 

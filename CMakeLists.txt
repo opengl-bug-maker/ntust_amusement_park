@@ -1,3 +1,4 @@
+# let cmake.txt change to fix vs bug :O
 cmake_minimum_required(VERSION 3.23)
 project(AmusementPark)
 
@@ -15,6 +16,10 @@ include_directories("${GLM_HOME}/include")
 
 file(GLOB OBJECT_HEADER src/Object/*.h)
 file(GLOB OBJECT_SOURCE src/Object/*.cpp)
+
+
+
+
 file(GLOB CUSTOM-OBJECT_HEADER src/Object/CustomObject/*.h)
 file(GLOB CUSTOM-OBJECT_SOURCE src/Object/CustomObject/*.cpp)
 file(GLOB OBJECT-COLLIDER_HEADER src/Object/Collider/*.h)

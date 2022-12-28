@@ -13,8 +13,7 @@
 
 class empty_obj;
 class cube;
-
-class gpu_obj_t : public PhysicsObject {
+class gpu_obj_t : public PhysicsObject  {
 protected:
     bool visible = true;
 
