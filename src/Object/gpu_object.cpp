@@ -29,8 +29,8 @@ void gpu_obj_t::bind() {
 
     for(int i = 0; i < data_block_size.size(); i++){
         glBindBuffer(GL_ARRAY_BUFFER, vao->vbo[i]);
-        glBufferData(GL_ARRAY_BUFFER, vertexCount * 3 * total * sizeof(GLfloat), data, GL_STATIC_DRAW);
-        glVertexAttribPointer(i, 3, GL_FLOAT, GL_FALSE, 0 * sizeof(GLfloat), (void*)(startIndex * sizeof(GLfloat)));
+        glBufferData(GL_ARRAY_BUFFER, vertexCount * total * sizeof(GLfloat), data, GL_STATIC_DRAW);
+        glVertexAttribPointer(i, data_block_size[i], GL_FLOAT, GL_FALSE, 0 * sizeof(GLfloat), (void*)(startIndex * sizeof(GLfloat)));
         glEnableVertexAttribArray(i);
         startIndex += vertexCount * data_block_size[i];
     }

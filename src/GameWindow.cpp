@@ -89,13 +89,25 @@ void GameWindow::InitObjects() {
     gpuObjs.push_back(c);
 //    cc->addChildren(c);
 
+    c = new cylinder();
+    c->setName("cylinder 0");
+    c->SettingTransform(glm::vec3(0, 0, 3));
+    c->SettingScale(glm::vec3(0.5, 0.5, 0.5));
+    //    c->SetGravity(false);
+    gpuObjs.push_back(c);
+    //    cc->addChildren(c);
+
     gpuObjs.push_back(cc);
 //endregion
 }
 
 void GameWindow::run() {
     for(auto objs : gpuObjs) objs->bind();
-
+    sf::Texture texture;
+    texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/uvtemplate.jpg");
+    sf::Sprite sprite;
+    sprite.setTexture(texture);
+    
     while (isOpen()) {
         nowTime = deltaClock.getElapsedTime();
         deltaTime = nowTime - prevTime;
@@ -162,11 +174,14 @@ void GameWindow::run() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
         glEnable(GL_DEPTH);
         glEnable(GL_DEPTH_TEST);
-
+        glEnable(GL_TEXTURE_2D);
 //        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         glViewport(0, 0, 800, 600);
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+
+        
+        draw(sprite);
 
         gpu_obj_t::projection_matrix = camera->getPerspectiveMatrix();
         gpu_obj_t::view_matrix = camera->getModelViewMatrix();
@@ -178,6 +193,7 @@ void GameWindow::run() {
 
         prevTime = nowTime;
     }
+
 }
 
 void GameWindow::MoveEvent() {

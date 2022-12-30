@@ -13,6 +13,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "Object/cube.h"
+#include "Object/cylinder.h"
 #include "Camera/ArcBallCamera.h"
 #include "Camera/Camera.h"
 #include "Camera/FirstPersonCamera.h"

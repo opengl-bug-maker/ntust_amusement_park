@@ -115,23 +115,29 @@ public:
 	//	img.release();
 	//}
 	void set2dTexture(const char* path){
-        sf::Texture texture;
-        if (!texture.loadFromFile(path)){
+        sf::Image sf_texture;
+		string str_path = path;
+        /*if (!texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/")){
             std::cerr << "img not found : " << path << std::endl;
             return;
-        }
-
+        }*/
+		//sf_texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/skybox/back.jpg");
+		if (!sf_texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/uvtemplate.jpg")) {
+			std::cerr << "img not found : " << path << std::endl;
+			return;
+		}
+		//sf_texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/skybox/back.jpg")
+		//sf_texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/skybox/back.jpg");
 //		cv::Mat img;
 //		//cv::imread(path, cv::IMREAD_COLOR).convertTo(img, CV_32FC3, 1 / 255.0f);	//unsigned char to float
 //		img = cv::imread(path, cv::IMREAD_COLOR);
-
+		
 //		this->size.x = img.cols;
 //		this->size.y = img.rows;
-        this->size.x = texture.getSize().x;
-		this->size.y = texture.getSize().y;
-
+        this->size.x = sf_texture.getSize().x;
+		this->size.y = sf_texture.getSize().y;
 		//cv::cvtColor(img, img, CV_BGR2RGB);
-
+		cout << "x : " << this->size.x << endl;
 		glGenTextures(1, &this->id);
 
 		glBindTexture(GL_TEXTURE_2D, this->id);
@@ -145,7 +151,13 @@ public:
 //			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, img.cols, img.rows, 0, GL_BGR, GL_UNSIGNED_BYTE, img.data);
 //		else if (img.type() == CV_8UC4)
 //            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, img.cols, img.rows, 0, GL_BGRA, GL_UNSIGNED_BYTE, img.data);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, size.x, size.y, 0, GL_BGRA, GL_UNSIGNED_BYTE, texture.copyToImage().getPixelsPtr());
+		//for (int i = 0; i < 10; ++i) {
+		//	cout << sf_texture.getPixelsPtr()[i]<<" ";
+		//}
+        //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, size.x, size.y, 0, GL_BGR, GL_UNSIGNED_BYTE, sf_texture.copyToImage().getPixelsPtr());
+		
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, size.x, size.y, 0, GL_BGR, GL_UNSIGNED_BYTE, sf_texture.getPixelsPtr());
+		
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 //		img.release();

@@ -16,6 +16,7 @@ void main() {
     //gl_Position = vec4(position, 1.0f);
     //gl_Position = u_model * vec4(position, 1.0f);
     gl_Position = u_projection * u_view * u_model * vec4(position, 1.0f);
-    v_out.texture_coordinate = vec2(texture_coordinate.x, 1.0f - texture_coordinate.y);
+    v_out.texture_coordinate = vec2(texture_coordinate.x, abs(1.0f - texture_coordinate.y));
+    //v_out.texture_coordinate = texture_coordinate;
     v_out.color = color;
 }

@@ -6,7 +6,7 @@
 #define WATEROPENGL_EMPTY_H
 
 #include "gpu_object.h"
-
+#include "Object/Collider/BoxCollider.h"
 class cylinder : public gpu_obj_t {
     void init() override;
 
