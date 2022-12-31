@@ -11,6 +11,7 @@
 
 class particle_t : public gpu_obj_t {
 	void init() override;
+	float start_time = 0.0f;
 
 public:
 	void bind() override;

@@ -7,7 +7,7 @@ in V_OUT {
 
 void main()
 {
-    f_color = vec4(f_in.color, 1.0f);
+    f_color = vec4(f_in.color, 0.3f);
     //f_color = vec4(1.0f, 0.5f, 0.2f, 1.0f);
 }
 
