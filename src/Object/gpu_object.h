@@ -31,6 +31,7 @@ protected:
 	virtual void init();
 
 	void update(float* input_data, size_t index);
+	void update();
 
 public:
     static glm::mat4 projection_matrix;
@@ -43,6 +44,6 @@ public:
 	explicit gpu_obj_t(glm::mat4 model_matrix);
 
     void addChildren(gpu_obj_t* obj);
-
+	
     virtual void draw(glm::mat4 modelMatrix = glm::mat4(1));
 };

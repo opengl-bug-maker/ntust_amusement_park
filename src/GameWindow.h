@@ -22,7 +22,7 @@
 #include "Object/Collider/BallCollider.h"
 #include "Object/player.h"
 #include "Object/PhysicsObject.h"
-
+#include "Object/ferris_wheel/ferris_wheel.h"
 class GameWindow : public sf::RenderWindow{
     ArcBallCamera arcBall;
     FirstPersonCamera firstPersonCamera;

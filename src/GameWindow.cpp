@@ -3,6 +3,7 @@
 //
 
 #include "GameWindow.h"
+#include "Object/ferris_wheel/ferwheel_namespace.h"
 
 //#include "Object/gpu_object.h"
 
@@ -92,19 +93,27 @@ void GameWindow::InitObjects() {
 
     c = new cylinder();
     c->setName("cylinder 0");
-    c->SettingTransform(glm::vec3(0, 0, 3));
-    c->SettingScale(glm::vec3(0.5, 0.5, 0.5));
+    c->SettingScale(glm::vec3(2, 2, 0.5));
+    c->SettingTransform(glm::vec3(0, 0, 100));
+    c->SettingRotate(glm::vec3(90,0,0));
     //    c->SetGravity(false);
     gpuObjs.push_back(c);
     //    cc->addChildren(c);
 
     c = new particle_t();
     c->setName("particle 0");
-    c->SettingTransform(glm::vec3(0, 0, 0));
+    c->SettingTransform(glm::vec3(0, 2, 5));
     c->SettingScale(glm::vec3(1, 1, 1));
     c->SetGravity(false);
     gpuObjs.push_back(c);
     //    cc->addChildren(c);
+
+    c = new ferris_wheel_t;
+    c->setName("ferris_wheel 0");
+    c->SettingTransform(glm::vec3(0, 5, 0));
+    c->SettingScale(glm::vec3(1,1,1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
 
     gpuObjs.push_back(cc);
 //endregion

@@ -14,55 +14,62 @@ namespace ferwheel {
     void car_t::init() {
         gpu_obj_t::init();
 
+        
         uint8_t tmp_counter = 0;
 
         this->addChildren(new cylinder); // connector
-        this->children[tmp_counter]->SettingScale(sca(0.05,2,0.05));
-        this->children[tmp_counter]->SettingRotate(rot(0,0,30));
-        this->children[tmp_counter]->SettingTransform(pos(0,-1.768,-1));
+        this->children[tmp_counter]->SettingTransform(pos(0, -1.768, -0.9));
+        this->children[tmp_counter]->SettingRotate(rot(30,0,0));
+        this->children[tmp_counter]->SettingScale(sca(0.05,1.9,0.05));
 
         ++tmp_counter;
         this->addChildren(new cylinder); // connector
-        this->children[tmp_counter]->SettingScale(sca(0.05,2,0.05));
-        this->children[tmp_counter]->SettingRotate(rot(0,0,330));
-        this->children[tmp_counter]->SettingTransform(pos(0,-1.768,1));
+        this->children[tmp_counter]->SettingTransform(pos(0, -1.768, 0.9));
+        this->children[tmp_counter]->SettingRotate(rot(330,0,0));
+        this->children[tmp_counter]->SettingScale(sca(0.05,1.9,0.05));
+        ++tmp_counter;
+        this->addChildren(new cube); // side
+        this->children[tmp_counter]->SettingRotate(rot(0,0,0));
+        this->children[tmp_counter]->SettingTransform(pos(0,-4.3,1.75));
+        this->children[tmp_counter]->SettingScale(sca(1.5,1,0.25));
 
         ++tmp_counter;
         this->addChildren(new cube); // side
-        this->children[tmp_counter]->SettingScale(sca(3,3,0.5));
         this->children[tmp_counter]->SettingRotate(rot(0,0,0));
-        this->children[tmp_counter]->SettingTransform(pos(0,-43,1.75));
-
-        ++tmp_counter;
-        this->addChildren(new cube); // side
-        this->children[tmp_counter]->SettingScale(sca(3,3,0.5));
-        this->children[tmp_counter]->SettingRotate(rot(0,0,0));
-        this->children[tmp_counter]->SettingTransform(pos(0,-43,-1.75));
+        this->children[tmp_counter]->SettingTransform(pos(0,-4.3,-1.75));
+        this->children[tmp_counter]->SettingScale(sca(1.5,1,0.25));
 
         ++tmp_counter;
         this->addChildren(new cube); // bottom
-        this->children[tmp_counter]->SettingScale(sca(2.5,0.5,3));
-        this->children[tmp_counter]->SettingRotate(rot(0,0,0));
-        this->children[tmp_counter]->SettingTransform(pos(2.5,-5,0));
+        this->children[tmp_counter]->SettingRotate(rot(0, 0, 0));
+        this->children[tmp_counter]->SettingTransform(pos(0.25,-5.05,0));
+        this->children[tmp_counter]->SettingScale(sca(1.25,0.25,1.5));
 
         ++tmp_counter;
         this->addChildren(new cube); // back
-        this->children[tmp_counter]->SettingScale(sca(0.5,2,3));
         this->children[tmp_counter]->SettingRotate(rot(0,0,0));
-        this->children[tmp_counter]->SettingTransform(pos(-1.25,-43,0));
+        this->children[tmp_counter]->SettingTransform(pos(-1.25,-4.3,0));
+        this->children[tmp_counter]->SettingScale(sca(0.25,1,1.5));
+
+        ++tmp_counter;
+        this->addChildren(new cube); // top bar
+        this->children[tmp_counter]->SettingRotate(rot(0,0,0));
+        this->children[tmp_counter]->SettingTransform(pos(0,0,0));
+        this->children[tmp_counter]->SettingScale(sca(0.5,0.5,3));
     }
 
     void car_t::bind() {
         if (this->shader) return;
 
         this->shader = new Shader(
+            "box.vert",
             nullptr,
             nullptr,
             nullptr,
-            nullptr,
-            nullptr
+            "box.frag"
         );
-
+        this->shader->Use();
         gpu_obj_t::bind();
+
     }
 } // ferris_wheel

@@ -13,5 +13,6 @@ void main()
     f_color = vec4(f_in.color*0.34, 1.0f);
     //f_color = vec4(1.0f, 0.5f, 0.2f, 1.0f);
     f_color = texture(u_texture, f_in.texture_coordinate)+f_color;
+
 }
 

@@ -15,7 +15,7 @@ double to_degree(double x) {
 vector<vector<double>> cal_cylinder_vertices() {
     //glBegin(GL_QUAD_STRIP);
     vector<vector<double>> ret_vertices;
-    const int rate = 2;
+    const int rate = 5;
     vector<double> upper_origin = { 0, 1, 0 };
     vector<double> lower_origin = { 0, -1, 0 };
     for (int j = 0; j <= 360; j += rate) {
@@ -32,12 +32,17 @@ vector<vector<double>> cal_cylinder_vertices() {
         //upper right sidebar
         ret_vertices.push_back(upper_left);
         ret_vertices.push_back(upper_right);
-        ret_vertices.push_back(upper_origin);
+        ret_vertices.push_back(lower_right);
 
         //top
         ret_vertices.push_back(lower_left);
         ret_vertices.push_back(lower_right);
         ret_vertices.push_back(lower_origin);
+
+        //bottom
+        ret_vertices.push_back(upper_left);
+        ret_vertices.push_back(upper_right);
+        ret_vertices.push_back(upper_origin);
     }
 
    // glBegin(GL_POLYGON);

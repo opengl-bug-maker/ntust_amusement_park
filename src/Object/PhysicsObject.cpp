@@ -104,7 +104,13 @@ void PhysicsObject::SettingScale(glm::vec3 scale) {
 }
 
 void PhysicsObject::SettingRotate(glm::vec3 rotate) {
-
+    this->model_matrix = glm::rotate(model_matrix, glm::radians(rotate[0]), glm::vec3(1,0,0));
+    this->model_matrix = glm::rotate(model_matrix, glm::radians(rotate[1]), glm::vec3(0,1,0));
+    this->model_matrix = glm::rotate(model_matrix, glm::radians(rotate[2]), glm::vec3(0,0,1));
+    
+    if(collider){
+//        collider->Rotate(rotate);
+    }
 }
 
 glm::vec3 PhysicsObject::GetPosition() {

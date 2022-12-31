@@ -14,7 +14,7 @@ struct Particle {
 		return this->cameradistance > that.cameradistance;
 	}
 };
-const int MaxParticles = 40;
+const int MaxParticles = 1000;
 Particle ParticlesContainer[MaxParticles];
 int LastUsedParticle = 0;
 
@@ -40,14 +40,32 @@ void SortParticles() {
 	std::sort(&ParticlesContainer[0], &ParticlesContainer[MaxParticles]);
 }
 static const GLfloat g_vertex_buffer_data[] = { //adapt triangle strips into trangles to fit gpu_object
- -0.5f, -0.5f, 0.0f,
-  0.5f, -0.5f, 0.0f,
- -0.5f,  0.5f, 0.0f,
+ -1.0f, -1.0f, 0.0f,
+  1.0f, -1.0f, 0.0f,
+ -1.0f,  1.0f, 0.0f,
 
-  0.5f,  0.5f, 0.0f,
-  0.5f, -0.5f, 0.0f,
- -0.5f,  0.5f, 0.0f,
+  1.0f,  1.0f, 0.0f,
+  1.0f, -1.0f, 0.0f,
+ -1.0f,  1.0f, 0.0f,
 };
+//static const GLfloat g_vertex_buffer_data[] = { //adapt triangle strips into trangles to fit gpu_object
+// -0.5f, -0.5f, 0.0f,
+//  0.5f, -0.5f, 0.0f,
+// -0.5f,  0.5f, 0.0f,
+//
+//  0.5f,  0.5f, 0.0f,
+//  0.5f, -0.5f, 0.0f,
+// -0.5f,  0.5f, 0.0f,
+//};
+//static const GLfloat g_vertex_buffer_data[] = { //adapt triangle strips into trangles to fit gpu_object
+// -0.1f, -0.1f, 0.0f,
+//  0.1f, -0.1f, 0.0f,
+// -0.1f,  0.1f, 0.0f,
+//
+//  0.1f,  0.1f, 0.0f,
+//  0.1f, -0.1f, 0.0f,
+// -0.1f,  0.1f, 0.0f,
+//};
 void particle_t::init(){
 	gpu_obj_t::init();
 	this->model_matrix = glm::scale(this->model_matrix, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -65,7 +83,7 @@ void particle_t::init(){
 
 	
 	this->vao->element_amount = MaxParticles * 2; //there are 2 triangles in each particles
-	this->element = new GLuint[2*MaxParticles*2*2];
+	this->element = new GLuint[1e5];
 	for (int i = 0; i < 2 * MaxParticles*2*2; ++i) { element[i] = i; }
 	//collider = new BoxCollider();
 }
@@ -74,19 +92,20 @@ void particle_t::bind(){
 	if (this->shader) return;
 	this->shader = new
 		Shader(
-			"box.vert",
-			nullptr, nullptr, nullptr,
-			"box.frag");
+			"fireworks.vert",
+			nullptr, nullptr, "explosion.gs",
+			"explosion.frag");
 	this->shader->Use();
 	//this->texture = new Texture2D();
 	////this->texture->set2dTexture("particle.jpg");
 	
 	//this->texture->bind(0);
 	//glUniform1i(glGetUniformLocation(this->shader->Program, "u_texture"), 0);
-	this->sf_texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/particle.jpg");
+	this->sf_texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/particle.png");
+	
 	glUniform1f(
 		glGetUniformLocation(this->shader->Program, "start_time"), (GLfloat)(GameWindow::magic->nowTime.asSeconds()));
-	//gpu_obj_t::bind();
+	gpu_obj_t::bind();
 }
 
 void particle_t::draw(glm::mat4 modelMatrix){
@@ -103,8 +122,9 @@ void particle_t::draw(glm::mat4 modelMatrix){
 
 	for (int i = 0; i < new_particlesN; i++) {
 		int particleIndex = FindUnusedParticle();
-		ParticlesContainer[particleIndex].life = 200.0f; // This particle will live 5 seconds.
+		ParticlesContainer[particleIndex].life = 300.0f; // This particle will live 5 seconds.
 		ParticlesContainer[particleIndex].pos = glm::vec3(0, 0, -20.0f);
+		//ParticlesContainer[particleIndex].pos = glm::vec3(0, 0, -0.0f);
 
 		float spread = 1.5f;
 		glm::vec3 maindir = glm::vec3(0.0f, 10.0f, 0.0f);
@@ -118,9 +138,9 @@ void particle_t::draw(glm::mat4 modelMatrix){
 
 
 		// Very bad way to generate a random color
-		ParticlesContainer[particleIndex].r = rand() % 256;
-		ParticlesContainer[particleIndex].g = rand() % 256;
-		ParticlesContainer[particleIndex].b = rand() % 256;
+		ParticlesContainer[particleIndex].r = rand() % 128+128;
+		ParticlesContainer[particleIndex].g = rand() % 128+128;
+		ParticlesContainer[particleIndex].b = rand() % 128+128;
 		ParticlesContainer[particleIndex].a = (rand() % 256) / 3;
 		ParticlesContainer[particleIndex].size = (rand() % 1000) / 2000.0f + 0.1f;
 	}
@@ -136,7 +156,7 @@ void particle_t::draw(glm::mat4 modelMatrix){
 			p.life -= delta_time;
 			if (p.life > 0.0f) {
 				// Simulate simple physics : gravity only, no collisions
-				//p.speed += glm::vec3(0.0f, -9.81f, 0.0f) * (float)delta_time;
+				//p.speed += glm::vec3(0.0f, -0.981f, 0.0f) * (float)delta_time;
 				p.pos += p.speed * (float)delta_time* 0.1f;
 				//p.cameradistance = glm::length2(p.pos - CameraPosition);
 				//p.cameradistance = glm::length2(p.pos);
@@ -153,7 +173,7 @@ void particle_t::draw(glm::mat4 modelMatrix){
 	int i_data = 0;
 	for (int i = 0; i < MaxParticles; ++i) {
 		Particle& p = ParticlesContainer[i]; // shortcut
-		for (int j = 0; j < 6; j ++) {
+		for (int j = 0; j < 6; j++) {
 			this->data[i_data++] = p.pos.x+ g_vertex_buffer_data[3*j];
 			this->data[i_data++] = p.pos.y+ g_vertex_buffer_data[3*j+1];
 			this->data[i_data++] = p.pos.z+ g_vertex_buffer_data[3*j+2];
@@ -164,17 +184,33 @@ void particle_t::draw(glm::mat4 modelMatrix){
 	for (int i = 0; i < MaxParticles; ++i) {
 		Particle& p = ParticlesContainer[i]; // shortcut
 		for (int j = 0; j < 6; j++) {
-			this->data[i_data++] = p.r/256.0f;
-			this->data[i_data++] = p.g / 256.0f;
-			this->data[i_data++] = p.b / 256.0f;
+			this->data[i_data++] = p.r/256.0;
+			this->data[i_data++] = p.g / 256.0;
+			this->data[i_data++] = p.b / 256.0;
 		}
 	}
 	for (int i = 0; i < MaxParticles; ++i) {
 		Particle& p = ParticlesContainer[i]; // shortcut
-		for (int j = 0; j < 6; j++) {
-			this->data[i_data++] = 0.0f;
-			this->data[i_data++] = 0.0f;
-		}
+
+		this->data[i_data++] = 0.0f;
+		this->data[i_data++] = 1.0f;
+
+		this->data[i_data++] = 1.0f;
+		this->data[i_data++] = 1.0f;
+
+		this->data[i_data++] = 0.0f;
+		this->data[i_data++] = 0.0f;
+
+		this->data[i_data++] = 1.0f;
+		this->data[i_data++] = 0.0f;
+
+		this->data[i_data++] = 1.0f;
+		this->data[i_data++] = 1.0f;
+
+		this->data[i_data++] = 0.0f;
+		this->data[i_data++] = 0.0f;
+
+
 	}
 	
 	glUniform1f(
@@ -182,7 +218,8 @@ void particle_t::draw(glm::mat4 modelMatrix){
 	glUniformMatrix4fv(
 		glGetUniformLocation(this->shader->Program, "u_projection"), 1, GL_FALSE, glm::value_ptr(gpu_obj_t::projection_matrix));
 
-	gpu_obj_t::bind();
+	//gpu_obj_t::bind();
+	gpu_obj_t::update();
 	gpu_obj_t::draw();
 }
 

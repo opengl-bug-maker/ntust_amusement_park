@@ -29,14 +29,14 @@ void gpu_obj_t::bind() {
 
     for(int i = 0; i < data_block_size.size(); i++){
         glBindBuffer(GL_ARRAY_BUFFER, vao->vbo[i]);
-        glBufferData(GL_ARRAY_BUFFER, vertexCount * total * sizeof(GLfloat), data, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, vertexCount * total * sizeof(GLfloat), data, GL_STREAM_DRAW);
         glVertexAttribPointer(i, data_block_size[i], GL_FLOAT, GL_FALSE, 0 * sizeof(GLfloat), (void*)(startIndex * sizeof(GLfloat)));
         glEnableVertexAttribArray(i);
         startIndex += vertexCount * data_block_size[i];
     }
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vao->ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, vao->element_amount * 3 * sizeof(GLuint), element, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, vao->element_amount * 3 * sizeof(GLuint), element, GL_STREAM_DRAW);
 
     glBindVertexArray(0);
 
@@ -45,15 +45,28 @@ void gpu_obj_t::bind() {
 
 void gpu_obj_t::update(float* input_data, size_t index) {
 	//input_data -> whole data -> choose perticular segment to update
-	int start = 0;
-	for(int i = 0; i < index - 1; i++)
-		start += data_block_size[i];
-	start *= this->vao->element_amount;
-	for(int i = 0; i < data_block_size[index] * this->vao->element_amount; i++){
-		this->data[start + i] = input_data[i];
-	}
+	//int start = 0;
+	//for(int i = 0; i < index - 1; i++)
+	//	start += data_block_size[i];
+	//start *= this->vao->element_amount;
+	//for(int i = 0; i < data_block_size[index] * this->vao->element_amount; i++){
+	//	this->data[start + i] = input_data[i];
+	//}
+        
 }
-
+void gpu_obj_t::update() {
+    size_t startIndex = 0;
+    size_t total = 0;
+    for (auto s : data_block_size) total += s;
+    for (int i = 0; i < data_block_size.size(); i++) {
+        glBindBuffer(GL_ARRAY_BUFFER, vao->vbo[i]);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, vertexCount * total * sizeof(GLfloat), data);
+        //glBufferData(GL_ARRAY_BUFFER, vertexCount * total * sizeof(GLfloat), data, GL_STREAM_DRAW);
+        glVertexAttribPointer(i, data_block_size[i], GL_FLOAT, GL_FALSE, 0 * sizeof(GLfloat), (void*)(startIndex * sizeof(GLfloat)));
+        glEnableVertexAttribArray(i);
+        startIndex += vertexCount * data_block_size[i];
+    }
+}
 void gpu_obj_t::addChildren(gpu_obj_t* obj) {
     children.push_back(obj);
 }
@@ -63,7 +76,7 @@ void gpu_obj_t::draw(glm::mat4 modelMatrix) {
         return;
 
 	modelMatrix = modelMatrix * this->model_matrix;
-	for(auto child : children){
+	for(auto& child : children){
 		child->draw(model_matrix);
 	}
 	this->shader->Use();

@@ -4,6 +4,7 @@ layout (triangle_strip, max_vertices = 3) out;
 
 in VS_OUT {
     vec2 texCoords;
+    vec3 color;
 } gs_in[];
 
 out vec2 TexCoords; 
