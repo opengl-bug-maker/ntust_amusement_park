@@ -3,6 +3,7 @@
 //
 
 #include "cylinder.h"
+#include "GameWindow.h"
 #include "cmath"
 # define M_PI           3.14159265358979323846
 cylinder::cylinder() {
@@ -53,7 +54,7 @@ vector<vector<double>> cal_cylinder_vertices() {
    //     glVertex3f(cos(to_degree(j)), -1, sin(to_degree(j)));
    // }
    // glEnd();
-    cout << ret_vertices.size() << endl;
+    //cout << ret_vertices.size() << endl;
     return ret_vertices;
 }
 void cylinder::init() {
@@ -83,7 +84,7 @@ void cylinder::init() {
     //}
     this->vao->element_amount = cylinder_vertices.size();
 
-    element = new GLuint[vertexN];
+    this->element = new GLuint[vertexN];
     for (int i = 0; i < vertexN; ++i) { element[i] = i; }
 
     collider = new BoxCollider();
@@ -92,11 +93,37 @@ void cylinder::init() {
 void cylinder::bind() {
     if (this->shader) return;
 
+    //this->shader = new
+    //        Shader(
+    //        "explosion.vert",
+    //        nullptr, nullptr, "explosion.gs",
+    //        "explosion.frag");
     this->shader = new
-        Shader(
-            "box.vert",
-            nullptr, nullptr, nullptr,
-            "box.frag");
+    Shader(
+        "box.vert",
+        nullptr, nullptr, nullptr,
+        "box.frag");
     this->shader->Use();
+    this->texture = new Texture2D();
+    //this->texture->set2dTexture("../Images/skybox/back.jpg");
+    this->texture->bind(0);
+    //uniform stuff
+    glUniform1i(glGetUniformLocation(this->shader->Program, "u_texture"), 0); 
+
+    glUniform1f(
+        glGetUniformLocation(this->shader->Program, "start_time"), (GLfloat)(GameWindow::magic->nowTime.asSeconds()));
+    
+
+    //general input
     gpu_obj_t::bind();
+}
+void cylinder::draw(glm::mat4 modelMatrix) {
+    if (!visible)
+        return;
+    this->shader->Use();
+    glUniform1f(
+        glGetUniformLocation(this->shader->Program, "now_time"), (GLfloat)(GameWindow::magic->nowTime.asSeconds()));
+    glUniformMatrix4fv(
+        glGetUniformLocation(this->shader->Program, "u_projection"), 1, GL_FALSE, glm::value_ptr(gpu_obj_t::projection_matrix));
+    gpu_obj_t::draw();
 }

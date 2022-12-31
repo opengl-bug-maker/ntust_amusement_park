@@ -3,6 +3,7 @@
 //
 
 #include "cube.h"
+#include "GameWindow.h"
 cube::cube() {
     init();
 }
@@ -15,34 +16,6 @@ void cube::init() {
     this->vertexCount = 36;
 
     this->data_block_size = { 3, 3, 2 };
-
-    
-        // -1, -1, -1,
-        // 1, -1, -1,
-        // 1, 1, -1,
-        // -1, 1, -1,
-        // -1, 1, 1,
-        // 1, 1, 1,
-        // 1, -1, 1,
-        // -1, -1, 1,
-
-
-
-        //
-        // 
-        // 
-        // -1, -1, -1, 1,-1,-1, 1, 1, -1,
-        // -1, -1, -1, 1, 1, -1, -1, 1, -1,
-        // 1, 1, -1, 1, 1, 1, -1, 1, 1,
-        // 1, 1, -1, -1, 1, 1, -1, 1, -1,
-        // -1, 1, 1, -1, -1, 1, -1, -1, -1,
-        // -1, 1, 1, -1, -1, -1, -1, 1, -1,
-        // -1, -1, -1, -1, -1, 1, 1, -1, 1,
-        // -1, -1, -1, 1, -1, 1, 1,-1,-1,
-        // 1, 1, -1, 1,-1,-1, 1, -1, 1,
-        // 1, 1, -1, 1, -1, 1, 1, 1, 1,
-        // -1, 1, 1, 1, 1, 1, 1, -1, 1,
-        // -1, 1, 1, 1, -1, 1, -1, -1, 1,
 
 
 
@@ -198,7 +171,7 @@ void cube::init() {
         
     };
 
-    this->vao->element_amount = 12;
+    this->vao->element_amount = 12; //6*2
 
     element = new GLuint[36];
     for (int i = 0; i < 36; ++i) {element[i] = i;}
@@ -209,15 +182,37 @@ void cube::init() {
 void cube::bind() {
     if (this->shader) return;
 
-    this->shader = new
+    /*this->shader = new
             Shader(
+            "explosion.vert",
+            nullptr, nullptr, "explosion.gs",
+            "explosion.frag");*/
+    this->shader = new
+        Shader(
             "box.vert",
             nullptr, nullptr, nullptr,
             "box.frag");
     this->shader->Use();
-    this->texture = new Texture2D();
-    this->texture->set2dTexture("../Images/skybox/back.jpg");
-    this->texture->bind(0);
-    glUniform1i(glGetUniformLocation(this->shader->Program, "u_texture"), 0);
+    this->sf_texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/uvtemplate.jpg");
+    //this->texture = new Texture2D();
+    //this->texture->set2dTexture("../Images/skybox/back.jpg");
+    //this->texture->bind(0);
+    //glUniform1i(glGetUniformLocation(this->shader->Program, "u_texture"), 0);
+
+    glUniform1f(
+        glGetUniformLocation(this->shader->Program, "start_time"), (GLfloat)(GameWindow::magic->nowTime.asSeconds()));
+
     gpu_obj_t::bind();
+}
+
+void cube::draw(glm::mat4 modelMatrix){
+    if (!visible)
+        return;
+    this->shader->Use();
+    glUniform1f(
+        glGetUniformLocation(this->shader->Program, "now_time"), (GLfloat)(GameWindow::magic->nowTime.asSeconds()));
+    glUniformMatrix4fv(
+        glGetUniformLocation(this->shader->Program, "u_projection"), 1, GL_FALSE, glm::value_ptr(gpu_obj_t::projection_matrix));
+    sf::Texture::bind(&this->sf_texture);
+    gpu_obj_t::draw();
 }

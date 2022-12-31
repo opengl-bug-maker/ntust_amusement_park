@@ -14,6 +14,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "Object/cube.h"
 #include "Object/cylinder.h"
+#include "Object/particle.h"
 #include "Camera/ArcBallCamera.h"
 #include "Camera/Camera.h"
 #include "Camera/FirstPersonCamera.h"
@@ -31,7 +32,6 @@ class GameWindow : public sf::RenderWindow{
     std::vector<gpu_obj_t*> gpuObjs;
 
     sf::Clock deltaClock;
-    sf::Time nowTime;
     sf::Time prevTime;
     sf::Time deltaTime;
 
@@ -43,6 +43,7 @@ class GameWindow : public sf::RenderWindow{
 public:
     static GameWindow* magic;
     static glm::vec3 FallDownVector;
+    sf::Time nowTime;
 
     GameWindow();
 

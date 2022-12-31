@@ -3,6 +3,7 @@
 //
 
 #include "GameWindow.h"
+
 //#include "Object/gpu_object.h"
 
 GameWindow* GameWindow::magic;
@@ -97,16 +98,25 @@ void GameWindow::InitObjects() {
     gpuObjs.push_back(c);
     //    cc->addChildren(c);
 
+    c = new particle_t();
+    c->setName("particle 0");
+    c->SettingTransform(glm::vec3(0, 0, 0));
+    c->SettingScale(glm::vec3(1, 1, 1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
+    //    cc->addChildren(c);
+
     gpuObjs.push_back(cc);
 //endregion
 }
 
 void GameWindow::run() {
     for(auto objs : gpuObjs) objs->bind();
-    sf::Texture texture;
-    texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/uvtemplate.jpg");
-    sf::Sprite sprite;
-    sprite.setTexture(texture);
+    //sf::Texture texture1;
+    //
+    //texture1.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/uvtemplate.jpg");
+
+    
     
     while (isOpen()) {
         nowTime = deltaClock.getElapsedTime();
@@ -181,7 +191,8 @@ void GameWindow::run() {
         glClear(GL_COLOR_BUFFER_BIT);
 
         
-        draw(sprite);
+        //draw(sprite1);
+        //draw(sprite2);
 
         gpu_obj_t::projection_matrix = camera->getPerspectiveMatrix();
         gpu_obj_t::view_matrix = camera->getModelViewMatrix();

@@ -122,10 +122,10 @@ public:
             return;
         }*/
 		//sf_texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/skybox/back.jpg");
-		if (!sf_texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/uvtemplate.jpg")) {
+		/*if (!sf_texture.loadFromFile(str_path)) {
 			std::cerr << "img not found : " << path << std::endl;
 			return;
-		}
+		}*/
 		//sf_texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/skybox/back.jpg")
 		//sf_texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/skybox/back.jpg");
 //		cv::Mat img;
@@ -137,7 +137,7 @@ public:
         this->size.x = sf_texture.getSize().x;
 		this->size.y = sf_texture.getSize().y;
 		//cv::cvtColor(img, img, CV_BGR2RGB);
-		cout << "x : " << this->size.x << endl;
+		//cout << "x : " << this->size.x << endl;
 		glGenTextures(1, &this->id);
 
 		glBindTexture(GL_TEXTURE_2D, this->id);

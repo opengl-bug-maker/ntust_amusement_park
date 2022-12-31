@@ -13,6 +13,7 @@ class cube : public gpu_obj_t {
 
 public:
     void bind() override;
+    void draw(glm::mat4 modelMatrix = glm::mat4(1)) override;
     cube();
 };
 
