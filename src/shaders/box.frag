@@ -5,7 +5,7 @@ in V_OUT {
    vec3 color;
    vec2 texture_coordinate;
 } f_in;
-uniform sampler2D u_texture1;
+
 uniform sampler2D u_texture;
 
 void main()
