@@ -130,5 +130,6 @@ void cylinder::draw(glm::mat4 modelMatrix) {
         glGetUniformLocation(this->shader->Program, "now_time"), (GLfloat)(GameWindow::magic->nowTime.asSeconds()));
     glUniformMatrix4fv(
         glGetUniformLocation(this->shader->Program, "u_projection"), 1, GL_FALSE, glm::value_ptr(gpu_obj_t::projection_matrix));
-    gpu_obj_t::draw();
+    gpu_obj_t::draw(modelMatrix);
+    //gpu_obj_t::draw();
 }

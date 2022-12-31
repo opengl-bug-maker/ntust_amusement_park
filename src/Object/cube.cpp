@@ -193,7 +193,7 @@ void cube::bind() {
             nullptr, nullptr, nullptr,
             "box.frag");
     this->shader->Use();
-    this->sf_texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/uvtemplate.jpg");
+    //this->sf_texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/uvtemplate.jpg");
     //this->texture = new Texture2D();
     //this->texture->set2dTexture("../Images/skybox/back.jpg");
     //this->texture->bind(0);
@@ -214,5 +214,6 @@ void cube::draw(glm::mat4 modelMatrix){
     glUniformMatrix4fv(
         glGetUniformLocation(this->shader->Program, "u_projection"), 1, GL_FALSE, glm::value_ptr(gpu_obj_t::projection_matrix));
     sf::Texture::bind(&this->sf_texture);
-    gpu_obj_t::draw();
+    gpu_obj_t::draw(modelMatrix);
+    //gpu_obj_t::draw();
 }

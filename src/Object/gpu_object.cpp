@@ -79,7 +79,9 @@ void gpu_obj_t::draw(glm::mat4 modelMatrix) {
 	for(auto& child : children){
 		child->draw(model_matrix);
 	}
-	this->shader->Use();
+    if(this->shader)
+	    this->shader->Use();
+    else { return; }
 
     glUniformMatrix4fv(
             glGetUniformLocation(this->shader->Program, "u_projection"), 1, GL_FALSE, glm::value_ptr(gpu_obj_t::projection_matrix));

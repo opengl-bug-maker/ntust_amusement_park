@@ -14,7 +14,7 @@ struct Particle {
 		return this->cameradistance > that.cameradistance;
 	}
 };
-const int MaxParticles = 1000;
+const int MaxParticles = 2;
 Particle ParticlesContainer[MaxParticles];
 int LastUsedParticle = 0;
 
@@ -93,15 +93,17 @@ void particle_t::bind(){
 	this->shader = new
 		Shader(
 			"fireworks.vert",
-			nullptr, nullptr, "explosion.gs",
-			"explosion.frag");
+			nullptr,
+			nullptr,
+			 "explosion.gs",
+			"fireworks.frag");
 	this->shader->Use();
 	//this->texture = new Texture2D();
 	////this->texture->set2dTexture("particle.jpg");
 	
 	//this->texture->bind(0);
 	//glUniform1i(glGetUniformLocation(this->shader->Program, "u_texture"), 0);
-	this->sf_texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/particle.png");
+	this->sf_texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/uvtemplate.jpg");
 	
 	glUniform1f(
 		glGetUniformLocation(this->shader->Program, "start_time"), (GLfloat)(GameWindow::magic->nowTime.asSeconds()));

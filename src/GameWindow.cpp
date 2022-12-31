@@ -100,17 +100,17 @@ void GameWindow::InitObjects() {
     gpuObjs.push_back(c);
     //    cc->addChildren(c);
 
-    c = new particle_t();
-    c->setName("particle 0");
-    c->SettingTransform(glm::vec3(0, 2, 5));
-    c->SettingScale(glm::vec3(1, 1, 1));
-    c->SetGravity(false);
-    gpuObjs.push_back(c);
+    //c = new particle_t();
+    //c->setName("particle 0");
+    //c->SettingTransform(glm::vec3(0, 2, 5));
+    //c->SettingScale(glm::vec3(1, 1, 1));
+    //c->SetGravity(false);
+    //gpuObjs.push_back(c);
     //    cc->addChildren(c);
 
     c = new ferris_wheel_t;
     c->setName("ferris_wheel 0");
-    c->SettingTransform(glm::vec3(0, 5, 0));
+    c->SettingTransform(glm::vec3(0, 1, 0));
     c->SettingScale(glm::vec3(1,1,1));
     c->SetGravity(false);
     gpuObjs.push_back(c);

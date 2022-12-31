@@ -22,52 +22,51 @@ namespace ferwheel {
 
         for(uint8_t i = 0; i < 4; ++i){
                     
-            //pos L_pos = pos(9.5*cos(deg2rad(45*i)), 9.5*sin(deg2rad(45*i)), 0);
-            //pos R_pos = pos(9.5*cos(deg2rad(45*i+180)), 9.5*sin(deg2rad(45*i+180)), 0);
+            pos L_pos = pos(9.5f*cos(deg2rad(45*i)), 9.5f*sin(deg2rad(45*i)), 0);
+            pos R_pos = pos(9.5f*cos(deg2rad(45*i+180)), 9.5f*sin(deg2rad(45*i+180)), 0);
+
+            uint8_t tmpcnt = 0;
 
             this->addChildren(new cube);
-            this->children[tmpcnt]->SettingRotate(rot(0,0,45*i));
-            this->children[tmpcnt]->SettingTransform(pos(0,0,3.5));
-            this->children[tmpcnt]->SettingScale(sca(10,0.5,0.5));
+            this->children[i*4 + tmpcnt]->SettingRotate(rot(0,0,45*i));
+            this->children[i*4 + tmpcnt]->SettingTransform(pos(0,0,3.5));
+            this->children[i*4 + tmpcnt]->SettingScale(sca(10,1,1));
+
             tmpcnt++;
-            
             this->addChildren(new cube);
-            this->children[tmpcnt]->SettingRotate(rot(0,0,45*i));
-            this->children[tmpcnt]->SettingTransform(pos(0,0,-3.5));
-            this->children[tmpcnt]->SettingScale(sca(10,0.5,0.5));
+            this->children[i*4 + tmpcnt]->SettingRotate(rot(0,0,45*i));
+            this->children[i*4 + tmpcnt]->SettingTransform(pos(0,0,-3.5));
+            this->children[i*4 + tmpcnt]->SettingScale(sca(10,1,1));
+
             tmpcnt++;
+            this->addChildren(new car_t);
+            this->children[i*4 + tmpcnt]->SettingRotate(rot(0,0,0));
+            this->children[i*4 + tmpcnt]->SettingTransform(L_pos);
+            this->children[i*4 + tmpcnt]->SettingScale(sca(1,1,1));
 
-            //tmpcnt++;
-            //this->addChildren(new car_t);
-            //this->children[i*4 + tmpcnt]->SettingRotate(rot(0,0,0));
-            ////this->children[i*4 + tmpcnt]->SettingTransform(pos(9.5*cos(deg2rad(45*i)), 9.5*sin(deg2rad(45*i)), 0));
-            //this->children[i * 4 + tmpcnt]->SettingTransform(pos(9.5, 0, 0));
-            //this->children[i*4 + tmpcnt]->SettingScale(sca(0.5,0.5,0.5));
-
-            //tmpcnt++;
-            //this->addChildren(new car_t);
-            //this->children[i*4 + tmpcnt]->SettingRotate(rot(0,0,0));
-            ////this->children[i*4 + tmpcnt]->SettingTransform(pos(9.5*cos(deg2rad(45*i+180)), 9.5*sin(deg2rad(45*i+180)), 0));
-            //this->children[i * 4 + tmpcnt]->SettingTransform(pos(-9.5, 0, 0));
-            //this->children[i*4 + tmpcnt]->SettingScale(sca(0.5,0.5,0.5));
+            tmpcnt++;
+            this->addChildren(new car_t);
+            this->children[i*4 + tmpcnt]->SettingRotate(rot(0,0,0));
+            this->children[i*4 + tmpcnt]->SettingTransform(R_pos);
+            this->children[i*4 + tmpcnt]->SettingScale(sca(1,1,1));
         }
 
         this->addChildren(new cylinder);
-        this->children[tmpcnt]->SettingRotate(rot(90,0,0));
-        this->children[tmpcnt]->SettingScale(sca(1,5,1));
+        this->children[16]->SettingRotate(rot(90,0,0));
+        this->children[16]->SettingScale(sca(1,5,1));
     }
 
     void wheel_t::bind() {
         if (this->shader) return;
 
-        this->shader = new Shader(
-            "box.vert",
-            nullptr,
-            nullptr,
-            nullptr,
-            "box.frag"
-        );
-        this->shader->Use();
+        //this->shader = new Shader(
+        //    nullptr,
+        //    nullptr,
+        //    nullptr,
+        //    nullptr,
+        //    nullptr
+        //);
+        //this->shader->Use();
         gpu_obj_t::bind();
     }
 

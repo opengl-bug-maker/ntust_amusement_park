@@ -1,13 +1,16 @@
-#version 330 core
+#version 410 core
 layout (triangles) in;
-layout (triangle_strip, max_vertices = 3) out;
+layout (triangle_strip, max_vertices = 128) out;
 
 in VS_OUT {
     vec2 texCoords;
     vec3 color;
 } gs_in[];
 
-out vec2 TexCoords; 
+out GS_OUT{
+    vec2 TexCoords; 
+    vec3 color;
+} gs_out;
 
 uniform float start_time;
 uniform float now_time;
@@ -27,16 +30,28 @@ vec3 GetNormal()
 }
 
 void main() {    
+    
     vec3 normal = GetNormal();
+    //if(gl_in[0].gl_Position[1]>1)
+        gl_Position = explode(gl_in[0].gl_Position, normal);
+    //else
+        gl_Position = gl_in[0].gl_Position;
+    gs_out.TexCoords = gs_in[0].texCoords;
+    gs_out.color = gs_in[0].color;
+    EmitVertex();
+    //if(gl_in[0].gl_Position[1]>1)
+        //gl_Position = explode(gl_in[1].gl_Position, normal);
+    //else
+        gl_Position = gl_in[1].gl_Position;
+    gs_out.TexCoords = gs_in[1].texCoords;
+    gs_out.color = gs_in[1].color;
+    EmitVertex();
+    //if(gl_in[0].gl_Position[1]>1)
+        //gl_Position = explode(gl_in[2].gl_Position, normal);
+    //else
+        gl_Position = gl_in[2].gl_Position;
+    gs_out.color = gs_in[2].color;
+    EmitVertex();
 
-    gl_Position = explode(gl_in[0].gl_Position, normal);
-    TexCoords = gs_in[0].texCoords;
-    EmitVertex();
-    gl_Position = explode(gl_in[1].gl_Position, normal);
-    TexCoords = gs_in[1].texCoords;
-    EmitVertex();
-    gl_Position = explode(gl_in[2].gl_Position, normal);
-    TexCoords = gs_in[2].texCoords;
-    EmitVertex();
     EndPrimitive();
 }
