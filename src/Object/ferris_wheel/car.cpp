@@ -3,8 +3,8 @@
 //
 #include "ferwheel_namespace.h"
 
-#include "cylinder.h"
-#include "cube.h"
+#include "Object/BasicObject/cylinder.h"
+#include "Object/BasicObject/cube.h"
 
 namespace ferwheel {
     car_t::car_t() {

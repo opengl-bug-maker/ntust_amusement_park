@@ -2,8 +2,8 @@
 // Created by lkj9487 on 2022/12/31.
 //
 #include "ferwheel_namespace.h"
-#include "cube.h"
-#include "cylinder.h"
+#include "Object/BasicObject/cube.h"
+#include "Object/BasicObject/cylinder.h"
 
 double deg2rad(double deg){
     return deg * 0.017453;

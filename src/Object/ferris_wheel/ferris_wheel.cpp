@@ -4,7 +4,7 @@
 
 #include "ferwheel_namespace.h"
 #include "ferris_wheel.h"
-#include "cube.h"
+#include "Object/BasicObject/cube.h"
 
 ferris_wheel_t::ferris_wheel_t() {
     init();

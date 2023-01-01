@@ -3,7 +3,7 @@
 //
 
 #include "RollerSystem.h"
-#include "Object/cube.h"
+#include "Object/BasicObject/cube.h"
 #include "GameWindow.h"
 
 RailPoint::RailPoint(const glm::vec3 &pos, const glm::vec3 &dir) : pos(pos), dir(dir) {}

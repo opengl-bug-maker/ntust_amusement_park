@@ -17,6 +17,10 @@ include_directories("${GLM_HOME}/include")
 
 file(GLOB OBJECT_HEADER src/Object/*.h)
 file(GLOB OBJECT_SOURCE src/Object/*.cpp)
+file(GLOB BASIC-OBJECT_HEADER src/Object/BasicObject/*.h)
+file(GLOB BASIC-OBJECT_SOURCE src/Object/BasicObject/*.cpp)
+file(GLOB ParticleSystem_HEADER src/Object/ParticleSystem/*.h)
+file(GLOB ParticleSystem_SOURCE src/Object/ParticleSystem/*.cpp)
 file(GLOB FERRIS_WHEEL_HEADER src/Object/ferris_wheel/*.h)
 file(GLOB FERRIS_WHEEL_SOURCE src/Object/ferris_wheel/*.cpp)
 file(GLOB CUSTOM-OBJECT_HEADER src/Object/CustomObject/*.h)
@@ -36,6 +40,8 @@ add_executable(AmusementPark
         src/GameWindow.cpp
         src/GameWindow.h
         ${OBJECT_HEADER} ${OBJECT_SOURCE}
+        ${BASIC-OBJECT_HEADER} ${BASIC-OBJECT_SOURCE}
+        ${ParticleSystem_HEADER} ${ParticleSystem_SOURCE}
         ${CUSTOM-OBJECT_HEADER} ${CUSTOM-OBJECT_SOURCE}
         ${FERRIS_WHEEL_HEADER} ${FERRIS_WHEEL_SOURCE}
         ${OBJECT-COLLIDER_HEADER} ${OBJECT-COLLIDER_SOURCE}

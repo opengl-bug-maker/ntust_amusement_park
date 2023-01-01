@@ -12,18 +12,18 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "Object/cube.h"
-#include "Object/cylinder.h"
+#include "Object/BasicObject/cube.h"
+#include "Object/BasicObject/cylinder.h"
 #include "Object/particle.h"
 #include "Camera/ArcBallCamera.h"
 #include "Camera/Camera.h"
 #include "Camera/FirstPersonCamera.h"
 #include "Object/Collider/BoxCollider.h"
 #include "Object/Collider/BallCollider.h"
-#include "Object/player.h"
+#include "Object/CustomObject/player.h"
 #include "Object/PhysicsObject.h"
 #include "Object/ferris_wheel/ferris_wheel.h"
-#include "Object/explosion_test.h"
+#include "Object/CustomObject/explosion_test.h"
 #include "CustomObject/RollerSystem.h"
 class GameWindow : public sf::RenderWindow{
     ArcBallCamera arcBall;
