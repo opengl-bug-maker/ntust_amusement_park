@@ -27,11 +27,10 @@
 #include "CustomObject/RollerSystem.h"
 class GameWindow : public sf::RenderWindow{
     ArcBallCamera arcBall;
-    FirstPersonCamera firstPersonCamera;
     Camera* camera;
     gpu_obj_t* Player;
 
-    RollerSystem* rs;
+    RollerSystem* rs = nullptr;
 
     std::vector<gpu_obj_t*> gpuObjs;
 
@@ -45,6 +44,7 @@ class GameWindow : public sf::RenderWindow{
 
 
 public:
+    FirstPersonCamera firstPersonCamera;
     static GameWindow* magic;
     static glm::vec3 FallDownVector;
     sf::Time nowTime;

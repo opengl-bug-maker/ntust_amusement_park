@@ -64,10 +64,15 @@ void GameWindow::InitObjects() {
     gpuObjs.push_back(plane);
 
 
-    //gpu_obj_t* cc = new cube();
-    //cc->setName("big cube");
-//    cc->SetGravity(false);
+    gpu_obj_t* cc = new cube();
+    cc->setName("big cube");
+//    cc->setFaceToCamera(true);
+    cc->SetGravity(false);
 //    cc->SettingScale(glm::vec3(0.2,0.2,0.2));
+    cc->SettingScale(glm::vec3(1,1,1));
+    gpuObjs.push_back(cc);
+
+    gpu_obj_t* c;
 
 //     gpu_obj_t* c = new cube();
     /*c->setName("x cube");
@@ -258,13 +263,21 @@ void GameWindow::MoveEvent() {
         Player->setVelocity(newSpeed);
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::U)){
-        if(((player*)Player)->state != player::OnTrain)
-            rs->Run();
+        if(rs != nullptr)
+            if(((player*)Player)->state != player::OnTrain)
+                rs->Run();
         ((player*)Player)->state = player::OnTrain;
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){
-
-        rs->GetOut();
+        if(rs != nullptr)
+            rs->GetOut();
         ((player*)Player)->state = player::Drop;
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Y)){
+        for(auto obj : gpuObjs){
+            if(obj->getName() == "big cube"){
+                obj->setFaceToCamera(!obj->isFaceToCamera());
+            }
+        }
     }
 }

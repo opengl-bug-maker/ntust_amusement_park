@@ -78,6 +78,27 @@ void gpu_obj_t::draw(glm::mat4 modelMatrix) {
         int i = 0; 
     }
 	modelMatrix = modelMatrix * this->model_matrix;
+    if(faceToCamera){
+        glm::vec3 dir = GetPosition() - GameWindow::magic->firstPersonCamera.getEyePosition();
+        dir = glm::normalize(dir);
+        glm::vec2 hor = glm::vec2(dir[2], dir[0]);
+        hor = glm::normalize(hor);
+        double theta = asin(dir[1]);
+        double phi = -atan2(hor[1], hor[0]);
+
+        double sp = sin(phi);
+        double cp = cos(phi);
+        double st = sin(theta);
+        double ct = cos(theta);
+
+        glm::mat4 ModelView = glm::mat4(
+                cp,  st * sp, -ct * sp, 0,
+                0,       ct,       st, 0,
+                sp, -st * cp, ct * cp, 0,
+                0,        0,       0,1
+        );
+        modelMatrix = modelMatrix * glm::inverse(ModelView);
+    }
 	for(auto& child : children){
 		child->draw(modelMatrix);
 	}
@@ -99,4 +120,20 @@ void gpu_obj_t::draw(glm::mat4 modelMatrix) {
 	glBindVertexArray(0);
 
 	glUseProgram(0);
+}
+
+bool gpu_obj_t::isVisible() const {
+    return visible;
+}
+
+void gpu_obj_t::setVisible(bool visible) {
+    gpu_obj_t::visible = visible;
+}
+
+bool gpu_obj_t::isFaceToCamera() const {
+    return faceToCamera;
+}
+
+void gpu_obj_t::setFaceToCamera(bool faceToCamera) {
+    gpu_obj_t::faceToCamera = faceToCamera;
 }

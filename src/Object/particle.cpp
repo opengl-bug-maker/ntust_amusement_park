@@ -223,6 +223,7 @@ void particle_t::draw(glm::mat4 modelMatrix){
 	//gpu_obj_t::bind();
 	gpu_obj_t::update();
 	gpu_obj_t::draw();
+    sf::Texture::bind(nullptr);
 }
 
 particle_t::particle_t(){

@@ -16,6 +16,7 @@ class cube;
 class gpu_obj_t : public PhysicsObject  {
 protected:
     bool visible = true;
+    bool faceToCamera = false;
 
 	Texture2D* texture = nullptr; //init
 	sf::Texture sf_texture;
@@ -46,4 +47,12 @@ public:
     void addChildren(gpu_obj_t* obj);
 	
     virtual void draw(glm::mat4 modelMatrix = glm::mat4(1));
+
+    bool isVisible() const;
+
+    void setVisible(bool visible);
+
+    bool isFaceToCamera() const;
+
+    void setFaceToCamera(bool faceToCamera);
 };
