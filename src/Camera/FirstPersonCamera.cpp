@@ -27,7 +27,15 @@ void FirstPersonCamera::reset() {
     downY = 0;
     theta = 0;
     phi = 0;
+    BiasTheta = 0;
+    BiasPhi = 0;
 }
+
+void FirstPersonCamera::Bias(glm::vec3 dir) {
+    BiasTheta = atan2(dir[2], dir[0]) * 57.2957795131;
+    BiasPhi = asin(dir[1]) * 57.2957795131;
+}
+
 
 int FirstPersonCamera::handle(sf::Event e) {
     switch (e.type) {
@@ -78,10 +86,10 @@ glm::mat4 FirstPersonCamera::getModelViewMatrix() const {
 //    double ct = cos(theta * 0.01745329252);
 //    double sp = sin(phi   * 0.01745329252);
 //    double cp = cos(phi   * 0.01745329252);
-    double sp = sin(theta * 0.01745329252); // 3.14 / 180
-    double cp = cos(theta * 0.01745329252);
-    double st = sin(phi   * 0.01745329252);
-    double ct = cos(phi   * 0.01745329252);
+    double sp = sin((theta + BiasTheta) * 0.01745329252); // 3.14 / 180
+    double cp = cos((theta + BiasTheta) * 0.01745329252);
+    double st = sin((phi + BiasPhi)     * 0.01745329252);
+    double ct = cos((phi + BiasPhi)     * 0.01745329252);
 
     glm::mat4 ModelView = glm::mat4(
             cp,  st * sp, -ct * sp, 0,

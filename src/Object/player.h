@@ -14,7 +14,8 @@ class player : public gpu_obj_t {
 public:
     enum ActionState {
         Floor = 0,
-        Drop = 1
+        Drop = 1,
+        OnTrain = 2
     };
 
     ActionState state = ActionState::Drop;

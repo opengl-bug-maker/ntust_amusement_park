@@ -49,6 +49,12 @@ void PhysicsObject::Move(glm::vec3 distance) {
         this->collider->Translate(distance);
 }
 
+void PhysicsObject::MoveTo(glm::vec3 position) {
+    this->model_matrix[3][0] = position[0];
+    this->model_matrix[3][1] = position[1];
+    this->model_matrix[3][2] = position[2];
+}
+
 void PhysicsObject::AddForce(glm::vec3 force) {
     velocity += force;
 }

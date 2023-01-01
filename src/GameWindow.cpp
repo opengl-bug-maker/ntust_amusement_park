@@ -51,7 +51,7 @@ void GameWindow::InitObjects() {
     Player->setName("player");
 //    Player = new cube();
 //    Player->SetGravity(false);
-    Player->SettingTransform(glm::vec3(0, 0, 8));
+    Player->SettingTransform(glm::vec3(0, 30, 8));
     Player->SettingScale(glm::vec3(1, 2, 1));
 //    Player->SettingTransform(glm::vec3(0, 10, 0));
     gpuObjs.push_back(Player);
@@ -69,7 +69,7 @@ void GameWindow::InitObjects() {
 //    cc->SetGravity(false);
 //    cc->SettingScale(glm::vec3(0.2,0.2,0.2));
 
-     gpu_obj_t* c = new cube();
+//     gpu_obj_t* c = new cube();
     /*c->setName("x cube");
     c->SettingTransform(glm::vec3(3, 0, 0));
     c->SettingScale(glm::vec3(0.5, 0.5, 0.5));
@@ -102,12 +102,17 @@ void GameWindow::InitObjects() {
     //gpuObjs.push_back(c);
         //cc->addChildren(c);
 
-    c = new ferris_wheel_t;
-    c->setName("ferris_wheel 0");
-    c->SettingTransform(glm::vec3(0, 0, 0));
-    c->SettingScale(glm::vec3(1,1,1));
-    c->SetGravity(false);
-    gpuObjs.push_back(c);
+
+    rs = new RollerSystem();
+    rs->SetGravity(false);
+    gpuObjs.push_back(rs);
+
+//    c = new ferris_wheel_t;
+//    c->setName("ferris_wheel 0");
+//    c->SettingTransform(glm::vec3(0, 0, 0));
+//    c->SettingScale(glm::vec3(1,1,1));
+//    c->SetGravity(false);
+//    gpuObjs.push_back(c);
 
     //gpuObjs.push_back(cc);
 //endregion
@@ -156,6 +161,11 @@ void GameWindow::run() {
 
 
         for(auto objs : gpuObjs) objs->UpdatePosition(deltaTime);
+
+        if(rs->isRunning()){
+            firstPersonCamera.Bias(rs->GetTrainDir());
+            Player->MoveTo(rs->GetTrainPos() - glm::vec3(0, 6, 0));
+        }
 
         firstPersonCamera.setPosition(Player->GetPosition() + glm::vec3(0, 1, 0));
 
@@ -246,5 +256,15 @@ void GameWindow::MoveEvent() {
         glm::vec3 newSpeed = glm::vec3(dir2[0], 0, dir2[1]) * MoveSpeed * 1.0f;
         newSpeed[1] = Player->getVelocity()[1];
         Player->setVelocity(newSpeed);
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::U)){
+        if(((player*)Player)->state != player::OnTrain)
+            rs->Run();
+        ((player*)Player)->state = player::OnTrain;
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){
+
+        rs->GetOut();
+        ((player*)Player)->state = player::Drop;
     }
 }

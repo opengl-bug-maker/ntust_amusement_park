@@ -24,11 +24,14 @@
 #include "Object/PhysicsObject.h"
 #include "Object/ferris_wheel/ferris_wheel.h"
 #include "Object/explosion_test.h"
+#include "CustomObject/RollerSystem.h"
 class GameWindow : public sf::RenderWindow{
     ArcBallCamera arcBall;
     FirstPersonCamera firstPersonCamera;
     Camera* camera;
     gpu_obj_t* Player;
+
+    RollerSystem* rs;
 
     std::vector<gpu_obj_t*> gpuObjs;
 

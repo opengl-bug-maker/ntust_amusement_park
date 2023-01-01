@@ -13,6 +13,8 @@ class FirstPersonCamera : public Camera {
 private:
     double theta = 0;// 0 ~ 360
     double phi = 0; // -90 ~ 90
+    double BiasTheta = 0;
+    double BiasPhi = 0;
     float moveSpeed = 1.0f;
 
 protected:
@@ -22,6 +24,8 @@ public:
     FirstPersonCamera();
 
     void reset() override;
+
+    void Bias(glm::vec3 dir);
 
     int handle(sf::Event e) override;
 

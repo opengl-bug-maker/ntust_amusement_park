@@ -62,6 +62,8 @@ public:
 
     void Move(glm::vec3 distance);
 
+    void MoveTo(glm::vec3 position);
+
     void AddForce(glm::vec3 force);
 
 
