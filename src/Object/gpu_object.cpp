@@ -74,10 +74,12 @@ void gpu_obj_t::addChildren(gpu_obj_t* obj) {
 void gpu_obj_t::draw(glm::mat4 modelMatrix) {
     if(!visible)
         return;
-
+    if (getName() == "wheel") { 
+        int i = 0; 
+    }
 	modelMatrix = modelMatrix * this->model_matrix;
 	for(auto& child : children){
-		child->draw(model_matrix);
+		child->draw(modelMatrix);
 	}
     if(this->shader)
 	    this->shader->Use();

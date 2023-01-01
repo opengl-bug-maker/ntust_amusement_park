@@ -3,7 +3,7 @@
 //
 
 #include "GameWindow.h"
-#include "Object/ferris_wheel/ferwheel_namespace.h"
+//#include "Object/ferris_wheel/ferwheel_namespace.h"
 
 //#include "Object/gpu_object.h"
 
@@ -64,40 +64,34 @@ void GameWindow::InitObjects() {
     gpuObjs.push_back(plane);
 
 
-    gpu_obj_t* cc = new cube();
-    cc->setName("big cube");
+    //gpu_obj_t* cc = new cube();
+    //cc->setName("big cube");
 //    cc->SetGravity(false);
 //    cc->SettingScale(glm::vec3(0.2,0.2,0.2));
 
-    gpu_obj_t* c = new cube();
-    c->setName("x cube");
+     gpu_obj_t* c = new cube();
+    /*c->setName("x cube");
     c->SettingTransform(glm::vec3(3, 0, 0));
     c->SettingScale(glm::vec3(0.5, 0.5, 0.5));
-//    c->SetGravity(false);
-    gpuObjs.push_back(c);
-//    cc->addChildren(c);
-    c = new cube();
-    c->setName("y cube");
-    c->SettingTransform(glm::vec3(0, 3, 0));
-    c->SettingScale(glm::vec3(0.5, 0.5, 0.5));
-//    c->SetGravity(false);
-    gpuObjs.push_back(c);
-//    cc->addChildren(c);
-    c = new cube();
-    c->setName("z cube");
-    c->SettingTransform(glm::vec3(0, 0, 3));
-    c->SettingScale(glm::vec3(0.5, 0.5, 0.5));
-//    c->SetGravity(false);
-    gpuObjs.push_back(c);
-//    cc->addChildren(c);
+    c->SetGravity(false);
+    gpuObjs.push_back(c);*/
+    //cc->addChildren(c);
+// 
+// 
+      //c = new explosion_test_t();
+      //  c->setName("z cube");
+      //  c->SettingTransform(glm::vec3(0, 0, 3));
+      //  c->SettingScale(glm::vec3(0.5, 0.5, 0.5));
+      //  c->SetGravity(false);
+      //  gpuObjs.push_back(c);
 
-    c = new cylinder();
-    c->setName("cylinder 0");
-    c->SettingScale(glm::vec3(2, 2, 0.5));
-    c->SettingTransform(glm::vec3(0, 0, 100));
-    c->SettingRotate(glm::vec3(90,0,0));
+    //c = new cylinder();
+    //c->setName("cylinder 0");
+    //c->SettingScale(glm::vec3(2, 2, 0.5));
+    //c->SettingTransform(glm::vec3(0, 0, 100));
+    //c->SettingRotate(glm::vec3(90,0,0));
     //    c->SetGravity(false);
-    gpuObjs.push_back(c);
+    //gpuObjs.push_back(c);
     //    cc->addChildren(c);
 
     //c = new particle_t();
@@ -106,16 +100,16 @@ void GameWindow::InitObjects() {
     //c->SettingScale(glm::vec3(1, 1, 1));
     //c->SetGravity(false);
     //gpuObjs.push_back(c);
-    //    cc->addChildren(c);
+        //cc->addChildren(c);
 
     c = new ferris_wheel_t;
     c->setName("ferris_wheel 0");
-    c->SettingTransform(glm::vec3(0, 1, 0));
+    c->SettingTransform(glm::vec3(0, 0, 0));
     c->SettingScale(glm::vec3(1,1,1));
     c->SetGravity(false);
     gpuObjs.push_back(c);
 
-    gpuObjs.push_back(cc);
+    //gpuObjs.push_back(cc);
 //endregion
 }
 

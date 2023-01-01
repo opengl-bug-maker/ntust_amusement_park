@@ -1,6 +1,6 @@
 #version 410 core
 layout (triangles) in;
-layout (triangle_strip, max_vertices = 128) out;
+layout (line_strip, max_vertices = 3) out;
 
 in VS_OUT {
     vec2 texCoords;
@@ -32,26 +32,22 @@ vec3 GetNormal()
 void main() {    
     
     vec3 normal = GetNormal();
-    //if(gl_in[0].gl_Position[1]>1)
-        gl_Position = explode(gl_in[0].gl_Position, normal);
-    //else
-        gl_Position = gl_in[0].gl_Position;
-    gs_out.TexCoords = gs_in[0].texCoords;
-    gs_out.color = gs_in[0].color;
+    gl_Position = gl_in[0].gl_Position+vec4(1, 1, 1, 1);
+    //gs_out.TexCoords = gs_in[0].texCoords;
+    //gs_out.color = gs_in[0].color+vec3(1.0f, 1.0f, 1.0f);
     EmitVertex();
-    //if(gl_in[0].gl_Position[1]>1)
-        //gl_Position = explode(gl_in[1].gl_Position, normal);
-    //else
-        gl_Position = gl_in[1].gl_Position;
-    gs_out.TexCoords = gs_in[1].texCoords;
-    gs_out.color = gs_in[1].color;
+
+    gl_Position = gl_in[1].gl_Position+vec4(1, 1, 1, 1);
+    //gs_out.TexCoords = gs_in[1].texCoords;
+    //gs_out.color = gs_in[1].color+vec3(1.0f, 1.0f, 1.0f);
     EmitVertex();
-    //if(gl_in[0].gl_Position[1]>1)
-        //gl_Position = explode(gl_in[2].gl_Position, normal);
-    //else
-        gl_Position = gl_in[2].gl_Position;
-    gs_out.color = gs_in[2].color;
+
+    gl_Position = gl_in[2].gl_Position+vec4(1, 1, 1, 1);
+    //gs_out.TexCoords = gs_in[2].texCoords;
+    //gs_out.color = gs_in[2].color+vec3(1.0f, 1.0f, 1.0f);
     EmitVertex();
 
     EndPrimitive();
 }
+
+// run dont close

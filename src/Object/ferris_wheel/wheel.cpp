@@ -40,12 +40,14 @@ namespace ferwheel {
 
             tmpcnt++;
             this->addChildren(new car_t);
+            this->children[i * 4 + tmpcnt]->setName("carL");
             this->children[i*4 + tmpcnt]->SettingRotate(rot(0,0,0));
             this->children[i*4 + tmpcnt]->SettingTransform(L_pos);
             this->children[i*4 + tmpcnt]->SettingScale(sca(1,1,1));
 
             tmpcnt++;
             this->addChildren(new car_t);
+            this->children[i * 4 + tmpcnt]->setName("carR");
             this->children[i*4 + tmpcnt]->SettingRotate(rot(0,0,0));
             this->children[i*4 + tmpcnt]->SettingTransform(R_pos);
             this->children[i*4 + tmpcnt]->SettingScale(sca(1,1,1));

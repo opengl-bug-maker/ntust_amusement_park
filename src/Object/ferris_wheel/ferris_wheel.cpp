@@ -11,31 +11,41 @@ ferris_wheel_t::ferris_wheel_t() {
 }
 
 void ferris_wheel_t::init() {
-    gpu_obj_t::init();
+        gpu_obj_t::init();
 
-    this->addChildren(new cube);
-    this->children[0]->SettingRotate(rot(0,0,60));
-    this->children[0]->SettingTransform(pos(2.813, 8.638, 4.5));
-    this->children[0]->SettingScale(sca(9,0.5,0.5));
+    cube* c = nullptr;
 
-    this->addChildren(new cube);
-    this->children[1]->SettingRotate(rot(0,0,300));
-    this->children[1]->SettingTransform(pos(-2.813, 8.638, 4.5));
-    this->children[1]->SettingScale(sca(9,0.5,0.5));
+    c = new cube;
+    c->SettingRotate(rot(0,0,330));
+    c->Move(pos(-2.813, 8.638, 4.5));
+    c->SettingScale(sca(0.5,9,0.5));
+    this->addChildren(c);
 
-    this->addChildren(new cube);
-    this->children[2]->SettingRotate(rot(0,0,60));
-    this->children[2]->SettingTransform(pos(2.813, 8.638, -4.5));
-    this->children[2]->SettingScale(sca(9,0.5,0.5));
 
-    this->addChildren(new cube);
-    this->children[3]->SettingRotate(rot(0,0,300));
-    this->children[3]->SettingTransform(pos(-2.813, 8.638, -4.5));
-    this->children[3]->SettingScale(sca(9,0.5,0.5));
+    c = new cube;
+    c->SettingRotate(rot(0,0,30));
+    c->Move(pos(2.813, 8.638, 4.5));
+    c->SettingScale(sca(0.5,9,0.5));
+    this->addChildren(c);
 
-    this->addChildren(new ferwheel::wheel_t);
-    this->children[4]->SettingTransform(pos(0,15,0));
-    this->children[4]->SettingScale(sca(1,1,1));
+    c = new cube;
+    c->SettingRotate(rot(0,0,330));
+    c->Move(pos(-2.813, 8.638, -4.5));
+    c->SettingScale(sca(0.5,9,0.5));
+    this->addChildren(c);
+
+    c = new cube;
+    c->SettingRotate(rot(0,0,30));
+    c->Move(pos(2.813, 8.638, -4.5));
+    c->SettingScale(sca(0.5,9,0.5));
+    this->addChildren(c);
+
+    ferwheel::wheel_t* wheel = new ferwheel::wheel_t;
+    wheel->setName("wheel");
+    wheel->SettingRotate(rot(0,0,0));
+    wheel->Move(pos(0,15,0));
+    wheel->SettingScale(sca(1,1,1));
+    this->addChildren(wheel);
 }
 
 void ferris_wheel_t::bind() {

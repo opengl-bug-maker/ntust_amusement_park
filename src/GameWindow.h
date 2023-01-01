@@ -23,6 +23,7 @@
 #include "Object/player.h"
 #include "Object/PhysicsObject.h"
 #include "Object/ferris_wheel/ferris_wheel.h"
+#include "Object/explosion_test.h"
 class GameWindow : public sf::RenderWindow{
     ArcBallCamera arcBall;
     FirstPersonCamera firstPersonCamera;
