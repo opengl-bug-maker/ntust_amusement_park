@@ -19,7 +19,7 @@ void cube::init() {
 
 
 
-    this->data = new float[] {
+    this->data = new float[288] {
             //vertices
          -1, -1, -1,
           1, -1, -1,
