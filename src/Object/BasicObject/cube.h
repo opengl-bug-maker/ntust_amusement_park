@@ -7,8 +7,10 @@
 
 #include "gpu_object.h"
 #include "Object/Collider/BoxCollider.h"
+#include "ferris_wheel/ferwheel_namespace.h"
 
 class cube : public gpu_obj_t {
+    friend ferwheel::wheel_t;
     void init() override;
 
 public:
