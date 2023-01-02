@@ -4,17 +4,18 @@
 
 struct Particle {
 	glm::vec3 pos, speed = glm::vec3(0, 0, 0);
+    glm::vec2 blast_dir;
 	unsigned char r, g, b, a; // Color
 	float size, angle, weight;
 	float life; // Remaining life of the particle. if <0 : dead and unused.
 	float cameradistance; // *Squared* distance to the camera. if dead : -1.0f
-
+    bool blasted = false;
 	bool operator<(const Particle& that) const {
 		// Sort in reverse order : far particles drawn first.
 		return this->cameradistance > that.cameradistance;
 	}
 };
-const int MaxParticles = 20;
+const int MaxParticles = 100;
 Particle ParticlesContainer[MaxParticles];
 int LastUsedParticle = 0;
 
@@ -39,24 +40,24 @@ int FindUnusedParticle() {
 void SortParticles() {
 	std::sort(&ParticlesContainer[0], &ParticlesContainer[MaxParticles]);
 }
-static const GLfloat g_vertex_buffer_data[] = { //adapt triangle strips into trangles to fit gpu_object
- -1.0f, -1.0f, 0.0f,
-  1.0f, -1.0f, 0.0f,
- -1.0f,  1.0f, 0.0f,
-
-  1.0f,  1.0f, 0.0f,
-  1.0f, -1.0f, 0.0f,
- -1.0f,  1.0f, 0.0f,
-};
 //static const GLfloat g_vertex_buffer_data[] = { //adapt triangle strips into trangles to fit gpu_object
-// -0.5f, -0.5f, 0.0f,
-//  0.5f, -0.5f, 0.0f,
-// -0.5f,  0.5f, 0.0f,
+// -1.0f, -1.0f, 0.0f,
+//  1.0f, -1.0f, 0.0f,
+// -1.0f,  1.0f, 0.0f,
 //
-//  0.5f,  0.5f, 0.0f,
-//  0.5f, -0.5f, 0.0f,
-// -0.5f,  0.5f, 0.0f,
+//  1.0f,  1.0f, 0.0f,
+//  1.0f, -1.0f, 0.0f,
+// -1.0f,  1.0f, 0.0f,
 //};
+static const GLfloat g_vertex_buffer_data[] = { //adapt triangle strips into trangles to fit gpu_object
+ -0.5f, -0.5f, 0.0f,
+  0.5f, -0.5f, 0.0f,
+ -0.5f,  0.5f, 0.0f,
+
+  0.5f,  0.5f, 0.0f,
+  0.5f, -0.5f, 0.0f,
+ -0.5f,  0.5f, 0.0f,
+};
 //static const GLfloat g_vertex_buffer_data[] = { //adapt triangle strips into trangles to fit gpu_object
 // -0.1f, -0.1f, 0.0f,
 //  0.1f, -0.1f, 0.0f,
@@ -67,7 +68,6 @@ static const GLfloat g_vertex_buffer_data[] = { //adapt triangle strips into tra
 // -0.1f,  0.1f, 0.0f,
 //};
 void particle_t::init(){
-	gpu_obj_t::init();
 	this->model_matrix = glm::scale(this->model_matrix, glm::vec3(1.0f, 1.0f, 1.0f));
 	start_time = (GLfloat)(GameWindow::magic->nowTime.asSeconds());
 	this->vertexCount = MaxParticles*6;
@@ -118,26 +118,28 @@ void particle_t::draw(glm::mat4 modelMatrix){
 	this->shader->Use();
 	sf::Texture::bind(&sf_texture);
 	float nowTime = (int)((GLfloat)(GameWindow::magic->nowTime.asSeconds()));
-//	float delta_time = 0.33;
-	float delta_time = 0.033;
+	float delta_time = 1;
+	//float delta_time = 0.033;
 	//cout << delta_time << endl;
 	int new_particlesN = min((float)1,delta_time*100);
 
 	for (int i = 0; i < new_particlesN; i++) {
 		int particleIndex = FindUnusedParticle();
-		ParticlesContainer[particleIndex].life = 30.0f; // This particle will live 5 seconds.
+		ParticlesContainer[particleIndex].life = 300.0f; // This particle will live 5 seconds.
 		ParticlesContainer[particleIndex].pos = glm::vec3(0, 0, -20.0f);
+        ParticlesContainer[particleIndex].blasted = false;
+        ParticlesContainer[particleIndex].blast_dir = glm::vec2((rand() % 2000 - 1000.0f) / 1000.0f,(rand() % 2000 - 1000.0f) / 1000.0f);
 		//ParticlesContainer[particleIndex].pos = glm::vec3(0, 0, -0.0f);
 
 		float spread = 1.5f;
-		glm::vec3 maindir = glm::vec3(0.0f, 10.0f, 0.0f);
+		glm::vec3 maindir = glm::vec3(0.0f, 12.0f, 0.0f);
 		glm::vec3 randomdir = glm::vec3(
 			(rand() % 2000 - 1000.0f) / 1000.0f,
 			(rand() % 2000 - 1000.0f) / 1000.0f,
 			(rand() % 2000 - 1000.0f) / 1000.0f
 		);
 
-		ParticlesContainer[particleIndex].speed = maindir + randomdir * spread;
+		ParticlesContainer[particleIndex].speed = maindir + (randomdir*0.1f) * spread;
 
 
 		// Very bad way to generate a random color
@@ -154,13 +156,28 @@ void particle_t::draw(glm::mat4 modelMatrix){
 	for (int i = 0; i < MaxParticles; i++) {
 
 		Particle& p = ParticlesContainer[i]; // shortcut
-		if (p.life > 0.0f) {
+		if (p.life >= 0.0f) {
 			// Decrease life
 			p.life -= delta_time;
 			if (p.life > 0.0f) {
+                if(p.speed.y<0){
+                    if(!p.blasted){
+                        p.speed = glm::vec3(p.blast_dir.x, -0.3, p.blast_dir.y);
+                        cout<< p.speed.x<<" "<<p.speed.y<<" "<<p.speed.z<<endl;
+                        p.blasted = true;
+                    }
+                    p.speed+=glm::vec3(0, -0.0981f, 0);
+
+                }
+                else{
+                    p.speed+=glm::vec3(0, -0.0981f, 0);
+                }
+//                cout<< p.speed.x<<" "<<p.speed.y<<" "<<p.speed.z<<endl;
+                cout<< p.life<<endl;
+                p.pos += p.speed * (float)delta_time*0.07f;
 				// Simulate simple physics : gravity only, no collisions
 				//p.speed += glm::vec3(0.0f, -0.981f, 0.0f) * (float)delta_time;
-				p.pos += p.speed * (float)delta_time*0.5f;
+
 				//p.cameradistance = glm::length2(p.pos - CameraPosition);
 				//p.cameradistance = glm::length2(p.pos);
 				//ParticlesContainer[i].pos += glm::vec3(0.0f,10.0f, 0.0f) * (float)delta_time;
@@ -169,7 +186,7 @@ void particle_t::draw(glm::mat4 modelMatrix){
 				// Particles that just died will be put at the end of the buffer in SortParticles();
 				//p.cameradistance = -1.0f;
 			}
-			ParticlesCount++;
+			//ParticlesCount++;
 		}
 	}
 	SortParticles();
@@ -215,7 +232,10 @@ void particle_t::draw(glm::mat4 modelMatrix){
 
 
 	}
-
+//    glUniform3fv(glGetUniformLocation(this->shader->Program, "cameraPosition")
+//            , 1, glm::value_ptr(GameWindow::magic->firstPersonCamera.getEyePosition()));
+    glUniform1f(
+            glGetUniformLocation(this->shader->Program, "start"), start_time);
 	glUniform1f(
 		glGetUniformLocation(this->shader->Program, "now_time"), (GLfloat)(GameWindow::magic->nowTime.asSeconds()));
 	glUniformMatrix4fv(

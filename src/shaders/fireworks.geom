@@ -20,6 +20,7 @@ float rand(float x)
 }
 uniform float start_time;
 uniform float now_time;
+uniform vec2 blast_dir;
 float rand(vec2 co){
     return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
 }
@@ -28,10 +29,6 @@ vec4 explode(vec4 position, vec3 normal)
     float magnitude = 2.0;
     vec3 direction = normal * ((sin((now_time-start_time)) + 1.0) / 2.0) * magnitude;
     return position + vec4(direction, 0.0);
-}
-vec4 fall(vec4 position){
-    float delta_time = 0.33;
-    return vec4(position.x,40-(position.y-40), position.z, position.w);
 }
 vec3 GetNormal()
 {
@@ -46,8 +43,6 @@ void main() {
    // for(float i = 0; i<20.0f; i+=1.0f){
         gl_Position = gl_in[0].gl_Position;
 
-        if(gl_in[0].gl_Position.y>40)
-           gl_Position = fall(gl_Position);
         gs_out.texture_coordinate = gs_in[0].texture_coordinate;
         gs_out.color = gs_in[0].color;
         gs_out.texture_coordinate = gs_in[0].texture_coordinate;
@@ -56,8 +51,6 @@ void main() {
         EmitVertex();
 
         gl_Position = gl_in[1].gl_Position;
-        if(gl_in[0].gl_Position.y>40)
-            gl_Position = fall(gl_Position);
         gs_out.texture_coordinate = gs_in[1].texture_coordinate;
         gs_out.color = gs_in[1].color;
         gs_out.texture_coordinate = gs_in[1].texture_coordinate;
@@ -66,8 +59,6 @@ void main() {
         EmitVertex();
 
         gl_Position = gl_in[2].gl_Position;
-        if(gl_in[0].gl_Position.y>40)
-            gl_Position = fall(gl_Position);
         gs_out.texture_coordinate = gs_in[2].texture_coordinate;
         gs_out.color = gs_in[2].color;
         gs_out.texture_coordinate = gs_in[2].texture_coordinate;
