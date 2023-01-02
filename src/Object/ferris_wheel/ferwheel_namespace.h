@@ -2,6 +2,7 @@
 // Created by lkj9487 on 2022/12/31.
 //
 
+#pragma once
 #ifndef AMUSEMENTPARK_FERWHEEL_NAMESPACE_H
 #define AMUSEMENTPARK_FERWHEEL_NAMESPACE_H
 
@@ -12,6 +13,9 @@ using sca=glm::vec3; // scale
 using rot=glm::vec3; // rotate
 
 namespace ferwheel {
+
+    double deg2rad(double deg);
+
     class car_t : public gpu_obj_t {
         void init() override;
 
@@ -22,13 +26,13 @@ namespace ferwheel {
 
     class wheel_t : public gpu_obj_t {
         void init() override;
-
+//        cube* rows[8];
     public:
         void bind() override;
         wheel_t();
         void turn(float degree);
     };
-//    extern class wheel_t;
+
 }
 
 #endif //AMUSEMENTPARK_FERWHEEL_NAMESPACE_H

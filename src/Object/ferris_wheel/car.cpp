@@ -2,9 +2,8 @@
 // Created by lkj9487 on 2022/12/31.
 //
 #include "ferwheel_namespace.h"
-
-#include "Object/BasicObject/cylinder.h"
 #include "Object/BasicObject/cube.h"
+#include "Object/BasicObject/cylinder.h"
 
 namespace ferwheel {
     car_t::car_t() {
@@ -60,16 +59,6 @@ namespace ferwheel {
 
     void car_t::bind() {
         if (this->shader) return;
-
-   /*     this->shader = new Shader(
-            nullptr,
-            nullptr,
-            nullptr,
-            nullptr,
-            nullptr
-        );*/
-        //this->shader->Use();
         gpu_obj_t::bind();
-
     }
-} // ferris_wheel
+} // ferwheel::car_t
