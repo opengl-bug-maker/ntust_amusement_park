@@ -79,11 +79,11 @@ void particle_t::init(){
 	}
 
 
-	this->data = new float[1e5]; //adapt triangle strips into trangles to fit gpu_object(particleN* 2(traingles)*3(vertices)*3(x, y, z) 
+	this->data = new float[100000]; //adapt triangle strips into trangles to fit gpu_object(particleN* 2(traingles)*3(vertices)*3(x, y, z)
 
 	
 	this->vao->element_amount = MaxParticles * 2; //there are 2 triangles in each particles
-	this->element = new GLuint[1e5];
+	this->element = new GLuint[100000];
 	for (int i = 0; i < 2 * MaxParticles*2*2; ++i) { element[i] = i; }
 	//collider = new BoxCollider();
 }

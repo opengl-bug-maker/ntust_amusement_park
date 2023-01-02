@@ -1,26 +1,32 @@
 # let cmake.txt change to fix vs bug :O
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.24)
 project(AmusementPark)
 
+set(CMAKE_C_STANDARD 17)
 set(CMAKE_CXX_STANDARD 17)
 
 set( GLM_HOME include/glm)
 set(GLAD_HOME include/glad)
-set(SFML_HOME include/sfml/2.5.1_1)
 
-link_directories("${SFML_HOME}/lib")
 include_directories("src")
 include_directories("src/Object")
 include_directories("${GLAD_HOME}/include")
-include_directories("${SFML_HOME}/include")
 include_directories("${GLM_HOME}/include")
+
+#setting for SFML
+if(CMAKE_HOST_APPLE)
+    MESSAGE("OS: macOS")
+    set(SFML_DIR "include/sfml/2.5.1-macOS/lib/cmake/SFML")
+elseif(CMAKE_HOST_WIN32)
+    MESSAGE("OS: Windows")
+    set(SFML_DIR "include/sfml/2.5.1-windows/lib/cmake/SFML")
+endif()
+find_package(SFML REQUIRED COMPONENTS audio network graphics window system)
+include_directories(${SFML_INCLUDE_DIR})
+#end setting for sfml
 
 file(GLOB OBJECT_HEADER src/Object/*.h)
 file(GLOB OBJECT_SOURCE src/Object/*.cpp)
-file(GLOB BASIC-OBJECT_HEADER src/Object/BasicObject/*.h)
-file(GLOB BASIC-OBJECT_SOURCE src/Object/BasicObject/*.cpp)
-file(GLOB ParticleSystem_HEADER src/Object/ParticleSystem/*.h)
-file(GLOB ParticleSystem_SOURCE src/Object/ParticleSystem/*.cpp)
 file(GLOB FERRIS_WHEEL_HEADER src/Object/ferris_wheel/*.h)
 file(GLOB FERRIS_WHEEL_SOURCE src/Object/ferris_wheel/*.cpp)
 file(GLOB CUSTOM-OBJECT_HEADER src/Object/CustomObject/*.h)
@@ -39,22 +45,21 @@ add_executable(AmusementPark
         include/glad.c
         src/GameWindow.cpp
         src/GameWindow.h
-        ${OBJECT_HEADER} ${OBJECT_SOURCE}
-        ${BASIC-OBJECT_HEADER} ${BASIC-OBJECT_SOURCE}
-        ${ParticleSystem_HEADER} ${ParticleSystem_SOURCE}
-        ${CUSTOM-OBJECT_HEADER} ${CUSTOM-OBJECT_SOURCE}
-        ${FERRIS_WHEEL_HEADER} ${FERRIS_WHEEL_SOURCE}
-        ${OBJECT-COLLIDER_HEADER} ${OBJECT-COLLIDER_SOURCE}
-        ${CAMERA_HEADER} ${CAMERA_SOURCE}
-        ${Utilities_HEADER} ${Utilities_SOURCE}
-        ${RenderUtilities_HEADER} ${RenderUtilities_SOURCE}
+        ${OBJECT_SOURCE}
+        ${CUSTOM-OBJECT_SOURCE}
+        ${FERRIS_WHEEL_SOURCE}
+        ${OBJECT-COLLIDER_SOURCE}
+        ${CAMERA_SOURCE}
+        ${Utilities_SOURCE}
+        ${RenderUtilities_SOURCE}
         )
 
-target_link_libraries (AmusementPark
+target_link_libraries(AmusementPark
+        sfml-audio
         sfml-graphics
         sfml-window
         sfml-system)
 
-if (APPLE)
+if(CMAKE_HOST_APPLE)
     target_link_libraries(AmusementPark "-framework OpenGL")
 endif()

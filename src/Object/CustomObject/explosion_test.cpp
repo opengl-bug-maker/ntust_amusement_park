@@ -19,7 +19,7 @@ void explosion_test_t::init() {
 
 
 
-    this->data = new float[] {
+    this->data = new float[24] {
         //vertices
         -1, -1, -1,
             1, -1, -1,
