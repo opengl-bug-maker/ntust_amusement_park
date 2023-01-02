@@ -38,8 +38,8 @@ GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : Ren
     firstPersonCamera.setup(60, 8, 0, 0, 0);
     firstPersonCamera.lock();
 
-    camera = &firstPersonCamera;
-//    camera = &arcBall;
+//    camera = &firstPersonCamera;
+    camera = &arcBall;
 //endregion
 
     InitObjects();
@@ -64,13 +64,13 @@ void GameWindow::InitObjects() {
     gpuObjs.push_back(plane);
 
 
-    gpu_obj_t* cc = new cube();
-    cc->setName("big cube");
-//    cc->setFaceToCamera(true);
-    cc->SetGravity(false);
-//    cc->SettingScale(glm::vec3(0.2,0.2,0.2));
-    cc->SettingScale(glm::vec3(1,1,1));
-    gpuObjs.push_back(cc);
+//    gpu_obj_t* cc = new cube();
+//    cc->setName("big cube");
+////    cc->setFaceToCamera(true);
+//    cc->SetGravity(false);
+////    cc->SettingScale(glm::vec3(0.2,0.2,0.2));
+//    cc->SettingScale(glm::vec3(1,1,1));
+//    gpuObjs.push_back(cc);
 
     gpu_obj_t* c;
 
@@ -83,12 +83,12 @@ void GameWindow::InitObjects() {
     //cc->addChildren(c);
 // 
 // 
-      //c = new explosion_test_t();
-      //  c->setName("z cube");
-      //  c->SettingTransform(glm::vec3(0, 0, 3));
-      //  c->SettingScale(glm::vec3(0.5, 0.5, 0.5));
-      //  c->SetGravity(false);
-      //  gpuObjs.push_back(c);
+//      c = new explosion_test_t();
+//        c->setName("z cube");
+//        c->SettingTransform(glm::vec3(0, 0, 3));
+//        c->SettingScale(glm::vec3(0.5, 0.5, 0.5));
+//        c->SetGravity(false);
+//        gpuObjs.push_back(c);
 
     //c = new cylinder();
     //c->setName("cylinder 0");
@@ -99,13 +99,13 @@ void GameWindow::InitObjects() {
     //gpuObjs.push_back(c);
     //    cc->addChildren(c);
 
-    //c = new particle_t();
-    //c->setName("particle 0");
-    //c->SettingTransform(glm::vec3(0, 2, 5));
-    //c->SettingScale(glm::vec3(1, 1, 1));
-    //c->SetGravity(false);
-    //gpuObjs.push_back(c);
-        //cc->addChildren(c);
+    c = new particle_t();
+    c->setName("particle 0");
+    c->SettingTransform(glm::vec3(0, -20, 0));
+    c->SettingScale(glm::vec3(1, 1, 1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
+//        cc->addChildren(c);
 
 
     rs = new RollerSystem();
@@ -156,7 +156,7 @@ void GameWindow::run() {
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && ((player*)Player)->state == player::ActionState::Floor){
-            cout << "jump" << endl;
+//            cout << "jump" << endl;
             ((player*)Player)->state = player::ActionState::Drop;
             glm::vec3 jump = glm::vec3 (0, 10, 0);
             jump[0] = Player->getVelocity()[0];
@@ -204,7 +204,7 @@ void GameWindow::run() {
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_TEXTURE_2D);
 //        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glViewport(0, 0, 800, 600);
+        glViewport(0, 0, 1600, 1200);
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -236,7 +236,6 @@ void GameWindow::MoveEvent() {
         glm::vec3 newSpeed = glm::vec3(dir2[0], 0, dir2[1]) * MoveSpeed * 1.0f;
         newSpeed[1] = Player->getVelocity()[1];
         Player->setVelocity(newSpeed);
-//        Player->Move(glm::vec3(dir2[0], 0, dir2[1]) * MoveSpeed * 0.01f);
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
         glm::vec3 dir = -firstPersonCamera.getEyeDirection();
@@ -262,22 +261,40 @@ void GameWindow::MoveEvent() {
         newSpeed[1] = Player->getVelocity()[1];
         Player->setVelocity(newSpeed);
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::U)){
-        if(rs != nullptr)
-            if(((player*)Player)->state != player::OnTrain)
-                rs->Run();
-        ((player*)Player)->state = player::OnTrain;
-    }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){
-        if(rs != nullptr)
-            rs->GetOut();
-        ((player*)Player)->state = player::Drop;
-    }
+//    if(sf::Keyboard::isKeyPressed(sf::Keyboard::U)){
+//        if(rs != nullptr)
+//            if(((player*)Player)->state != player::OnTrain)
+//                rs->Run();
+//        ((player*)Player)->state = player::OnTrain;
+//    }
+//    if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){
+//        if(rs != nullptr)
+//            rs->GetOut();
+//        ((player*)Player)->state = player::Drop;
+//    }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Y)){
         for(auto obj : gpuObjs){
             if(obj->getName() == "big cube"){
                 obj->setFaceToCamera(!obj->isFaceToCamera());
             }
         }
+    }
+}
+
+void GameWindow::ConsoleEvent(string input) {
+    if(input == "reset"){
+        Player->MoveTo(glm::vec3(0, 0, 0));
+        Player->setVelocity(glm::vec3(0, 0, 0));
+        Player->SetGravity(false);
+        cout << "move!" << endl;
+    }
+    if(input == "unfreeze"){
+        Player->SetGravity(true);
+    }
+    if(input == "posi"){
+        cout << Player->GetPosition()[0] << " "<< Player->GetPosition()[1] << " "<< Player->GetPosition()[2] << endl;
+    }
+    if(input == "q"){
+        firstPersonCamera.Bias(glm::vec3(-1,0,-1));
     }
 }

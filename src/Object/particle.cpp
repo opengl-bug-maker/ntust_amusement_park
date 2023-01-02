@@ -14,7 +14,7 @@ struct Particle {
 		return this->cameradistance > that.cameradistance;
 	}
 };
-const int MaxParticles = 200;
+const int MaxParticles = 20;
 Particle ParticlesContainer[MaxParticles];
 int LastUsedParticle = 0;
 
@@ -95,7 +95,7 @@ void particle_t::bind(){
 			"fireworks.vert",
 			nullptr,
 			nullptr,
-			 nullptr,
+			 "fireworks.geom",
 			"fireworks.frag");
 	this->shader->Use();
 	//this->texture = new Texture2D();
@@ -103,7 +103,7 @@ void particle_t::bind(){
 	
 	//this->texture->bind(0);
 	//glUniform1i(glGetUniformLocation(this->shader->Program, "u_texture"), 0);
-	this->sf_texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/particle.png");
+	this->sf_texture.loadFromFile("../Images/particle.png");
 	
 	glUniform1f(
 		glGetUniformLocation(this->shader->Program, "start_time"), (GLfloat)(GameWindow::magic->nowTime.asSeconds()));
@@ -118,13 +118,14 @@ void particle_t::draw(glm::mat4 modelMatrix){
 	this->shader->Use();
 	sf::Texture::bind(&sf_texture);
 	float nowTime = (int)((GLfloat)(GameWindow::magic->nowTime.asSeconds()));
-	float delta_time = 0.33;
+//	float delta_time = 0.33;
+	float delta_time = 0.033;
 	//cout << delta_time << endl;
-	int new_particlesN = min((float)10,delta_time*10);
+	int new_particlesN = min((float)1,delta_time*100);
 
 	for (int i = 0; i < new_particlesN; i++) {
 		int particleIndex = FindUnusedParticle();
-		ParticlesContainer[particleIndex].life = 300.0f; // This particle will live 5 seconds.
+		ParticlesContainer[particleIndex].life = 30.0f; // This particle will live 5 seconds.
 		ParticlesContainer[particleIndex].pos = glm::vec3(0, 0, -20.0f);
 		//ParticlesContainer[particleIndex].pos = glm::vec3(0, 0, -0.0f);
 
@@ -159,7 +160,7 @@ void particle_t::draw(glm::mat4 modelMatrix){
 			if (p.life > 0.0f) {
 				// Simulate simple physics : gravity only, no collisions
 				//p.speed += glm::vec3(0.0f, -0.981f, 0.0f) * (float)delta_time;
-				p.pos += p.speed * (float)delta_time* 0.1f;
+				p.pos += p.speed * (float)delta_time*0.5f;
 				//p.cameradistance = glm::length2(p.pos - CameraPosition);
 				//p.cameradistance = glm::length2(p.pos);
 				//ParticlesContainer[i].pos += glm::vec3(0.0f,10.0f, 0.0f) * (float)delta_time;
@@ -214,7 +215,7 @@ void particle_t::draw(glm::mat4 modelMatrix){
 
 
 	}
-	
+
 	glUniform1f(
 		glGetUniformLocation(this->shader->Program, "now_time"), (GLfloat)(GameWindow::magic->nowTime.asSeconds()));
 	glUniformMatrix4fv(

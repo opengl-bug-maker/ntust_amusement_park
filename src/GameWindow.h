@@ -53,6 +53,8 @@ public:
 
     GameWindow(const sf::VideoMode &mode, const sf::String &title);
 
+    void ConsoleEvent(string input);
+
     void run();
 };
 

@@ -185,7 +185,7 @@ void cube::bind() {
     /*this->shader = new
             Shader(
             "explosion.vert",
-            nullptr, nullptr, "explosion.gs",
+            nullptr, nullptr, "explosion.geom",
             "explosion.frag");*/
     this->shader = new
         Shader(

@@ -29,6 +29,8 @@ file(GLOB OBJECT_HEADER src/Object/*.h)
 file(GLOB OBJECT_SOURCE src/Object/*.cpp)
 file(GLOB BASIC_OBJECT_HEADER src/Object/BasicObject/*.h)
 file(GLOB BASIC_OBJECT_SOURCE src/Object/BasicObject/*.cpp)
+file(GLOB OBJECT_PARTICLE_SOURCE src/Object/ParticleSystem/*.cpp)
+file(GLOB OBJECT_PARTICLE_SOURCE src/Object/ParticleSystem/*.cpp)
 file(GLOB FERRIS_WHEEL_HEADER src/Object/ferris_wheel/*.h)
 file(GLOB FERRIS_WHEEL_SOURCE src/Object/ferris_wheel/*.cpp)
 file(GLOB CUSTOM-OBJECT_HEADER src/Object/CustomObject/*.h)
@@ -49,6 +51,7 @@ add_executable(AmusementPark
         src/GameWindow.h
         ${OBJECT_SOURCE}
         ${BASIC_OBJECT_SOURCE}
+        ${OBJECT_PARTICLE_SOURCE}
         ${CUSTOM-OBJECT_SOURCE}
         ${FERRIS_WHEEL_SOURCE}
         ${OBJECT-COLLIDER_SOURCE}

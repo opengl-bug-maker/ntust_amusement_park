@@ -1,5 +1,5 @@
 //
-// Created by ªL¤h³Ç on 2022/12/7.
+// Created by ï¿½Lï¿½hï¿½ï¿½ on 2022/12/7.
 //
 
 #include "explosion_test.h"
@@ -34,16 +34,15 @@ void explosion_test_t::init() {
 
 
             //u, v
-            //0
-            1.0f, 1.0f,
             0.0f, 1.0f,
+            1.0f, 1.0f,
             0.0f, 0.0f
     };
 
     this->vao->element_amount = 3; //6*2
 
-    element = new GLuint[3];
-    for (int i = 0; i < 3; ++i) { element[i] = i; }
+    element = new GLuint[1];
+    for (int i = 0; i < 1; ++i) { element[i] = i; }
 
     collider = new BoxCollider();
 }
@@ -51,18 +50,18 @@ void explosion_test_t::init() {
 void explosion_test_t::bind() {
     if (this->shader) return;
 
-    /*this->shader = new
+    this->shader = new
             Shader(
             "explosion.vert",
-            nullptr, nullptr, "explosion.gs",
-            "explosion.frag");*/
-    this->shader = new
-        Shader(
-            "box.vert",
-            nullptr, nullptr, "explosion.gs",
-            "box.frag");
+            nullptr, nullptr, "explosion.geom",
+            "explosion.frag");
+//    this->shader = new
+//        Shader(
+//            "box.vert",
+//            nullptr, nullptr, nullptr,
+//            "box.frag");
     this->shader->Use();
-    //this->sf_texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/uvtemplate.jpg");
+    this->sf_texture.loadFromFile("../Images/uvtemplate.jpg");
     //this->texture = new Texture2D();
     //this->texture->set2dTexture("../Images/skybox/back.jpg");
     //this->texture->bind(0);

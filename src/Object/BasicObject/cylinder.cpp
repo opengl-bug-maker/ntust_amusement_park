@@ -1,5 +1,5 @@
 //
-// Created by ªL¤h³Ç on 2022/12/7.
+// Created by ï¿½Lï¿½hï¿½ï¿½ on 2022/12/7.
 //
 
 #include "cylinder.h"
@@ -101,7 +101,7 @@ void cylinder::bind() {
     //this->shader = new
     //        Shader(
     //        "explosion.vert",
-    //        nullptr, nullptr, "explosion.gs",
+    //        nullptr, nullptr, "explosion.geom",
     //        "explosion.frag");
     this->shader = new
     Shader(
