@@ -87,11 +87,29 @@ void locomotive_t::init() {
     this->addChildren(cyl);
 
 //
-//    ball = new Ball; // boiler
-//    ball->MoveTo(train_ns::train_pos(0,8,0));
-//    ball->SettingScale(sca(1.2,1.2,1.2));
-//    ball->SetGravity(false);
-//    this->addChildren(ball);
+    ball = new Ball; // boiler lid
+    ball->MoveTo(train_ns::train_pos(-1.65,1.2,0));
+    ball->SettingScale(sca(0.325,0.6,0.6));
+    ball->SetGravity(false);
+    this->addChildren(ball);
+
+    ball = new Ball; // make boiler fancy
+    ball->MoveTo(train_ns::train_pos(-1.325,1.2,0));
+    ball->SettingScale(sca(0.1,0.7,0.7));
+    ball->SetGravity(false);
+    this->addChildren(ball);
+
+    ball = new Ball; // make boiler fancy
+    ball->MoveTo(train_ns::train_pos(-0.7,1.2,0));
+    ball->SettingScale(sca(0.1,0.7,0.7));
+    ball->SetGravity(false);
+    this->addChildren(ball);
+
+    ball = new Ball; // make boiler fancy
+    ball->MoveTo(train_ns::train_pos(-0.075,1.2,0));
+    ball->SettingScale(sca(0.1,0.7,0.7));
+    ball->SetGravity(false);
+    this->addChildren(ball);
 
     // driver room
     c = new cube;
