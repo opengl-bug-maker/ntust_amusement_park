@@ -14,6 +14,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "Object/BasicObject/cube.h"
 #include "Object/BasicObject/cylinder.h"
+#include "Object/BasicObject/Ball.h"
+#include "Object/ParticleSystem/Piece.h"
 #include "Object/particle.h"
 #include "Camera/ArcBallCamera.h"
 #include "Camera/Camera.h"

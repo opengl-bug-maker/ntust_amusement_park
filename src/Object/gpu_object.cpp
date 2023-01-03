@@ -82,14 +82,13 @@ void gpu_obj_t::draw(glm::mat4 modelMatrix) {
         glm::vec3 dir = GetPosition() - GameWindow::magic->firstPersonCamera.getEyePosition();
         dir = glm::normalize(dir);
         glm::vec2 hor = glm::vec2(dir[2], dir[0]);
-        hor = glm::normalize(hor);
-        double theta = asin(dir[1]);
-        double phi = -atan2(hor[1], hor[0]);
 
-        double sp = sin(phi);
-        double cp = cos(phi);
-        double st = sin(theta);
-        double ct = cos(theta);
+        double st = dir[1];
+        double ct = glm::length(hor);
+
+        hor = glm::normalize(hor);
+        double sp = -hor[1];
+        double cp = hor[0];
 
         glm::mat4 ModelView = glm::mat4(
                 cp,  st * sp, -ct * sp, 0,

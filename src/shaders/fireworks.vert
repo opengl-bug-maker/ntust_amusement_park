@@ -8,14 +8,37 @@ out VS_OUT {
    vec3 color;
 } v_out;
 
+//uniform vec3 cameraPosition;
 uniform mat4 u_model;
 uniform mat4 u_projection;
 uniform mat4 u_view;
 
 void main() {
+
+//    vec3 dir = position - cameraPosition;
+//    dir = normalize(dir);
+//    vec2 hor = vec2(dir.zx);
+//
+//    double st = dir.y;
+//    double ct = length(hor);
+//
+//    hor = normalize(hor);
+//    double sp = -hor.y;
+//    double cp = hor.x;
+//
+//    mat4 face = mat4(
+//    cp,  st * sp, -ct * sp, 0,
+//    0,       ct,       st, 0,
+//    sp, -st * cp, ct * cp, 0,
+//    0,        0,       0,1
+//    );
+
+
+
     //gl_Position = vec4(position, 1.0f);
     //gl_Position = u_model * vec4(position, 1.0f);
     gl_Position = u_projection * u_view * u_model * vec4(position, 1.0f);
+//    gl_Position = u_projection * u_view * u_model * inverse(face) * vec4(position, 1.0f);
     //v_out.texture_coordinate = vec2(texture_coordinate.x, 1.0f - texture_coordinate.y);
     v_out.texture_coordinate = texture_coordinate;
     v_out.color = color;

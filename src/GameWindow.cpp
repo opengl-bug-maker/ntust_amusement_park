@@ -63,6 +63,13 @@ void GameWindow::InitObjects() {
     plane->SetGravity(false);
     gpuObjs.push_back(plane);
 
+    gpu_obj_t* piece = new Piece();
+    piece->SetGravity(false);
+    gpuObjs.push_back(piece);
+
+//    gpu_obj_t* ball = new Ball();
+//    ball->SetGravity(false);
+//    gpuObjs.push_back(ball);
 
 //    gpu_obj_t* cc = new cube();
 //    cc->setName("big cube");
