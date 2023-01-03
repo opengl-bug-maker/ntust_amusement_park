@@ -52,13 +52,13 @@ void Piece::bind() {
             "piece.frag"
     );
 
-    this->sf_texture.loadFromFile("../Images/particle.png");
+    SetTexture("../Images/particle.png");
 
     gpu_obj_t::bind();
 }
 
 void Piece::draw(glm::mat4 modelMatrix) {
-    sf::Texture::bind(&this->sf_texture);
+    sf::Texture::bind(this->sf_texture);
     if(!visible)
         return;
     modelMatrix = modelMatrix * this->model_matrix;

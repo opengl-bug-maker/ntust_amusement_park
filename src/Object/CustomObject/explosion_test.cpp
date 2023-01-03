@@ -61,7 +61,7 @@ void explosion_test_t::bind() {
 //            nullptr, nullptr, nullptr,
 //            "box.frag");
     this->shader->Use();
-    this->sf_texture.loadFromFile("../Images/uvtemplate.jpg");
+    SetTexture("../Images/uvtemplate.jpg");
     //this->texture = new Texture2D();
     //this->texture->set2dTexture("../Images/skybox/back.jpg");
     //this->texture->bind(0);
@@ -81,7 +81,7 @@ void explosion_test_t::draw(glm::mat4 modelMatrix) {
         glGetUniformLocation(this->shader->Program, "now_time"), (GLfloat)(GameWindow::magic->nowTime.asSeconds()));
     glUniformMatrix4fv(
         glGetUniformLocation(this->shader->Program, "u_projection"), 1, GL_FALSE, glm::value_ptr(gpu_obj_t::projection_matrix));
-    sf::Texture::bind(&this->sf_texture);
+    sf::Texture::bind(this->sf_texture);
     gpu_obj_t::draw(modelMatrix);
     //gpu_obj_t::draw();
 }

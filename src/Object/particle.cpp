@@ -106,7 +106,7 @@ void particle_t::bind(){
 	
 	//this->texture->bind(0);
 	//glUniform1i(glGetUniformLocation(this->shader->Program, "u_texture"), 0);
-	this->sf_texture.loadFromFile("../Images/particle.png");
+    this->SetTexture("../Images/particle.png");
 	
 	glUniform1f(
 		glGetUniformLocation(this->shader->Program, "start_time"), (GLfloat)(GameWindow::magic->nowTime.asSeconds()));
@@ -119,7 +119,7 @@ void particle_t::draw(glm::mat4 modelMatrix){
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	this->shader->Use();
-	sf::Texture::bind(&sf_texture);
+	sf::Texture::bind(sf_texture);
 	float nowTime = (int)((GLfloat)(GameWindow::magic->nowTime.asSeconds()));
 	float delta_time = 1;
 	//float delta_time = 0.033;

@@ -110,6 +110,7 @@ void gpu_obj_t::draw(glm::mat4 modelMatrix) {
     if(this->shader)
 	    this->shader->Use();
     else { return; }
+    sf::Texture::bind(this->sf_texture);
 
     glUniformMatrix4fv(
             glGetUniformLocation(this->shader->Program, "u_projection"), 1, GL_FALSE, glm::value_ptr(gpu_obj_t::projection_matrix));
@@ -125,6 +126,7 @@ void gpu_obj_t::draw(glm::mat4 modelMatrix) {
 	glBindVertexArray(0);
 
 	glUseProgram(0);
+    sf::Texture::bind(nullptr);
 }
 
 bool gpu_obj_t::isVisible() const {
@@ -166,4 +168,9 @@ bool gpu_obj_t::IsCollision(PhysicsObject *obj, glm::vec3 &collisionVector) {
 
     }
     return bbb;
+}
+
+void gpu_obj_t::SetTexture(string str) {
+    this->sf_texture = new sf::Texture();
+    this->sf_texture->loadFromFile(str);
 }

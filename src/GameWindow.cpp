@@ -82,6 +82,23 @@ void GameWindow::InitObjects() {
     ball->SetGravity(false);
     gpuObjs.push_back(ball);
 
+    gpu_obj_t* smallCube = new cube();
+    smallCube->SetGravity(false);
+    smallCube->SettingTransform(glm::vec3(0, -3, 0));
+    smallCube->SetTexture("../Images/particle.png");
+    smallCube->setName("smallCube");
+
+    gpu_obj_t* bigCube = new cube();
+    bigCube->setName("bigCube");
+    bigCube->SettingTransform(glm::vec3(5, 0, 0));
+    bigCube->SetGravity(false);
+    bigCube->SetTexture("../Images/uvtemplate.jpg");
+    bigCube->addChildren(smallCube);
+
+    gpuObjs.push_back(bigCube);
+
+
+
 //    gpu_obj_t* cc = new cube();
 //    cc->setName("big cube");
 ////    cc->setFaceToCamera(true);

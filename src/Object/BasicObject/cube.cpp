@@ -213,7 +213,9 @@ void cube::draw(glm::mat4 modelMatrix){
         glGetUniformLocation(this->shader->Program, "now_time"), (GLfloat)(GameWindow::magic->nowTime.asSeconds()));
     glUniformMatrix4fv(
         glGetUniformLocation(this->shader->Program, "u_projection"), 1, GL_FALSE, glm::value_ptr(gpu_obj_t::projection_matrix));
-    sf::Texture::bind(&this->sf_texture);
+//    sf::Texture::bind(&this->sf_texture);
     gpu_obj_t::draw(modelMatrix);
+//    sf::Texture::bind(nullptr);
+
     //gpu_obj_t::draw();
 }
