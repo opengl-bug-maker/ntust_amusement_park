@@ -13,7 +13,9 @@ class ferris_wheel_t : public gpu_obj_t {
     ferwheel::wheel_t* my_wheel;
 
 public:
+    float start_time = 0;
     void bind() override;
+    void draw(glm::mat4 modelMatrix) override;
     ferris_wheel_t();
     void turn(float degree);
 };

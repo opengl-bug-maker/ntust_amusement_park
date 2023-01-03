@@ -3,7 +3,8 @@
 //
 #include "ferris_wheel.h"
 #include "Object/BasicObject/cube.h"
-
+#include "GameWindow.h"
+#include "iostream"
 ferris_wheel_t::ferris_wheel_t() {
     init();
 }
@@ -46,7 +47,8 @@ void ferris_wheel_t::init() {
     this->addChildren(wheel);
     this->my_wheel = wheel;
 
-    this->turn(30);
+//    this->turn(30);
+    this->start_time = (GLfloat)(GameWindow::magic->nowTime.asSeconds());
 }
 
 void ferris_wheel_t::bind() {
@@ -58,3 +60,12 @@ void ferris_wheel_t::turn(float degree) {
     this->my_wheel->turn(degree);
 }
 
+
+void ferris_wheel_t::draw(glm::mat4 modelMatrix) {
+    float now_time = (GLfloat)(GameWindow::magic->nowTime.asSeconds());
+    float delta_time = now_time - this->start_time;
+    turn(delta_time*10);
+    //std::cout<< this->start_time << " " << now_time << std::endl;
+    gpu_obj_t::update();
+    gpu_obj_t::draw();
+}

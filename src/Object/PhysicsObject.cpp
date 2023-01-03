@@ -55,6 +55,46 @@ void PhysicsObject::MoveTo(glm::vec3 position) {
     this->model_matrix[3][2] = position[2];
 }
 
+void PhysicsObject::CleanRotate(glm::vec3 rotate){
+    glm::vec3 position = glm::vec3(this->model_matrix[3][0],
+                                   this->model_matrix[3][1],
+                                   this->model_matrix[3][2]);
+
+    this->model_matrix[3][0] = this->model_matrix[3][1] = this->model_matrix[3][2] = 0;
+
+    this->model_matrix = glm::rotate(model_matrix, glm::radians(rotate[0]), glm::vec3(1,0,0));
+    this->model_matrix = glm::rotate(model_matrix, glm::radians(rotate[1]), glm::vec3(0,1,0));
+    this->model_matrix = glm::rotate(model_matrix, glm::radians(rotate[2]), glm::vec3(0,0,1));
+
+    this->model_matrix[3][0] = position[0];
+    this->model_matrix[3][1] = position[1];
+    this->model_matrix[3][2] = position[2];
+}
+
+void PhysicsObject::RotateTo(glm::vec3 rotate){
+    glm::vec3 position = glm::vec3(this->model_matrix[3][0],
+                                   this->model_matrix[3][1],
+                                   this->model_matrix[3][2]);
+
+    this->model_matrix[3][0] = this->model_matrix[3][1] = this->model_matrix[3][2] = 0;
+
+    this->model_matrix[0][0] = 1;
+    this->model_matrix[1][1] = 1;
+    this->model_matrix[2][2] = 1;
+//    this->model_matrix[0][0] += this->model_matrix[1][0] += this->model_matrix[2][0];
+//    this->model_matrix[1][1] += this->model_matrix[0][1] += this->model_matrix[2][1];
+//    this->model_matrix[2][2] += this->model_matrix[0][2] += this->model_matrix[1][2];
+    this->model_matrix[0][1] =this->model_matrix[0][2] =this->model_matrix[1][0] =this->model_matrix[1][2] =this->model_matrix[2][0] =this->model_matrix[2][1] = 0.0f;
+
+    this->model_matrix = glm::rotate(model_matrix, glm::radians(rotate[0]), glm::vec3(1,0,0));
+    this->model_matrix = glm::rotate(model_matrix, glm::radians(rotate[1]), glm::vec3(0,1,0));
+    this->model_matrix = glm::rotate(model_matrix, glm::radians(rotate[2]), glm::vec3(0,0,1));
+
+    this->model_matrix[3][0] = position[0];
+    this->model_matrix[3][1] = position[1];
+    this->model_matrix[3][2] = position[2];
+}
+
 void PhysicsObject::AddForce(glm::vec3 force) {
     velocity += force;
 }

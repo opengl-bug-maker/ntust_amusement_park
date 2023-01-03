@@ -17,7 +17,10 @@ namespace ferwheel {
     double deg2rad(double deg);
 
     class car_t : public gpu_obj_t {
+        float my_rand;
+        float start_time;
         void init() override;
+        void draw(glm::mat4 modelMatrix) override;
 
     public:
         void bind() override;

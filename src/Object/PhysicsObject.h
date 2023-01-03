@@ -64,6 +64,10 @@ public:
 
     void MoveTo(glm::vec3 position);
 
+    void CleanRotate(glm::vec3 rotate);
+
+    void RotateTo(glm::vec3 rorate);
+
     void AddForce(glm::vec3 force);
 
 

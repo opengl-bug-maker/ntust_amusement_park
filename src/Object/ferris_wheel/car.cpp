@@ -4,13 +4,18 @@
 #include "ferwheel_namespace.h"
 #include "Object/BasicObject/cube.h"
 #include "Object/BasicObject/cylinder.h"
-
+#include "GameWindow.h"
 namespace ferwheel {
+
     car_t::car_t() {
         init();
     }
 
     void car_t::init() {
+//        srand(time(NULL));
+
+        this->my_rand = (((rand() % 32) - 16.0) / 32.00f);
+
         gpu_obj_t::init();
 
         uint8_t tmp_counter = 0;
@@ -55,10 +60,19 @@ namespace ferwheel {
         this->children[tmp_counter]->SettingRotate(rot(0,0,0));
         this->children[tmp_counter]->SettingTransform(pos(0,0,0));
         this->children[tmp_counter]->SettingScale(sca(0.5,0.5,3));
+
+        this->start_time = (GLfloat)(GameWindow::magic->nowTime.asSeconds()) + my_rand * 3.14;
     }
 
     void car_t::bind() {
         if (this->shader) return;
         gpu_obj_t::bind();
+    }
+
+    void car_t::draw(glm::mat4 modelMatrix){
+        float now_time = (GLfloat)(GameWindow::magic->nowTime.asSeconds());
+        this->RotateTo(rot(0,0,(cos((start_time - now_time) * 3) * 5)));
+        gpu_obj_t::update();
+        gpu_obj_t::draw(modelMatrix);
     }
 } // ferwheel::car_t
