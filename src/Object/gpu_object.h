@@ -55,4 +55,6 @@ public:
     bool isFaceToCamera() const;
 
     void setFaceToCamera(bool faceToCamera);
+
+    bool IsCollision(PhysicsObject *obj, glm::vec3 &collisionVector) override;
 };
