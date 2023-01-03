@@ -21,10 +21,12 @@ namespace ferwheel {
         float start_time;
         void init() override;
         void draw(glm::mat4 modelMatrix) override;
+        const char* car_texture_path;
+        const char* connector_texture_path;
 
     public:
         void bind() override;
-        car_t();
+        car_t(const char*, const char*);
     };
 
     class wheel_t : public gpu_obj_t {

@@ -18,6 +18,7 @@ void ferris_wheel_t::init() {
     c->SettingRotate(rot(0,0,330));
     c->Move(pos(-4.9, 8.5, 4.5));
     c->SettingScale(sca(0.5,10,0.5));
+    c->SetTexture("../Images/steel.png");
     this->addChildren(c);
 
 
@@ -25,18 +26,21 @@ void ferris_wheel_t::init() {
     c->SettingRotate(rot(0,0,30));
     c->Move(pos(4.9, 8.5, 4.5));
     c->SettingScale(sca(0.5,10,0.5));
+    c->SetTexture("../Images/steel.png");
     this->addChildren(c);
 
     c = new cube;
     c->SettingRotate(rot(0,0,330));
     c->Move(pos(-4.9, 8.5, -4.5));
     c->SettingScale(sca(0.5,10,0.5));
+    c->SetTexture("../Images/steel.png");
     this->addChildren(c);
 
     c = new cube;
     c->SettingRotate(rot(0,0,30));
     c->Move(pos(4.9, 8.5, -4.5));
     c->SettingScale(sca(0.5,10,0.5));
+    c->SetTexture("../Images/steel.png");
     this->addChildren(c);
 
     ferwheel::wheel_t* wheel = new ferwheel::wheel_t;

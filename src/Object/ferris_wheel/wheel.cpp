@@ -32,6 +32,7 @@ namespace ferwheel {
             c->SettingTransform(pos(0,0,3.5));
             c->SettingScale(sca(10,1,0.5));
             this->addChildren(c);
+            c->SetTexture("../Images/purple_metal.png");
             rows[i*2 + 0] = c;
 
             c = new cube;
@@ -39,18 +40,20 @@ namespace ferwheel {
             c->SettingTransform(pos(0,0,-3.5));
             c->SettingScale(sca(10,1,0.5));
             this->addChildren(c);
+            c->SetTexture("../Images/purple_metal.png");
             rows[i*2 + 1] = c;
+
 
             car_t* car = nullptr;
 
-            car = new car_t;
+            car = new car_t("../Images/blue_metal.png", "../Images/blue_metal.png");
             car->setName("carL");
             car->SettingRotate(rot(0,0,0));
             car->SettingTransform(L_pos);
             car->SettingScale(sca(1,1,1));
             this->addChildren(car);
 
-            car = new car_t;
+            car = new car_t("../Images/red_metal.jpg", "../Images/red_metal.jpg");
             car->setName("carR");
             car->SettingRotate(rot(0,0,0));
             car->SettingTransform(R_pos);

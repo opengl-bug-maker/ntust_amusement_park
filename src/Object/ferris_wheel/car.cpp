@@ -7,7 +7,9 @@
 #include "GameWindow.h"
 namespace ferwheel {
 
-    car_t::car_t() {
+    car_t::car_t(const char* texture_path, const char* connector_texture_path) {
+        this->car_texture_path = texture_path;
+        this->connector_texture_path = connector_texture_path;
         init();
     }
 
@@ -25,6 +27,7 @@ namespace ferwheel {
         this->children[tmp_counter]->SettingRotate(rot(30,0,0));
         this->children[tmp_counter]->SettingScale(sca(0.05,1.9,0.05));
 
+
         ++tmp_counter;
         this->addChildren(new cylinder); // connector
         this->children[tmp_counter]->SettingTransform(pos(0, -1.768, 0.9));
@@ -36,30 +39,37 @@ namespace ferwheel {
         this->children[tmp_counter]->SettingRotate(rot(0,0,0));
         this->children[tmp_counter]->SettingTransform(pos(0,-4.3,1.75));
         this->children[tmp_counter]->SettingScale(sca(1.5,1,0.25));
+         this->children[tmp_counter]->SetTexture(car_texture_path);
 
         ++tmp_counter;
         this->addChildren(new cube); // side
         this->children[tmp_counter]->SettingRotate(rot(0,0,0));
         this->children[tmp_counter]->SettingTransform(pos(0,-4.3,-1.75));
         this->children[tmp_counter]->SettingScale(sca(1.5,1,0.25));
+        this->children[tmp_counter]->SetTexture(string(this->car_texture_path));
 
         ++tmp_counter;
         this->addChildren(new cube); // bottom
         this->children[tmp_counter]->SettingRotate(rot(0, 0, 0));
         this->children[tmp_counter]->SettingTransform(pos(0.25,-5.05,0));
         this->children[tmp_counter]->SettingScale(sca(1.25,0.25,1.5));
+        this->children[tmp_counter]->SetTexture(string(this->car_texture_path));
+
 
         ++tmp_counter;
         this->addChildren(new cube); // back
         this->children[tmp_counter]->SettingRotate(rot(0,0,0));
         this->children[tmp_counter]->SettingTransform(pos(-1.25,-4.3,0));
         this->children[tmp_counter]->SettingScale(sca(0.25,1,1.5));
+        this->children[tmp_counter]->SetTexture(string(this->car_texture_path));
 
         ++tmp_counter;
         this->addChildren(new cube); // top bar
         this->children[tmp_counter]->SettingRotate(rot(0,0,0));
         this->children[tmp_counter]->SettingTransform(pos(0,0,0));
         this->children[tmp_counter]->SettingScale(sca(0.5,0.5,3));
+        this->children[tmp_counter]->SetTexture("../Images/purple_metal.png");
+
 
         this->start_time = (GLfloat)(GameWindow::magic->nowTime.asSeconds()) + my_rand * 3.14;
     }
