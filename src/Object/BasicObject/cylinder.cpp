@@ -15,7 +15,7 @@ double to_degree(double x) {
 vector<vector<double>> cal_cylinder_vertices() {
     //glBegin(GL_QUAD_STRIP);
     vector<vector<double>> ret_vertices;
-    const int rate = 5;
+    const int rate = 2;
     vector<double> upper_origin = { 0, 1, 0 };
     vector<double> lower_origin = { 0, -1, 0 };
     for (int j = 0; j <= 360; j += rate) {
