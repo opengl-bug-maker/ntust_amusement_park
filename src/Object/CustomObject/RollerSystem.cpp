@@ -27,7 +27,7 @@ void RollerSystem::init() {
 //
 //    element;
 
-    Move(glm::vec3(0,-8,0));
+//    Move(glm::vec3(0,-8,0));
 
     gpu_obj_t* car = new cube();
     car->setName("rollCar");

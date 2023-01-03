@@ -109,6 +109,14 @@ void GameWindow::InitObjects() {
 
     gpu_obj_t* c;
 
+    for(int i = 0; i < 10; i++){
+        c = new cube();
+        c->SettingTransform(glm::vec3 (5, -i, 5));
+        c->SettingScale(glm::vec3(0.2f, 0.2f, 0.2f));
+        c->SetGravity(false);
+        gpuObjs.push_back(c);
+    }
+
 //     gpu_obj_t* c = new cube();
     /*c->setName("x cube");
     c->SettingTransform(glm::vec3(3, 0, 0));

@@ -154,12 +154,6 @@ bool gpu_obj_t::IsCollision(PhysicsObject *obj, glm::vec3 &collisionVector) {
     for(auto objChild : ((gpu_obj_t*)obj)->children)
         if(this->IsCollision(objChild, collisionVector))
             return true;
-//    if(obj->getName() == "player")
-//        cout << getName() << " " << to_string(children.size()) << " " << obj->getName() << endl;
-//    if(obj->getName() == "rollCar")
-//        cout << getName() << " " << to_string(children.size()) << " " << obj->getName() << endl;
-//    if(getName() == "rollCar" && obj->getName() == "player")
-//        cout << getName() << " " << to_string(children.size()) << " " << obj->getName() << endl;
     bool bbb = PhysicsObject::IsCollision(obj, collisionVector);
     if(getName() == "player" && obj->getName() == "rollCar"){
 //        cout << getName() << " " << to_string(children.size()) << " " << obj->getName() << "   " << to_string(bbb) << endl;
