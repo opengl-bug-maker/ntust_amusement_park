@@ -121,13 +121,13 @@ void RollerSystem::init() {
 void RollerSystem::bind() {
     if (this->shader) return;
 
-    this->shader = new Shader(
-            nullptr,
-            nullptr,
-            nullptr,
-            nullptr,
-            nullptr
-    );
+//    this->shader = new Shader(
+//            nullptr,
+//            nullptr,
+//            nullptr,
+//            nullptr,
+//            nullptr
+//    );
 
     gpu_obj_t::bind();
 }

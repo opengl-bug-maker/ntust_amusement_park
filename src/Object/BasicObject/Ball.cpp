@@ -148,7 +148,7 @@ void Ball::draw(glm::mat4 modelMatrix) {
     glBindVertexArray(vao->vao);
 
 //    glDrawElements(GL_TRIANGLES, vao->element_amount * 3, GL_UNSIGNED_INT, 0);
-    glPatchParameteri(GL_PATCH_VERTICES, 3);
+//    glPatchParameteri(GL_PATCH_VERTICES, 3);
     glDrawElements(GL_PATCHES, vao->element_amount * 3, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 

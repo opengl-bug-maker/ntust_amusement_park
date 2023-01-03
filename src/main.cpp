@@ -14,10 +14,10 @@ void EatInput(){
 }
 
 int main() {
-    GameWindow win(sf::VideoMode(1600, 1200), "SFML window");
+    GameWindow win(sf::VideoMode(800, 600), "SFML window");
 //    std::thread listen(EatInput);
 //    listen.detach();
     win.run();
 //    str = "end";
-    return EXIT_SUCCESS;
+    return 0;
 }

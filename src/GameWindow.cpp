@@ -75,7 +75,7 @@ void GameWindow::InitObjects() {
     piece->SettingTransform(glm::vec3(3, 0, 3));
     piece->SetGravity(false);
     gpuObjs.push_back(piece);
-
+//
     gpu_obj_t* ball = new Ball();
     ball->setName("ball");
     ball->SettingScale(glm::vec3 (1, 0.1, 1));
@@ -148,7 +148,6 @@ void GameWindow::InitObjects() {
     c->SettingScale(glm::vec3(1, 1, 1));
     c->SetGravity(false);
     gpuObjs.push_back(c);
-//        cc->addChildren(c);
 
 
     rs = new RollerSystem();
@@ -156,12 +155,12 @@ void GameWindow::InitObjects() {
     rs->SetGravity(false);
     gpuObjs.push_back(rs);
 
-//    c = new ferris_wheel_t;
-//    c->setName("ferris_wheel 0");
-//    c->SettingTransform(glm::vec3(0, 0, 0));
-//    c->SettingScale(glm::vec3(1,1,1));
-//    c->SetGravity(false);
-//    gpuObjs.push_back(c);
+    c = new ferris_wheel_t;
+    c->setName("ferris_wheel 0");
+    c->SettingTransform(glm::vec3(0, 0, 0));
+    c->SettingScale(glm::vec3(1,1,1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
 
     //gpuObjs.push_back(cc);
 //endregion
@@ -216,10 +215,10 @@ void GameWindow::run() {
 
         for(auto objs : gpuObjs) objs->UpdatePosition(deltaTime);
 
-        if(rs->isRunning()){
-            firstPersonCamera.Bias(rs->GetTrainDir());
-            Player->MoveTo(rs->GetTrainPos() - glm::vec3(0, 6, 0));
-        }
+//        if(rs->isRunning()){
+//            firstPersonCamera.Bias(rs->GetTrainDir());
+//            Player->MoveTo(rs->GetTrainPos() - glm::vec3(0, 6, 0));
+//        }
 
         firstPersonCamera.setPosition(Player->GetPosition() + glm::vec3(0, 1, 0));
 
@@ -231,10 +230,14 @@ void GameWindow::run() {
 
             camera->handle(event);
 
-            if (event.type == sf::Event::Closed)
-                close();
-            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-                close();
+            if (event.type == sf::Event::Closed){
+                close();return;
+            }
+
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape){
+                close();return;
+            }
+
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Num1){
                 camera = (camera == &firstPersonCamera) ? ((Camera*)&arcBall) : ((Camera*)&firstPersonCamera);
             }
@@ -253,7 +256,7 @@ void GameWindow::run() {
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_TEXTURE_2D);
 //        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glViewport(0, 0, 1600, 1200);
+        glViewport(0, 0, 800, 600);
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
