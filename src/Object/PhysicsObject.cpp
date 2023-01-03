@@ -53,6 +53,18 @@ void PhysicsObject::MoveTo(glm::vec3 position) {
     this->model_matrix[3][0] = position[0];
     this->model_matrix[3][1] = position[1];
     this->model_matrix[3][2] = position[2];
+    if(collider)
+        this->collider->SetPosition(position);
+}
+
+void PhysicsObject::PhysicsMove(glm::vec3 distance) {
+    if(GravityObject){
+        this->model_matrix[3][0] += distance[0];
+        this->model_matrix[3][1] += distance[1];
+        this->model_matrix[3][2] += distance[2];
+        if(collider)
+            this->collider->Translate(distance);
+    }
 }
 
 void PhysicsObject::CleanRotate(glm::vec3 rotate){

@@ -8,8 +8,8 @@
 #include "ICollider.h"
 
 class BoxCollider : public ICollider{
-    glm::vec3 center = glm::vec3(0), size = glm::vec3(1);
 public:
+    glm::vec3 center = glm::vec3(0), size = glm::vec3(1);
     BoxCollider();
 
     BoxCollider(const glm::vec3 &center, const glm::vec3 &size);

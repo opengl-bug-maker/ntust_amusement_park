@@ -30,6 +30,7 @@ void RollerSystem::init() {
     Move(glm::vec3(0,-8,0));
 
     gpu_obj_t* car = new cube();
+    car->setName("rollCar");
     addChildren(car);
 
     SettingRails = vector<RailPoint>();
@@ -100,12 +101,20 @@ void RollerSystem::init() {
 
     VirtualRails = arcPoints;
 
-    for(auto p : VirtualRails){
+    for(int i = 0; i < VirtualRails.size(); i++){
         gpu_obj_t* c = new cube();
-        c->SettingTransform(p.pos);
+        c->setName("roll " + to_string(i));
+        c->SettingTransform(VirtualRails[i].pos);
         c->SettingScale(glm::vec3(0.03f,0.03f,0.03f));
         addChildren(c);
     }
+
+//    for(auto p : VirtualRails){
+//        gpu_obj_t* c = new cube();
+//        c->SettingTransform(p.pos);
+//        c->SettingScale(glm::vec3(0.03f,0.03f,0.03f));
+//        addChildren(c);
+//    }
 
 }
 

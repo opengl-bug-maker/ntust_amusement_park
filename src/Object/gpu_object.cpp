@@ -4,6 +4,12 @@
 glm::mat4 gpu_obj_t::projection_matrix;
 glm::mat4 gpu_obj_t::view_matrix;
 
+ostream& operator<<(ostream& os, const glm::vec3 & v)
+{
+    os << " x : " << v.x << " y : " << v.y << " z : " << v.z;
+    return os;
+}
+
 gpu_obj_t::gpu_obj_t() {
 
 }
@@ -104,6 +110,7 @@ void gpu_obj_t::draw(glm::mat4 modelMatrix) {
     if(this->shader)
 	    this->shader->Use();
     else { return; }
+    sf::Texture::bind(this->sf_texture);
 
     glUniformMatrix4fv(
             glGetUniformLocation(this->shader->Program, "u_projection"), 1, GL_FALSE, glm::value_ptr(gpu_obj_t::projection_matrix));
@@ -119,6 +126,7 @@ void gpu_obj_t::draw(glm::mat4 modelMatrix) {
 	glBindVertexArray(0);
 
 	glUseProgram(0);
+    sf::Texture::bind(nullptr);
 }
 
 bool gpu_obj_t::isVisible() const {
@@ -135,4 +143,34 @@ bool gpu_obj_t::isFaceToCamera() const {
 
 void gpu_obj_t::setFaceToCamera(bool faceToCamera) {
     gpu_obj_t::faceToCamera = faceToCamera;
+}
+
+bool gpu_obj_t::IsCollision(PhysicsObject *obj, glm::vec3 &collisionVector) {
+    for(auto child : children){
+        for(auto objChild : ((gpu_obj_t*)obj)->children)
+            if(child->IsCollision(objChild, collisionVector))
+                return true;
+    }
+    for(auto objChild : ((gpu_obj_t*)obj)->children)
+        if(this->IsCollision(objChild, collisionVector))
+            return true;
+//    if(obj->getName() == "player")
+//        cout << getName() << " " << to_string(children.size()) << " " << obj->getName() << endl;
+//    if(obj->getName() == "rollCar")
+//        cout << getName() << " " << to_string(children.size()) << " " << obj->getName() << endl;
+//    if(getName() == "rollCar" && obj->getName() == "player")
+//        cout << getName() << " " << to_string(children.size()) << " " << obj->getName() << endl;
+    bool bbb = PhysicsObject::IsCollision(obj, collisionVector);
+    if(getName() == "player" && obj->getName() == "rollCar"){
+//        cout << getName() << " " << to_string(children.size()) << " " << obj->getName() << "   " << to_string(bbb) << endl;
+//        cout << ((BoxCollider*)this->collider)->center << " | " << ((BoxCollider*)this->collider)->size << " || ";
+//        cout << ((BoxCollider*)((gpu_obj_t*)obj)->collider)->center << " | " << ((BoxCollider*)((gpu_obj_t*)obj)->collider)->size << endl;
+
+    }
+    return bbb;
+}
+
+void gpu_obj_t::SetTexture(string str) {
+    this->sf_texture = new sf::Texture();
+    this->sf_texture->loadFromFile(str);
 }

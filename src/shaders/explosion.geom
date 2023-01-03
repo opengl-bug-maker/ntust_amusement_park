@@ -32,28 +32,50 @@ vec3 GetNormal()
 void main() {    
     
     vec3 normal = GetNormal();
-    for(float i = 0; i<20.0f; i+=1.0f){
-        gl_Position = gl_in[0].gl_Position+i;
-        gs_out.TexCoords = gs_in[0].texCoords;
-        gs_out.color = vec3(1.0f, 0.0f, 0.0f);
-        //gs_out.TexCoords = gs_in[0].texCoords;
-        //gs_out.color = gs_in[0].color+vec3(1.0f, 1.0f, 1.0f);
-        EmitVertex();
+    gl_Position = gl_in[0].gl_Position;
+    gs_out.TexCoords = gs_in[0].texCoords;
+    gs_out.color = vec3(1.0f, 0.0f, 0.0f);
+    //gs_out.TexCoords = gs_in[0].texCoords;
+    //gs_out.color = gs_in[0].color+vec3(1.0f, 1.0f, 1.0f);
+    EmitVertex();
 
-        gl_Position = gl_in[1].gl_Position+i;
-        gs_out.TexCoords = gs_in[1].texCoords;
-        gs_out.color = vec3(0.0f, 1.0f, 0.0f);
-        //gs_out.TexCoords = gs_in[1].texCoords;
-        //gs_out.color = gs_in[1].color+vec3(1.0f, 1.0f, 1.0f);
-        EmitVertex();
+    gl_Position = gl_in[1].gl_Position;
+    gs_out.TexCoords = gs_in[1].texCoords;
+    gs_out.color = vec3(0.0f, 1.0f, 0.0f);
+    //gs_out.TexCoords = gs_in[1].texCoords;
+    //gs_out.color = gs_in[1].color+vec3(1.0f, 1.0f, 1.0f);
+    EmitVertex();
 
-        gl_Position = gl_in[2].gl_Position+i;
-        gs_out.TexCoords = gs_in[2].texCoords;
-        gs_out.color = vec3(0.0f, 0.0f, 1.0f);
-        //gs_out.TexCoords = gs_in[2].texCoords;
-        //gs_out.color = gs_in[2].color+vec3(1.0f, 1.0f, 1.0f);
-        EmitVertex();
-    }
+    gl_Position = gl_in[2].gl_Position;
+    gs_out.TexCoords = gs_in[2].texCoords;
+    gs_out.color = vec3(0.0f, 0.0f, 1.0f);
+    //gs_out.TexCoords = gs_in[2].texCoords;
+    //gs_out.color = gs_in[2].color+vec3(1.0f, 1.0f, 1.0f);
+    EmitVertex();
+    EndPrimitive();
+
+
+    vec3 normal = GetNormal();
+    gl_Position = gl_in[0].gl_Position;
+    gs_out.TexCoords = gs_in[0].texCoords;
+    gs_out.color = vec3(1.0f, 0.0f, 0.0f);
+    //gs_out.TexCoords = gs_in[0].texCoords;
+    //gs_out.color = gs_in[0].color+vec3(1.0f, 1.0f, 1.0f);
+    EmitVertex();
+
+    gl_Position = gl_in[1].gl_Position;
+    gs_out.TexCoords = gs_in[1].texCoords;
+    gs_out.color = vec3(0.0f, 1.0f, 0.0f);
+    //gs_out.TexCoords = gs_in[1].texCoords;
+    //gs_out.color = gs_in[1].color+vec3(1.0f, 1.0f, 1.0f);
+    EmitVertex();
+
+    gl_Position = gl_in[2].gl_Position;
+    gs_out.TexCoords = gs_in[2].texCoords;
+    gs_out.color = vec3(0.0f, 0.0f, 1.0f);
+    //gs_out.TexCoords = gs_in[2].texCoords;
+    //gs_out.color = gs_in[2].color+vec3(1.0f, 1.0f, 1.0f);
+    EmitVertex();
 
 
     EndPrimitive();

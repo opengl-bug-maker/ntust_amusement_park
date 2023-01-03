@@ -10,6 +10,12 @@
 GameWindow* GameWindow::magic;
 glm::vec3 GameWindow::FallDownVector = glm::vec3(0, -20, 0);
 
+//ostream& operator<<(ostream& os, const glm::vec3 & v)
+//{
+//    os << " x : " << v.x << " y : " << v.y << " z : " << v.z;
+//    return os;
+//}
+
 GameWindow::GameWindow() {}
 
 GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : RenderWindow(mode, title, sf::Style::Default, sf::ContextSettings(
@@ -34,7 +40,7 @@ GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : Ren
 //region setting
     prevTime = deltaClock.getElapsedTime();
 
-    arcBall.setup(40, 8, 0, 0, 0);
+    arcBall.setup(40, 100, -0.5, 0, 0);
     firstPersonCamera.setup(60, 8, 0, 0, 0);
     firstPersonCamera.lock();
 
@@ -47,29 +53,51 @@ GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : Ren
 
 void GameWindow::InitObjects() {
 //region object
+    gpu_obj_t* plane = new cube();
+    plane->setName("plane");
+    plane->SettingTransform(glm::vec3(0, -11.7, 0));
+    plane->SettingScale(glm::vec3(10, 2, 10));
+    plane->SetGravity(false);
+    gpuObjs.push_back(plane);
+
     Player = new player();
-    Player->setName("player");
 //    Player = new cube();
+    Player->setName("player");
 //    Player->SetGravity(false);
     Player->SettingTransform(glm::vec3(0, 30, 8));
     Player->SettingScale(glm::vec3(1, 2, 1));
 //    Player->SettingTransform(glm::vec3(0, 10, 0));
     gpuObjs.push_back(Player);
 
-    gpu_obj_t* plane = new cube();
-    plane->setName("plane");
-    plane->SettingTransform(glm::vec3(0, -10, 0));
-    plane->SettingScale(glm::vec3(10, 0.1, 10));
-    plane->SetGravity(false);
-    gpuObjs.push_back(plane);
 
     gpu_obj_t* piece = new Piece();
+    piece->setName("piece");
+    piece->SettingTransform(glm::vec3(3, 0, 3));
     piece->SetGravity(false);
     gpuObjs.push_back(piece);
 
-//    gpu_obj_t* ball = new Ball();
-//    ball->SetGravity(false);
-//    gpuObjs.push_back(ball);
+    gpu_obj_t* ball = new Ball();
+    ball->setName("ball");
+    ball->SettingScale(glm::vec3 (1, 0.1, 1));
+    ball->SetGravity(false);
+    gpuObjs.push_back(ball);
+
+    gpu_obj_t* smallCube = new cube();
+    smallCube->SetGravity(false);
+    smallCube->SettingTransform(glm::vec3(0, -3, 0));
+    smallCube->SetTexture("../Images/particle.png");
+    smallCube->setName("smallCube");
+
+    gpu_obj_t* bigCube = new cube();
+    bigCube->setName("bigCube");
+    bigCube->SettingTransform(glm::vec3(5, 0, 0));
+    bigCube->SetGravity(false);
+    bigCube->SetTexture("../Images/uvtemplate.jpg");
+    bigCube->addChildren(smallCube);
+
+    gpuObjs.push_back(bigCube);
+
+
 
 //    gpu_obj_t* cc = new cube();
 //    cc->setName("big cube");
@@ -108,7 +136,7 @@ void GameWindow::InitObjects() {
 
     c = new particle_t();
     c->setName("particle 0");
-    c->SettingTransform(glm::vec3(0, -20, 0));
+    c->SettingTransform(glm::vec3(0, 0, 0));
     c->SettingScale(glm::vec3(1, 1, 1));
     c->SetGravity(false);
     gpuObjs.push_back(c);
@@ -116,6 +144,7 @@ void GameWindow::InitObjects() {
 
 
     rs = new RollerSystem();
+    rs->setName("roller system");
     rs->SetGravity(false);
     gpuObjs.push_back(rs);
 
@@ -153,8 +182,13 @@ void GameWindow::run() {
         for(int i = 0; i < gpuObjs.size(); i++){
             for(int j = 0; j < gpuObjs.size(); j++){
                 if(gpuObjs[i]->IsCollision(gpuObjs[j], collisionVec)){
-                    if(glm::length(collisionVec) > 0.1)
-                        gpuObjs[i]->Move(collisionVec);
+                    if(glm::length(collisionVec) > 0.1){
+//                        cout << gpuObjs[i]->getName() << " phm " << collisionVec << endl;
+//                        cout << "posi : " << gpuObjs[i]->GetPosition() << endl;
+                        gpuObjs[i]->PhysicsMove(collisionVec);
+                    }
+//                        cout << gpuObjs[i]->getName() << " phm " << collisionVec << endl;
+//                        cout << "posi : " << gpuObjs[i]->GetPosition() << endl;
                     glm::vec3 coll = glm::normalize(collisionVec);
                     if(glm::abs(glm::length(coll)) > 0.000000001)
                         gpuObjs[i]->addVelocity(coll * (-glm::dot(gpuObjs[i]->getVelocity(), coll)));
@@ -215,6 +249,8 @@ void GameWindow::run() {
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
+        if(camera == &arcBall) Player->setVisible(true);
+        else Player->setVisible(false);
         
         //draw(sprite1);
         //draw(sprite2);

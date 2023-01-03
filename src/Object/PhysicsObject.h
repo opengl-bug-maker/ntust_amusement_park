@@ -62,6 +62,8 @@ public:
 
     void Move(glm::vec3 distance);
 
+    void PhysicsMove(glm::vec3 distance);
+
     void MoveTo(glm::vec3 position);
 
     void CleanRotate(glm::vec3 rotate);
