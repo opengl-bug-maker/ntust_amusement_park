@@ -16,7 +16,7 @@ void Piece::init() {
 
     this->data_block_size = { 3, 2 };
 
-    this->data = new float[] {
+    this->data = new float[20] {
             -1, -1, 0,
             1, -1, 0,
             1, 1, 0,
@@ -35,7 +35,7 @@ void Piece::init() {
 
     this->vao->element_amount = 2;
 
-    element = new GLuint[]{
+    element = new GLuint[6]{
         0, 1, 2,
         0, 2, 3
     };

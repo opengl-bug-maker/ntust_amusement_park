@@ -18,7 +18,7 @@ void Ball::init() {
 //
     this->data_block_size = {3};
 //
-    this->data = new float []{
+    this->data = new float [36]{
             0.000f,  0.000f,  1.000f,
             0.894f,  0.000f,  0.447f,
             0.276f,  0.851f,  0.447f,
@@ -35,7 +35,7 @@ void Ball::init() {
 //
     this->vao->element_amount = 20;
 //
-    element = new GLuint[] {
+    element = new GLuint[60] {
             2, 1, 0,
             3, 2, 0,
             4, 3, 0,

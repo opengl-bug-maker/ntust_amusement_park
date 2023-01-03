@@ -193,7 +193,7 @@ void cube::bind() {
             nullptr, nullptr, nullptr,
             "pure_texture.frag");
     this->shader->Use();
-    this->sf_texture.loadFromFile("../Images/uvtemplate.jpg");
+//    this->sf_texture.loadFromFile("../Images/uvtemplate.jpg");
     //this->texture = new Texture2D();
     //this->texture->set2dTexture("../Images/skybox/back.jpg");
     //this->texture->bind(0);
