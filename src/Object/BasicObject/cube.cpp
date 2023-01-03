@@ -133,37 +133,37 @@ void cube::init() {
         1.0f, 1.0f,
         0.0f, 1.0f,
     //3
-        0.0f, 0.0f,
-        0.0f, 0.0f,
+        1.0f, 0.0f,
+        0.0f, 1.0f,
         0.0f, 0.0f,
     //4
-        0.0f, 0.0f,
-        0.0f, 0.0f,
-        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
     //5
-        0.0f, 0.0f,
-        0.0f, 0.0f,
+        1.0f, 0.0f,
+        0.0f, 1.0f,
         0.0f, 0.0f,
     //6
         0.0f, 0.0f,
-        0.0f, 0.0f,
-        0.0f, 0.0f,
+        0.0f, 1.0f,
+        1.0f, 1.0f,
     //7
         0.0f, 0.0f,
-        0.0f, 0.0f,
-        0.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
     //8
-        0.0f, 0.0f,
-        0.0f, 0.0f,
-        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
+        0.0f, 1.0f,
     //9
-        0.0f, 0.0f,
-        0.0f, 0.0f,
+        1.0f, 0.0f,
+        0.0f, 1.0f,
         0.0f, 0.0f,
     //10
         0.0f, 0.0f,
-        0.0f, 0.0f,
-        0.0f, 0.0f,
+        1.0f, 0.0f,
+        1.0f, 1.0f,
     //11
         0.0f, 0.0f,    
         1.0f, 1.0f,
@@ -189,11 +189,11 @@ void cube::bind() {
             "explosion.frag");*/
     this->shader = new
         Shader(
-            "box.vert",
+            "pure_texture.vert",
             nullptr, nullptr, nullptr,
-            "box.frag");
+            "pure_texture.frag");
     this->shader->Use();
-    //this->sf_texture.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/uvtemplate.jpg");
+    this->sf_texture.loadFromFile("../Images/uvtemplate.jpg");
     //this->texture = new Texture2D();
     //this->texture->set2dTexture("../Images/skybox/back.jpg");
     //this->texture->bind(0);
