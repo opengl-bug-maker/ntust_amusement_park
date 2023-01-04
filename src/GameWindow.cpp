@@ -127,7 +127,28 @@ void GameWindow::InitObjects() {
 
     c = new particle_t();
     c->setName("particle 0");
-    c->SettingTransform(glm::vec3(0, 0, 0));
+    c->SettingTransform(glm::vec3(45, -15.7, 45));
+    c->SettingScale(glm::vec3(1, 1, 1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
+
+    c = new particle_t();
+    c->setName("particle 0");
+    c->SettingTransform(glm::vec3(-45, -15.7, -45));
+    c->SettingScale(glm::vec3(1, 1, 1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
+
+    c = new particle_t();
+    c->setName("particle 0");
+    c->SettingTransform(glm::vec3(-45, -15.7, 45));
+    c->SettingScale(glm::vec3(1, 1, 1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
+
+    c = new particle_t();
+    c->setName("particle 0");
+    c->SettingTransform(glm::vec3(45, -15.7, -45));
     c->SettingScale(glm::vec3(1, 1, 1));
     c->SetGravity(false);
     gpuObjs.push_back(c);
