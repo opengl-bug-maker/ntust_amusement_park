@@ -52,12 +52,13 @@ GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : Ren
 }
 
 void GameWindow::InitObjects() {
+    cube::init_data();
     cylinder::init_data();
 //region object
     gpu_obj_t* plane = new cube();
     plane->setName("plane");
     plane->SettingTransform(glm::vec3(0, -11.7, 0));
-    plane->SettingScale(glm::vec3(10, 2, 10));
+    plane->SettingScale(glm::vec3(50, 2, 50));
     plane->SetGravity(false);
     plane->SetTexture("../Images/skybox/top.jpg");
     gpuObjs.push_back(plane);
@@ -134,6 +135,7 @@ void GameWindow::InitObjects() {
 
     rs = new RollerSystem();
     rs->setName("roller system");
+    c->SettingTransform(glm::vec3(0, -9.7, 0));
     rs->SetGravity(false);
     gpuObjs.push_back(rs);
 

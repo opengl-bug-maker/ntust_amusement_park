@@ -16,9 +16,11 @@ GLuint* general_element = new GLuint[mxN];
 cylinder::cylinder() {
     init();
 }
+
 float to_radius(float x) {
     return (x / 180.0f) * M_PI;
 }
+
 vector<vector<vector<float>>> cal_cylinder_prop() {
     //glBegin(GL_QUAD_STRIP);
     vector<vector<float>> ret_vertices, ret_text, ret_norm;
@@ -93,42 +95,16 @@ void cylinder::init() {
     gpu_obj_t::init();
 
     this->model_matrix = glm::scale(this->model_matrix, glm::vec3(1.0f, 1.0f, 1.0f));
-//    auto cylinder_prop = cal_cylinder_prop();
-//    vector<vector<float>> cylinder_vertices = cylinder_prop[0];
-//    vector<vector<float>> cylinder_text = cylinder_prop[1];
-//    vector<vector<float>> cylinder_norm = cylinder_prop[2];
-    this->vertexCount = vertexN;
 
-    const int elementN = vertexN;
-    //this->data_block_size = { 3, 3, 2};
+    this->vertexCount = ::vertexN;
+
     this->data_block_size = { 3,3,2, 3}; //vs, nor, uv, color
-    this->data = general_data;
-//    this->data = new float[cylinder_vertices.size()*11];
-//    int i_data = 0;
-//    for (int i = 0; i < cylinder_vertices.size(); ++i) {
-//        data[i_data++] = cylinder_vertices[i][0]; //x
-//        data[i_data++] = cylinder_vertices[i][1]; //y
-//        data[i_data++] = cylinder_vertices[i][2]; //z
-//    }
-//    for (int i = 0; i < cylinder_vertices.size(); ++i) {
-//        data[i_data++] = cylinder_norm[i][0]; //x
-//        data[i_data++] = cylinder_norm[i][1]; //y
-//        data[i_data++] = cylinder_norm[i][2]; //z
-//    }
-//    for (int i = 0; i < cylinder_text.size(); ++i) {
-//        data[i_data++] = cylinder_text[i][0]; //u
-//        data[i_data++] = cylinder_text[i][1]; //v
-//    }
-//    for (int i = 0; i < cylinder_vertices.size(); ++i) {
-//        data[i_data++] = 0; //x
-//        data[i_data++] = 0; //y
-//        data[i_data++] = 0; //z
-//    }
-    this->vao->element_amount = vertexN;
-    //cout<< i_data<<endl;
-    //this->element = new GLuint[vertexN];
-    //for (int i = 0; i < elementN; ++i) { element[i] = i; }
-    this->element = general_element;
+
+    this->data = ::general_data;
+
+    this->vao->element_amount = ::vertexN;
+
+    this->element = ::general_element;
 
     collider = new BoxCollider();
 }
@@ -136,19 +112,18 @@ void cylinder::init() {
 void cylinder::bind() {
     if (this->shader) return;
 
-
     this->shader = new
+
     Shader(
         "light_texture_color.vert",
         nullptr, nullptr, nullptr,
         "light_texture_color.frag");
+
     this->shader->Use();
 
     glUniform1f(
         glGetUniformLocation(this->shader->Program, "start_time"), (GLfloat)(GameWindow::magic->nowTime.asSeconds()));
-    
 
-    //general input
     gpu_obj_t::bind();
 }
 void cylinder::draw(glm::mat4 modelMatrix) {
@@ -170,30 +145,27 @@ void cylinder::init_data(){
     vector<vector<float>> cylinder_norm = cylinder_prop[2];
 
 
-    vertexN = cylinder_vertices.size();
-    //this->data_block_size = { 3, 3, 2};
-
-
+    ::vertexN = cylinder_vertices.size();
 
     int i_data = 0;
     for (int i = 0; i < cylinder_vertices.size(); ++i) {
-        general_data[i_data++] = cylinder_vertices[i][0]; //x
-        general_data[i_data++] = cylinder_vertices[i][1]; //y
-        general_data[i_data++] = cylinder_vertices[i][2]; //z
+        ::general_data[i_data++] = cylinder_vertices[i][0]; //x
+        ::general_data[i_data++] = cylinder_vertices[i][1]; //y
+        ::general_data[i_data++] = cylinder_vertices[i][2]; //z
     }
     for (int i = 0; i < cylinder_vertices.size(); ++i) {
-        general_data[i_data++] = cylinder_norm[i][0]; //x
-        general_data[i_data++] = cylinder_norm[i][1]; //y
-        general_data[i_data++] = cylinder_norm[i][2]; //z
+        ::general_data[i_data++] = cylinder_norm[i][0]; //x
+        ::general_data[i_data++] = cylinder_norm[i][1]; //y
+        ::general_data[i_data++] = cylinder_norm[i][2]; //z
     }
     for (int i = 0; i < cylinder_text.size(); ++i) {
-        general_data[i_data++] = cylinder_text[i][0]; //u
-        general_data[i_data++] = cylinder_text[i][1]; //v
+        ::general_data[i_data++] = cylinder_text[i][0]; //u
+        ::general_data[i_data++] = cylinder_text[i][1]; //v
     }
     for (int i = 0; i < cylinder_vertices.size(); ++i) {
-        general_data[i_data++] = 0; //x
-        general_data[i_data++] = 0; //y
-        general_data[i_data++] = 0; //z
+        ::general_data[i_data++] = 0; //x
+        ::general_data[i_data++] = 0; //y
+        ::general_data[i_data++] = 0; //z
     }
-    for (int i = 0; i < vertexN; ++i) { general_element[i] = i; }
+    for (int i = 0; i < vertexN; ++i) { ::general_element[i] = i; }
 }
