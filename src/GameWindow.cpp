@@ -250,6 +250,63 @@ void gray(sf::Image& img){
         }
     }
 }
+const int mxN = 256;
+int nIntensityCount[mxN], nSumR[mxN], nSumG[mxN], nSumB[mxN];
+//Paint(img, 5, 5, 900, 1200)
+void Paint(sf::Image& img, const int nRadius_i,const float fIntensityLevels_i,const int nWidth_i,const int nHeight_i)
+{
+    sf::Image ret = img;
+
+    // nRadius pixels are avoided from left, right top, and bottom edges.
+    for( int nY = nRadius_i; nY < nHeight_i - nRadius_i; nY++){
+        for( int nX = nRadius_i; nX < nWidth_i - nRadius_i; nX++){
+            // Find intensities of nearest nRadius pixels in four direction.
+            for(int i = 0; i<256; ++i){
+                nSumB[i] = nSumG[i] = nSumR[i] = nIntensityCount[i] = 0;
+            }
+            for( int nY_O = -nRadius_i; nY_O <= nRadius_i; nY_O++ ){
+                for( int nX_O = -nRadius_i; nX_O <= nRadius_i; nX_O++ ){
+                    //int nR, nG, nB;
+                    //nR = nG = nB = 0;
+                    int nR = img.getPixel(nX+nX_O, nY + nY_O).r;
+                    int nG = img.getPixel(nX+nX_O, nY + nY_O).g;
+                    int nB = img.getPixel(nX+nX_O, nY + nY_O).b;
+                    //int nR = pbyDataIn_i[( nX+nX_O) * 3  + ( nY + nY_O ) * nBytesInARow ];
+                    //int nG = pbyDataIn_i[( nX+nX_O) * 3  + ( nY + nY_O ) * nBytesInARow + 1];
+                    //int nB = pbyDataIn_i[( nX+nX_O) * 3  + ( nY + nY_O ) * nBytesInARow + 2];
+
+                    // Find intensity of RGB value and apply intensity level.
+                    int nCurIntensity =  ( ( ( nR + nG + nB ) / 3.0 ) * fIntensityLevels_i ) / 255;
+                    if( nCurIntensity > 255 )
+                        nCurIntensity = 255;
+                    int i = nCurIntensity;
+                    nIntensityCount[i]++;
+
+                    nSumR[i]+= nR;
+                    nSumG[i] +=nG;
+                    nSumB[i] +=nB;
+                }
+            }
+
+            int nCurMax = 0;
+            int nMaxIndex = 0;
+            for( int nI = 0; nI < 256; nI++ )
+            {
+                if( nIntensityCount[nI] > nCurMax )
+                {
+                    nCurMax = nIntensityCount[nI];
+                    nMaxIndex = nI;
+                }
+            }
+            sf::Color res = sf::Color(nSumR[nMaxIndex] / nCurMax, nSumG[nMaxIndex] / nCurMax, nSumB[nMaxIndex] / nCurMax);
+            ret.setPixel(nX, nY, res);
+//            pbyDataOut_o[( nX) * 3 + ( nY ) * nBytesInARow ] = nSumR[nMaxIndex] / nCurMax;
+//            pbyDataOut_o[( nX) * 3 + ( nY ) * nBytesInARow + 1] = nSumG[nMaxIndex] / nCurMax;
+//            pbyDataOut_o[( nX) * 3 + ( nY ) * nBytesInARow + 2] = nSumB[nMaxIndex] / nCurMax;
+        }
+    }
+    img = ret;
+}
 void gauss(sf::Image& img){
 
 
@@ -264,7 +321,7 @@ void gauss(sf::Image& img){
             d += kernel[i][j];
         }
     }
-    cout<< d<<endl;
+    //cout<< d<<endl;
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
                 float sum_r = 0, sum_g = 0, sum_b = 0;
@@ -303,6 +360,21 @@ void pencil(sf::Image& img){
         }
     }
 
+}
+
+void resize(const sf::Image& originalImage, sf::Image& resizedImage)
+{
+    const sf::Vector2u originalImageSize{ originalImage.getSize() };
+    const sf::Vector2u resizedImageSize{ resizedImage.getSize() };
+    for (unsigned int y{ 0u }; y < resizedImageSize.y; ++y)
+    {
+        for (unsigned int x{ 0u }; x < resizedImageSize.x; ++x)
+        {
+            unsigned int origX{ static_cast<unsigned int>(static_cast<double>(x) / resizedImageSize.x * originalImageSize.x) };
+            unsigned int origY{ static_cast<unsigned int>(static_cast<double>(y) / resizedImageSize.y * originalImageSize.y) };
+            resizedImage.setPixel(x, y, originalImage.getPixel(origX, origY));
+        }
+    }
 }
 void GameWindow::run() {
     for(auto objs : gpuObjs) objs->bind();
@@ -431,16 +503,21 @@ void GameWindow::run() {
         //cout<< this->getSize().x<<" "<<this->getSize().y<<endl;
         win_text.update((*this), 0, 0);
         sf::Image tmpImg = win_text.copyToImage();
-        pencil(tmpImg);
-//        gray_and_inv(tmpImg);
-//        gauss(tmpImg);
-        //tmpImg.saveToFile ("tmp.jpg");
-        win_text.loadFromImage(tmpImg);
+        sf::Image small_img;
+        small_img.create(120, 90);
+        resize(tmpImg, small_img);
+
         sf::Sprite fb;
+        fb = sf::Sprite(win_text);
+        //Paint(small_img, 5, 2, 120, 90);
+        //tmpImg.saveToFile ("tmp.jpg");
+        win_text.loadFromImage(small_img);
+
 
         //fb.setTexture(win_text, true);
         //clear();
         this->result->draw(sf::Sprite(win_text));
+        //this->result->draw(fb);
         this->result->display();
         this->draw((sf::Sprite(win_text)));
         display();
