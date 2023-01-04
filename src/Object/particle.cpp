@@ -123,7 +123,7 @@ void particle_t::draw(glm::mat4 modelMatrix){
     int x = FindUnusedParticle();
 	for (int i = 0; i < new_particlesN; i++) {
 		int particleIndex = FindUnusedParticle();
-		ParticlesContainer[particleIndex].life = 300.0f; // This particle will live 5 seconds.
+		ParticlesContainer[particleIndex].life = 250.0f; // This particle will live 5 seconds.
 		ParticlesContainer[particleIndex].pos = glm::vec3(0, 0, 0);
         ParticlesContainer[particleIndex].blasted = false;
         ParticlesContainer[particleIndex].blast_dir = glm::vec2((rand() % 2000 - 1000.0f) / 1000.0f,(rand() % 2000 - 1000.0f) / 1000.0f);

@@ -6,6 +6,7 @@ layout (triangle_strip, max_vertices =7) out;
 in VS_OUT {
     vec2 texture_coordinate;
     vec3 color;
+    float height;
 } gs_in[];
 
 out GS_OUT{
@@ -41,7 +42,8 @@ void main() {
     float bias = 1;
     float delta_time = now_time-start_time;
     gl_Position = gl_in[0].gl_Position;
-    if(delta_time>160){
+    float height = gs_in[0].height;
+    if( height>65){
         if(gs_in[0].texture_coordinate[0]>gs_in[0].texture_coordinate[1]){
             gl_Position+=vec4(bias, bias, 0, 0);
         }
@@ -59,7 +61,7 @@ void main() {
 
 
     gl_Position = gl_in[1].gl_Position;
-    if(delta_time>160){
+    if(height>65){
         if(gs_in[0].texture_coordinate[0]>gs_in[0].texture_coordinate[1]){
             gl_Position+=vec4(bias, bias, 0, 0);
         }
@@ -77,7 +79,7 @@ void main() {
 
 
     gl_Position = gl_in[2].gl_Position;
-    if(delta_time>160){
+    if(height>65){
         if(gs_in[0].texture_coordinate[0]>gs_in[0].texture_coordinate[1]){
             gl_Position+=vec4(bias, bias, 0, 0);
         }

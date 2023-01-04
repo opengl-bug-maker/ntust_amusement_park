@@ -15,29 +15,15 @@ RollerSystem::RollerSystem() {
 void RollerSystem::init() {
     gpu_obj_t::init();
 
-//    this->model_matrix;
-//
-//    this->vertexCount;
-//
-//    this->data_block_size;
-//
-//    this->data;
-//
-//    this->vao->element_amount;
-//
-//    element;
-
-//    Move(glm::vec3(0,-8,0));
-
-    gpu_obj_t* car = new cube();
+    gpu_obj_t* car = new locomotive_t();
     car->setName("rollCar");
     addChildren(car);
 
     SettingRails = vector<RailPoint>();
-    SettingRails.emplace_back(glm::vec3(10,0,0), glm::vec3(0,0,0));
-    SettingRails.emplace_back(glm::vec3(0,0,10), glm::vec3(0,0,0));
-    SettingRails.emplace_back(glm::vec3(-10,0,0), glm::vec3(0,0,0));
-    SettingRails.emplace_back(glm::vec3(0,0,-10), glm::vec3(0,0,0));
+    SettingRails.emplace_back(glm::vec3(30,0,0), glm::vec3(0,0,0));
+    SettingRails.emplace_back(glm::vec3(0,0,30), glm::vec3(0,0,0));
+    SettingRails.emplace_back(glm::vec3(-30,0,0), glm::vec3(0,0,0));
+    SettingRails.emplace_back(glm::vec3(0,0,-30), glm::vec3(0,0,0));
 
 
     float checkPointsCount = 20;
@@ -106,28 +92,13 @@ void RollerSystem::init() {
         c->setName("roll " + to_string(i));
         c->SettingTransform(VirtualRails[i].pos);
         c->SettingScale(glm::vec3(0.03f,0.03f,0.03f));
+        c->SetTexture("../Images/steel.png");
         addChildren(c);
     }
-
-//    for(auto p : VirtualRails){
-//        gpu_obj_t* c = new cube();
-//        c->SettingTransform(p.pos);
-//        c->SettingScale(glm::vec3(0.03f,0.03f,0.03f));
-//        addChildren(c);
-//    }
-
 }
 
 void RollerSystem::bind() {
     if (this->shader) return;
-
-//    this->shader = new Shader(
-//            nullptr,
-//            nullptr,
-//            nullptr,
-//            nullptr,
-//            nullptr
-//    );
 
     gpu_obj_t::bind();
 }
