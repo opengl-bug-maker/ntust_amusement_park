@@ -67,7 +67,7 @@ void GameWindow::InitObjects() {
     Player = new player();
     Player->setName("player");
 //    Player->SetGravity(false);
-    Player->SettingTransform(glm::vec3(0, 30, 8));
+    Player->SettingTransform(glm::vec3(0, -7, 20));
     Player->SettingScale(glm::vec3(1, 2, 1));
 //    Player->SettingTransform(glm::vec3(0, 10, 0));
     gpuObjs.push_back(Player);
@@ -155,11 +155,11 @@ void GameWindow::InitObjects() {
     gpuObjs.push_back(c);
 
 
-    rs = new RollerSystem();
-    rs->setName("roller system");
-    rs->SettingTransform(glm::vec3(0, -10, 0));
-    rs->SetGravity(false);
-    gpuObjs.push_back(rs);
+//    rs = new RollerSystem();
+//    rs->setName("roller system");
+//    rs->SettingTransform(glm::vec3(0, -10, 0));
+//    rs->SetGravity(false);
+//    gpuObjs.push_back(rs);
 
     c = new ferris_wheel_t;
     c->setName("ferris_wheel 0");
@@ -179,6 +179,22 @@ void GameWindow::InitObjects() {
     c->setName("coach 0");
     c->SettingTransform(glm::vec3(2.5, -10, 5));
     c->SettingScale(glm::vec3(1,1,1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
+
+    c = new creeper_t;
+    c->setName("creeper 0");
+    c->SettingTransform(glm::vec3(-20,-10,20));
+    c->SettingRotate(glm::vec3(0,90,0));
+    c->SettingRotate(glm::vec3(3,3,3));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
+
+    c = new creeper_t;
+    c->setName("creeper 1");
+    c->SettingTransform(glm::vec3(20,-10,20));
+    c->SettingRotate(glm::vec3(0,90,0));
+    c->SettingRotate(glm::vec3(3,3,3));
     c->SetGravity(false);
     gpuObjs.push_back(c);
 
@@ -229,9 +245,11 @@ void GameWindow::run() {
 
         for(auto objs : gpuObjs) objs->UpdatePosition(deltaTime);
 
-        if(rs->isRunning()){
-            firstPersonCamera.Bias(rs->GetTrainDir());
-            Player->MoveTo(rs->GetTrainPos() - glm::vec3(0, 6, 0));
+        if(rs != nullptr){
+            if(rs->isRunning()){
+                firstPersonCamera.Bias(rs->GetTrainDir());
+                Player->MoveTo(rs->GetTrainPos() - glm::vec3(0, 6, 0));
+            }
         }
 
         firstPersonCamera.setPosition(Player->GetPosition() + glm::vec3(0, 1, 0));

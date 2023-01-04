@@ -14,6 +14,7 @@ void EatInput(){
 }
 
 int main() {
+    srand(time(NULL));
     GameWindow win(sf::VideoMode(1200, 900), "SFML window");
 //    std::thread listen(EatInput);
 //    listen.detach();

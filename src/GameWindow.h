@@ -27,6 +27,7 @@
 #include "Object/ferris_wheel/ferris_wheel.h"
 #include "Object/train/locomotive.h"
 #include "Object/train/coach.h"
+#include "Object/creeper/creeper.h"
 #include "Object/CustomObject/explosion_test.h"
 #include "CustomObject/RollerSystem.h"
 
