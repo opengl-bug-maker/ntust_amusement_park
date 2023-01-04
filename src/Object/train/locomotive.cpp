@@ -25,6 +25,7 @@ void locomotive_t::init() {
     cyl->SettingRotate(rot(90,0,0));
     cyl->SettingScale(sca(0.3,0.05,0.3));
     cyl->SetTexture("../Images/train_wheel.png");
+    cyl->collider = nullptr;
     this->addChildren(cyl);
 
     cyl = new cylinder; // Left wheel 1
@@ -32,6 +33,7 @@ void locomotive_t::init() {
     cyl->SettingRotate(rot(90,0,0));
     cyl->SettingScale(sca(0.3,0.05,0.3));
     cyl->SetTexture("../Images/train_wheel.png");
+    cyl->collider = nullptr;
     this->addChildren(cyl);
 
     cyl = new cylinder; // Left wheel 2
@@ -39,6 +41,7 @@ void locomotive_t::init() {
     cyl->SettingRotate(rot(90,0,0));
     cyl->SettingScale(sca(0.3,0.05,0.3));
     cyl->SetTexture("../Images/train_wheel.png");
+    cyl->collider = nullptr;
     this->addChildren(cyl);
 
     cyl = new cylinder; // Left wheel 3
@@ -46,6 +49,7 @@ void locomotive_t::init() {
     cyl->SettingRotate(rot(90,0,0));
     cyl->SettingScale(sca(0.3,0.05,0.3));
     cyl->SetTexture("../Images/train_wheel.png");
+    cyl->collider = nullptr;
     this->addChildren(cyl);
 
     cyl = new cylinder; // Right wheel 0
@@ -53,6 +57,7 @@ void locomotive_t::init() {
     cyl->SettingRotate(rot(90,0,0));
     cyl->SettingScale(sca(0.3,0.05,0.3));
     cyl->SetTexture("../Images/train_wheel.png");
+    cyl->collider = nullptr;
     this->addChildren(cyl);
 
     cyl = new cylinder; // Right wheel 1
@@ -60,6 +65,7 @@ void locomotive_t::init() {
     cyl->SettingRotate(rot(90,0,0));
     cyl->SettingScale(sca(0.3,0.05,0.3));
     cyl->SetTexture("../Images/train_wheel.png");
+    cyl->collider = nullptr;
     this->addChildren(cyl);
 
     cyl = new cylinder; // Right wheel 2
@@ -67,6 +73,7 @@ void locomotive_t::init() {
     cyl->SettingRotate(rot(90,0,0));
     cyl->SettingScale(sca(0.3,0.05,0.3));
     cyl->SetTexture("../Images/train_wheel.png");
+    cyl->collider = nullptr;
     this->addChildren(cyl);
 
     cyl = new cylinder; // Right wheel 3
@@ -74,6 +81,7 @@ void locomotive_t::init() {
     cyl->SettingRotate(rot(90,0,0));
     cyl->SettingScale(sca(0.3,0.05,0.3));
     cyl->SetTexture("../Images/train_wheel.png");
+    cyl->collider = nullptr;
     this->addChildren(cyl);
 
 
@@ -81,6 +89,7 @@ void locomotive_t::init() {
     c->SettingTransform(train_ns::train_pos(0, 0.5, 0));
     c->SettingScale(sca(1.8, 0.1, 0.8));
     c->SetTexture("../Images/locomotive.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     cyl = new cylinder; // boiler
@@ -88,6 +97,7 @@ void locomotive_t::init() {
     cyl->SettingRotate(rot(0,0,90));
     cyl->SettingScale(sca(0.6,0.925,0.6));
     cyl->SetTexture("../Images/red_metal.jpg");
+    cyl->collider = nullptr;
     this->addChildren(cyl);
 
     cyl = new cylinder; // chimney of boiler
@@ -95,6 +105,7 @@ void locomotive_t::init() {
     cyl->SettingRotate(rot(0,0,0));
     cyl->SettingScale(sca(0.3,0.5,0.3));
     cyl->SetTexture("../Images/gray_chimney.jpg");
+    cyl->collider = nullptr;
     this->addChildren(cyl);
 
 //
@@ -103,6 +114,7 @@ void locomotive_t::init() {
     ball->SettingScale(sca(0.325,0.6,0.6));
     ball->SetGravity(false);
     ball->color = glm::vec4(0.4,0,0,1);
+    ball->collider = nullptr;
     this->addChildren(ball);
 
 //    ball = new Ball; // make boiler fancy
@@ -117,6 +129,7 @@ void locomotive_t::init() {
     ball->SettingScale(sca(0.1,0.7,0.7));
     ball->color = glm::vec4(0.7,0.1,0.1,1);
     ball->SetGravity(false);
+    ball->collider = nullptr;
     this->addChildren(ball);
 
     ball = new Ball; // make boiler fancy
@@ -124,6 +137,7 @@ void locomotive_t::init() {
     ball->SettingScale(sca(0.1,0.7,0.7));
     ball->color = glm::vec4(0.47,0,0,1);
     ball->SetGravity(false);
+    ball->collider = nullptr;
     this->addChildren(ball);
 
     // driver room
@@ -131,54 +145,63 @@ void locomotive_t::init() {
     c->SettingTransform(train_ns::train_pos(0.3, 1.475, 0.7));
     c->SettingScale(sca(0.1,0.875,0.1));
     c->SetTexture("../Images/locomotive.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube;
     c->SettingTransform(train_ns::train_pos(0.3, 1.475, -0.7));
     c->SettingScale(sca(0.1,0.875,0.1));
     c->SetTexture("../Images/locomotive.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube;
     c->SettingTransform(train_ns::train_pos(1.7, 1.475, 0.7));
     c->SettingScale(sca(0.1,0.875,0.1));
     c->SetTexture("../Images/locomotive.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube;
     c->SettingTransform(train_ns::train_pos(1.7, 1.475, -0.7));
     c->SettingScale(sca(0.1,0.875,0.1));
     c->SetTexture("../Images/locomotive.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube;
     c->SettingTransform(train_ns::train_pos(1, 1, 0.7));
     c->SettingScale(sca(0.6,0.4,0.1));
     c->SetTexture("../Images/locomotive.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube;
     c->SettingTransform(train_ns::train_pos(1, 1, -0.7));
     c->SettingScale(sca(0.6,0.4,0.1));
     c->SetTexture("../Images/locomotive.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube;
     c->SettingTransform(train_ns::train_pos(1.7, 1, 0));
     c->SettingScale(sca(0.1,0.4,0.6));
     c->SetTexture("../Images/locomotive.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube;
     c->SettingTransform(train_ns::train_pos(0.3, 1.2, 0));
     c->SettingScale(sca(0.1,0.6,0.6));
     c->SetTexture("../Images/locomotive.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube;
     c->SettingTransform(train_ns::train_pos(0.825, 2.45, 0));
     c->SettingScale(sca(0.975,0.1,0.8));
     c->SetTexture("../Images/locomotive.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
 }

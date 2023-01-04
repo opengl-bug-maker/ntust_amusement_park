@@ -21,7 +21,7 @@ namespace ferwheel {
         gpu_obj_t::init();
 
         for(uint8_t i = 0; i < 4; ++i){
-                    
+
             pos L_pos = pos(9.5f*cos(deg2rad(45*i)), 9.5f*sin(deg2rad(45*i)), 0);
             pos R_pos = pos(9.5f*cos(deg2rad(45*i+180)), 9.5f*sin(deg2rad(45*i+180)), 0);
 
@@ -31,6 +31,7 @@ namespace ferwheel {
             c->SettingRotate(rot(0,0,45*i));
             c->SettingTransform(pos(0,0,3.5));
             c->SettingScale(sca(10,1,0.5));
+            c->collider = nullptr;
             this->addChildren(c);
             c->SetTexture("../Images/purple_metal.png");
             rows[i*2 + 0] = c;
@@ -40,6 +41,7 @@ namespace ferwheel {
             c->SettingTransform(pos(0,0,-3.5));
             c->SettingScale(sca(10,1,0.5));
             this->addChildren(c);
+            c->collider = nullptr;
             c->SetTexture("../Images/purple_metal.png");
             rows[i*2 + 1] = c;
 

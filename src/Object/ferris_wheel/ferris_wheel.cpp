@@ -10,7 +10,7 @@ ferris_wheel_t::ferris_wheel_t() {
 }
 
 void ferris_wheel_t::init() {
-        gpu_obj_t::init();
+    gpu_obj_t::init();
 
     cube* c = nullptr;
 
@@ -19,6 +19,7 @@ void ferris_wheel_t::init() {
     c->Move(pos(-4.9, 8.5, 4.5));
     c->SettingScale(sca(0.5,10,0.5));
     c->SetTexture("../Images/steel.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
 
@@ -27,6 +28,7 @@ void ferris_wheel_t::init() {
     c->Move(pos(4.9, 8.5, 4.5));
     c->SettingScale(sca(0.5,10,0.5));
     c->SetTexture("../Images/steel.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube;
@@ -34,6 +36,7 @@ void ferris_wheel_t::init() {
     c->Move(pos(-4.9, 8.5, -4.5));
     c->SettingScale(sca(0.5,10,0.5));
     c->SetTexture("../Images/steel.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube;
@@ -41,6 +44,7 @@ void ferris_wheel_t::init() {
     c->Move(pos(4.9, 8.5, -4.5));
     c->SettingScale(sca(0.5,10,0.5));
     c->SetTexture("../Images/steel.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     ferwheel::wheel_t* wheel = new ferwheel::wheel_t;

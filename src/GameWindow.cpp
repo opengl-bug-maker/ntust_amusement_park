@@ -3,9 +3,10 @@
 //
 
 #include "GameWindow.h"
-//#include "Object/ferris_wheel/ferwheel_namespace.h"
 
 //#include "Object/gpu_object.h"
+
+bool FUCKYOU = false;
 
 GameWindow* GameWindow::magic;
 glm::vec3 GameWindow::FallDownVector = glm::vec3(0, -20, 0);
@@ -62,8 +63,8 @@ void GameWindow::InitObjects() {
 //region object
     gpu_obj_t* plane = new cube();
     plane->setName("plane");
-    plane->SettingTransform(glm::vec3(0, -10.5, 0));
-    plane->SettingScale(glm::vec3(50, 0.5, 50));
+    plane->SettingTransform(glm::vec3(0, -12, 0));
+    plane->SettingScale(glm::vec3(50, 2, 50));
     plane->SetGravity(false);
     plane->SetTexture("../Images/skybox/top.jpg");
 
@@ -73,8 +74,8 @@ void GameWindow::InitObjects() {
     Player = new player();
     Player->setName("player");
 //    Player->SetGravity(false);
-    Player->SettingTransform(glm::vec3(0, -7, 20));
-    Player->SettingScale(glm::vec3(1, 2, 1));
+    Player->SettingTransform(glm::vec3(0, 0, 20));
+    Player->SettingScale(glm::vec3(0.5, 2 ,0.5));
 //    Player->SettingTransform(glm::vec3(0, 10, 0));
     gpuObjs.push_back(Player);
 
@@ -412,6 +413,10 @@ void GameWindow::run() {
                 close();return;
             }
 
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F){
+                ::FUCKYOU = !::FUCKYOU;
+            }
+
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape){
                 close();return;
             }
@@ -459,14 +464,17 @@ void GameWindow::run() {
 //        }
 
         //cout<< this->getSize().x<<" "<<this->getSize().y<<endl;
-        win_text.update((*this), 0, 0);
-        sf::Image tmpImg = win_text.copyToImage();
-        en(tmpImg);
-        pencil(tmpImg);
-        win_text.loadFromImage(tmpImg);
-        this->result->draw(sf::Sprite(win_text));
+        if(FUCKYOU){
+            win_text.update((*this), 0, 0);
+            sf::Image tmpImg = win_text.copyToImage();
+            en(tmpImg);
+            pencil(tmpImg);
+            win_text.loadFromImage(tmpImg);
+            this->result->draw(sf::Sprite(win_text));
+            this->result->display();
+            //this->result->setActive();
+        }
         //this->result->draw(fb);
-        this->result->display();
         //this->draw((sf::Sprite(win_text)));
         display();
 //        win_text.update((*this), 0, 0);
