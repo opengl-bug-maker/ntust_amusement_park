@@ -18,7 +18,7 @@ glm::vec3 GameWindow::FallDownVector = glm::vec3(0, -20, 0);
 
 GameWindow::GameWindow() {}
 
-GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : RenderWindow(mode, title, sf::Style::Default, sf::ContextSettings(
+GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title, sf::RenderWindow* result_win) : RenderWindow(mode, title, sf::Style::Default, sf::ContextSettings(
         24, // depthBits
         8,  // stencilBits
         4,  // antialiasingLevel
@@ -26,6 +26,7 @@ GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : Ren
         3,   // minorVersion
         sf::ContextSettings::Core
 )) {
+    result = result_win;
     GameWindow::magic = this;
 //region glSetting
     if (!gladLoadGL()) {
@@ -50,6 +51,9 @@ GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : Ren
 //endregion
 
     InitObjects();
+
+
+    win_text.create(getSize().x, getSize().y);
 }
 
 void GameWindow::InitObjects() {
@@ -62,8 +66,10 @@ void GameWindow::InitObjects() {
     plane->SettingScale(glm::vec3(50, 0.5, 50));
     plane->SetGravity(false);
     plane->SetTexture("../Images/skybox/top.jpg");
-    gpuObjs.push_back(plane);
 
+
+
+    gpuObjs.push_back(plane);
     Player = new player();
     Player->setName("player");
 //    Player->SetGravity(false);
@@ -85,19 +91,19 @@ void GameWindow::InitObjects() {
 //    ball->SetGravity(false);
 //    gpuObjs.push_back(ball);
 
-//    gpu_obj_t* smallCube = new cube();
-//    smallCube->SetGravity(false);
-//    smallCube->SettingTransform(glm::vec3(0, -3, 0));
-//    smallCube->SetTexture("../Images/particle.png");
-//    smallCube->setName("smallCube");
-//
-//    gpu_obj_t* bigCube = new cube();
-//    bigCube->setName("bigCube");
-//    bigCube->SettingTransform(glm::vec3(5, 0, 0));
-//    bigCube->SetGravity(false);
-//    bigCube->SetTexture("../Images/uvtemplate.jpg");
-//    bigCube->addChildren(smallCube);
-//    gpuObjs.push_back(bigCube);
+    gpu_obj_t* smallCube = new cube();
+    smallCube->SetGravity(false);
+    smallCube->SettingTransform(glm::vec3(0, -3, 0));
+    smallCube->SetTexture("../Images/particle.png");
+    smallCube->setName("smallCube");
+
+    gpu_obj_t* bigCube = new cube();
+    bigCube->setName("bigCube");
+    bigCube->SettingTransform(glm::vec3(5, 0, 0));
+    bigCube->SetGravity(false);
+    bigCube->SetTexture("../Images/uvtemplate.jpg");
+    bigCube->addChildren(smallCube);
+    gpuObjs.push_back(bigCube);
 
 //    gpu_obj_t* cc = new cube();
 //    cc->setName("big cube");
@@ -155,18 +161,18 @@ void GameWindow::InitObjects() {
 //    gpuObjs.push_back(c);
 
 
-//    rs = new RollerSystem();
-//    rs->setName("roller system");
-//    rs->SettingTransform(glm::vec3(0, -10, 0));
-//    rs->SetGravity(false);
-//    gpuObjs.push_back(rs);
-
-//    c = new ferris_wheel_t;
-//    c->setName("ferris_wheel 0");
-//    c->SettingTransform(glm::vec3(0, -10, 0));
-//    c->SettingScale(glm::vec3(1,1,1));
-//    c->SetGravity(false);
-//    gpuObjs.push_back(c);
+    rs = new RollerSystem();
+    rs->setName("roller system");
+    rs->SettingTransform(glm::vec3(0, -10, 0));
+    rs->SetGravity(false);
+    gpuObjs.push_back(rs);
+//
+    c = new ferris_wheel_t;
+    c->setName("ferris_wheel 0");
+    c->SettingTransform(glm::vec3(0, -10, 0));
+    c->SettingScale(glm::vec3(1,1,1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
 
     c = new locomotive_t;
     c->setName("locomotive 0");
@@ -200,11 +206,111 @@ void GameWindow::InitObjects() {
 
 //endregion
 }
+//float kernel[5][5] = {
+//        {1, 4, 6, 4, 1},
+//        {4, 16, 24, 16, 4},
+//        {6, 24, 36, 24, 6},
+//        {4, 16, 24, 16, 4},
+//        {1, 4, 6, 4, 1}
+//};
+float kernel[7][7] = {
+        {0, 0, 0, 5, 0, 0, 0},
+        {0, 5, 18, 32, 18, 5, 0},
+        {0, 18, 64, 100, 64, 18, 0},
+        {5, 32, 100, 100, 100, 32, 5},
+        {0, 18, 64, 100, 64, 18, 0},
+        {0, 5, 18, 32, 18, 5, 0},
+        {0, 0, 0, 5, 0, 0, 0}
 
+};
+//float kernel[5][5] = {
+//        {1, 8, 12, 8, 1},
+//        {8, 16, 36, 16, 4},
+//        {6, 36, 72, 36, 6},
+//        {4, 16, 36, 16, 4},
+//        {1, 4, 6, 4, 1}
+//};
+const int height = 1200, width = 900;
+void gray_and_inv(sf::Image& img){
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            sf::Color c = img.getPixel(i, j);
+            int v = 0.299 *(float)c.r + 0.587*(float)c.g + 0.114*(float)c.b;
+            v = 255-v;
+            img.setPixel(i, j, sf::Color(v, v, v));
+        }
+    }
+}
+void gray(sf::Image& img){
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            sf::Color c = img.getPixel(i, j);
+            int v = 0.299 *(float)c.r + 0.587*(float)c.g + 0.114*(float)c.b;
+            img.setPixel(i, j, sf::Color(v, v, v));
+        }
+    }
+}
+void gauss(sf::Image& img){
+
+
+    float d = 0;
+//    for (int i = 0; i < 5; ++i) {
+//        for (int j = 0; j < 5; ++j) {
+//            kernel[i][j]*=2;
+//        }
+//    }
+    for (int i = 0; i < 7; ++i) {
+        for (int j = 0; j < 7; ++j) {
+            d += kernel[i][j];
+        }
+    }
+    cout<< d<<endl;
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+                float sum_r = 0, sum_g = 0, sum_b = 0;
+                for (int p = -3; p <= 3; ++p) {
+                    for (int q = -3; q <= 3; ++q) {
+                        int ni = i + p, nj = j + q;
+                        if (ni < 0 || nj < 0 || ni >= height || nj >= width) { continue; }
+                        //sum += t[k][ni][nj] * kernel[p + 2][q + 2];
+                        sf::Color c = img.getPixel(ni, nj);
+                        sum_r += c.r * kernel[p + 3][q + 3];
+                        sum_g += c.g * kernel[p + 3][q + 3];
+                        sum_b += c.b*kernel[p+3][q+3];
+                    }
+                }
+                img.setPixel(i, j, sf::Color(sum_r/d, sum_g/d, sum_b/d));
+        }
+    }
+}
+void pencil(sf::Image& img){
+
+    sf::Image gray_img = img;
+    sf::Image blurr_img = img;
+    gray(gray_img);
+    gray_and_inv(blurr_img);
+
+    gauss(blurr_img);
+    //def dodge(front,back): result=blurr*255/(255-gray)  result[result>255]=255 result[back==255]=255 return result.astype(‘uint8’)
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            float blurr_v = blurr_img.getPixel(i, j).r;
+            float gray_v = gray_img.getPixel(i, j).r;
+            if(255.0f-gray_v==0){gray_v+=2;}
+            int v = blurr_v*255.0f/(255.0f-gray_v);
+            v = std::min(255, v);
+            img.setPixel(i, j, sf::Color(v, v, v));
+        }
+    }
+
+}
 void GameWindow::run() {
     for(auto objs : gpuObjs) objs->bind();
 
     while (isOpen()) {
+
+
+
         nowTime = deltaClock.getElapsedTime();
         deltaTime = nowTime - prevTime;
 
@@ -292,6 +398,8 @@ void GameWindow::run() {
 
         clear();
 
+
+        //display();
         glClearStencil(0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
         glEnable(GL_DEPTH);
@@ -305,17 +413,40 @@ void GameWindow::run() {
         if(camera == &arcBall) Player->setVisible(true);
         else Player->setVisible(false);
         
-        //draw(sprite1);
-        //draw(sprite2);
+
 
         gpu_obj_t::projection_matrix = camera->getPerspectiveMatrix();
         gpu_obj_t::view_matrix = camera->getModelViewMatrix();
 
+
         for(auto objs : gpuObjs) objs->draw();
 
+//  fancy mirror (don't open, gpu killer)
+//        for(auto& obj:gpuObjs){
+//            if(obj->getName()=="plane"){
+//                (*obj->sf_texture) = win_text;
+//            }
+//        }
 
+        //cout<< this->getSize().x<<" "<<this->getSize().y<<endl;
+        win_text.update((*this), 0, 0);
+        sf::Image tmpImg = win_text.copyToImage();
+        pencil(tmpImg);
+//        gray_and_inv(tmpImg);
+//        gauss(tmpImg);
+        //tmpImg.saveToFile ("tmp.jpg");
+        win_text.loadFromImage(tmpImg);
+        sf::Sprite fb;
+
+        //fb.setTexture(win_text, true);
+        //clear();
+        this->result->draw(sf::Sprite(win_text));
+        this->result->display();
+        this->draw((sf::Sprite(win_text)));
         display();
-
+//        win_text.update((*this), 0, 0);
+//        sf::Image tmpImg = win_text.copyToImage();
+//        tmpImg.saveToFile ("tmp.jpg");
         prevTime = nowTime;
     }
 
