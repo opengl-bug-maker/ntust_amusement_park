@@ -1,4 +1,4 @@
-#version 440 core
+#version 410 core
 out vec4 f_color;
 
 in V_OUT {

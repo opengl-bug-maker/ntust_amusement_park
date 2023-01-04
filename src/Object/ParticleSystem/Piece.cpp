@@ -48,7 +48,7 @@ void Piece::bind() {
             "piece.vert",
             nullptr,
             nullptr,
-            nullptr,
+            "piece.geom",
             "piece.frag"
     );
 

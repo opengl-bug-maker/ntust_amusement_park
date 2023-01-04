@@ -27,7 +27,7 @@ void cube::init() {
 
     this->element = ::element;
 
-    collider = new BoxCollider();
+    collider = new BoxCollider(this);
 }
 
 void cube::bind() {

@@ -4,11 +4,11 @@
 glm::mat4 gpu_obj_t::projection_matrix;
 glm::mat4 gpu_obj_t::view_matrix;
 
-ostream& operator<<(ostream& os, const glm::vec3 & v)
-{
-    os << " x : " << v.x << " y : " << v.y << " z : " << v.z;
-    return os;
-}
+//ostream& operator<<(ostream& os, const glm::vec3 & v)
+//{
+//    os << " x : " << v.x << " y : " << v.y << " z : " << v.z;
+//    return os;
+//}
 
 gpu_obj_t::gpu_obj_t() {
 
@@ -74,6 +74,7 @@ void gpu_obj_t::update() {
     }
 }
 void gpu_obj_t::addChildren(gpu_obj_t* obj) {
+    obj->parent = this;
     children.push_back(obj);
 }
 
@@ -167,4 +168,49 @@ bool gpu_obj_t::IsCollision(PhysicsObject *obj, glm::vec3 &collisionVector) {
 void gpu_obj_t::SetTexture(string str) {
     this->sf_texture = new sf::Texture();
     this->sf_texture->loadFromFile(str);
+}
+
+void gpu_obj_t::SettingTransform(glm::vec3 transform) {
+    PhysicsObject::SettingTransform(transform);
+    for(auto child : children){
+        CollTransform(transform);
+    }
+}
+
+void gpu_obj_t::SettingScale(glm::vec3 scale) {
+    PhysicsObject::SettingScale(scale);
+    for(auto child : children){
+        CollTransform(scale);
+    }
+}
+
+void gpu_obj_t::Move(glm::vec3 distance) {
+    PhysicsObject::Move(distance);
+    for(auto child : children){
+        CollTransform(distance);
+    }
+}
+
+void gpu_obj_t::PhysicsMove(glm::vec3 distance) {
+    PhysicsObject::PhysicsMove(distance);
+    for(auto child : children){
+        CollTransform(distance);
+    }
+}
+
+void gpu_obj_t::MoveTo(glm::vec3 position) {
+    PhysicsObject::MoveTo(position);
+    for(auto child : children){
+        CollTransform(position);
+    }
+}
+
+glm::mat4 gpu_obj_t::GetRootMatrix() {
+    glm::mat4 mat = this->model_matrix;
+    gpu_obj_t* rt = this->parent;
+    while(rt != nullptr){
+        mat = rt->model_matrix * mat;
+        rt = rt->parent;
+    }
+    return mat;
 }

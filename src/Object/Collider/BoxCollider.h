@@ -6,13 +6,17 @@
 #define AMUSEMENTPARK_BOXCOLLIDER_H
 
 #include "ICollider.h"
+#include "PolygonCollider.h"
 
-class BoxCollider : public ICollider{
+class BoxCollider : public PolygonCollider {
 public:
-    glm::vec3 center = glm::vec3(0), size = glm::vec3(1);
-    BoxCollider();
+    explicit BoxCollider(gpu_obj_t *owner);
 
-    BoxCollider(const glm::vec3 &center, const glm::vec3 &size);
+//    BoxCollider(gpu_obj_t *owner, const std::vector<glm::vec3> &vertexes);
+//    glm::vec3 center = glm::vec3(0), size = glm::vec3(1);
+//    BoxCollider();
+
+//    BoxCollider(const glm::vec3 &center, const glm::vec3 &size);
 
     bool IsCollision(ICollider *collider, glm::vec3& collisionVector) override;
 
@@ -20,11 +24,13 @@ public:
 
     bool IsCollision(BallCollider *collider, glm::vec3& collisionVector) override;
 
-    void SetPosition(glm::vec3 position) override;
+    bool IsCollision(PolygonCollider *collider, glm::vec3 &collisionVector) override;
 
-    void Translate(glm::vec3 translate) override;
-
-    void Scale(glm::vec3 scale) override;
+//    void SetPosition(glm::vec3 position) override;
+//
+//    void Translate(glm::vec3 translate) override;
+//
+//    void Scale(glm::vec3 scale) override;
 };
 
 
