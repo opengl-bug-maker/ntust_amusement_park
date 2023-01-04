@@ -521,17 +521,17 @@ void GameWindow::MoveEvent() {
         newSpeed[1] = Player->getVelocity()[1];
         Player->setVelocity(newSpeed);
     }
-//    if(sf::Keyboard::isKeyPressed(sf::Keyboard::U)){
-//        if(rs != nullptr)
-//            if(((player*)Player)->state != player::OnTrain)
-//                rs->Run();
-//        ((player*)Player)->state = player::OnTrain;
-//    }
-//    if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){
-//        if(rs != nullptr)
-//            rs->GetOut();
-//        ((player*)Player)->state = player::Drop;
-//    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::U)){
+        if(rs != nullptr)
+            if(((player*)Player)->state != player::OnTrain)
+                rs->Run();
+        ((player*)Player)->state = player::OnTrain;
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){
+        if(rs != nullptr)
+            rs->GetOut();
+        ((player*)Player)->state = player::Drop;
+    }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Y)){
         for(auto obj : gpuObjs){
             if(obj->getName() == "big cube"){
