@@ -73,4 +73,6 @@ public:
     void PhysicsMove(glm::vec3 distance) override;
 
     void MoveTo(glm::vec3 position) override;
+
+    void lookMatrix();
 };

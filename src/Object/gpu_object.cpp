@@ -216,3 +216,28 @@ glm::mat4 gpu_obj_t::GetRootMatrix() {
     }
     return mat;
 }
+
+void gpu_obj_t::lookMatrix() {
+    if(this->collider != nullptr){
+        std::cout << getName() << std::endl;
+        ((PolygonCollider*)this->collider)->lookVertex();
+    }
+    for(auto c : children){
+        if(c->collider != nullptr){
+            std::cout << c->getName() << std::endl;
+            ((PolygonCollider*)c->collider)->lookVertex();
+        }
+    }
+//    if()
+//    if(owner == nullptr){
+//        cout << "look null\n";
+//        return;
+//    }
+//    gpu_obj_t* wee = owner;
+//    std::vector<glm::vec3> copyVer;
+//    std::cout << "look\n";
+//    for(auto v : vertexes){
+//        copyVer.emplace_back(wee->GetRootMatrix() * glm::vec4(v, 1.0f));
+////        std::cout << wee->GetRootMatrix() * glm::vec4(v, 1.0f) << std::endl;
+//    }
+}

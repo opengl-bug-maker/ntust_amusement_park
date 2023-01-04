@@ -357,6 +357,6 @@ void PolygonCollider::lookVertex() {
     std::cout << "look\n";
     for(auto v : vertexes){
         copyVer.emplace_back(wee->GetRootMatrix() * glm::vec4(v, 1.0f));
-//        std::cout << wee->GetRootMatrix() * glm::vec4(v, 1.0f) << std::endl;
+        std::cout << wee->GetRootMatrix() * glm::vec4(v, 1.0f) << std::endl;
     }
 }
