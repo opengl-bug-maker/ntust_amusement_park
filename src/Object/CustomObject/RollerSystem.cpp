@@ -24,24 +24,37 @@ void RollerSystem::init() {
 //    SettingRails.emplace_back(glm::vec3(0,0,30), glm::vec3(0,0,0));
 //    SettingRails.emplace_back(glm::vec3(-30,0,0), glm::vec3(0,0,0));
 //    SettingRails.emplace_back(glm::vec3(0,0,-30), glm::vec3(0,0,0));
-    SettingRails.emplace_back(glm::vec3( 24.4376 , 4.60531,- 5.5879 ),glm::vec3(0,1,0));
-    SettingRails.emplace_back(glm::vec3( 10.119  , 4.09605,-14.5177 ),glm::vec3(0,1,0));
-    SettingRails.emplace_back(glm::vec3(  0.61136, 3.58679,-29.5161 ),glm::vec3(0,1,0));
-    SettingRails.emplace_back(glm::vec3(  5.82873, 3.07753,-43.9883 ),glm::vec3(0,1,0));
-    SettingRails.emplace_back(glm::vec3( 25.423  , 3.78877,-38.7872 ),glm::vec3(0,1,0));
-    SettingRails.emplace_back(glm::vec3( 23.0204 , 4.5    ,-14.6543 ),glm::vec3(0,1,0));
-    SettingRails.emplace_back(glm::vec3(- 0.0006 ,14.1773 ,-19.0165 ),glm::vec3(0,1,0));
-    SettingRails.emplace_back(glm::vec3(-19.7794 ,14.048  ,-18.8115 ),glm::vec3(0,1,0));
-    SettingRails.emplace_back(glm::vec3(-37.6214 ,11.2994 ,- 6.4530 ),glm::vec3(0,1,0));
-    SettingRails.emplace_back(glm::vec3(-34.6161 , 5.73964, 16.2978 ),glm::vec3(0,1,0));
-    SettingRails.emplace_back(glm::vec3(-25.2172 , 5.72988, 26.8965 ),glm::vec3(0,1,0));
-    SettingRails.emplace_back(glm::vec3(-12.1806 ,  6.55993, 31.0868),glm::vec3(0,1,0));
-    SettingRails.emplace_back(glm::vec3(  0.86990, 15.5824 , 36.1424),glm::vec3(-0.573223,0.78033,-0.25));
-    SettingRails.emplace_back(glm::vec3(- 8.21242, 29.1848 , 28.8183),glm::vec3(0,-1,0));
-    SettingRails.emplace_back(glm::vec3(-19.5402 , 14.3613 , 26.6618),glm::vec3(1,0,0));
-    SettingRails.emplace_back(glm::vec3(- 2.75134,  5.58337, 26.9809),glm::vec3(0,1,0));
-    SettingRails.emplace_back(glm::vec3( 12.42   , 5.4271 , 26.0657 ),glm::vec3(0,1,0));
-    SettingRails.emplace_back(glm::vec3( 25.2382 , 5.11456, 10.1207 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3( 24.4376,  4.6053, - 5.5879 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(  8.4258,  4.0960, -45.5349 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(  1.6561, 56.2198, -29.4959 ),glm::vec3(1,0,0));
+    SettingRails.emplace_back(glm::vec3( 28.7198, 18.347 , -10.1328 ),glm::vec3(0,0.707107,-0.707107));
+    SettingRails.emplace_back(glm::vec3( 31.2873, 18.3991, -32.9051 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3( 18.138 , 17.2923, -31.4484 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(- 0.5373, 14.1773, -26.028  ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(-19.5865, 21.6255, -24.9693 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(-33.773 , 24.181 , -17.865  ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(-37.108 , 22.6669,   2.0535 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(-17.4583, 14.392 ,  10.1164 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(-14.0127, 14.7046, -12.7979 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(-33.3044, 13.4192, -19.252  ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(-37.188 , 12.8637,   1.7739 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(-17.4222,  9.1016,  10.1348 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(-14.0748,  5.9124, -13.0954 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(-32.8957,  5.1773, -19.6089 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(-36.9618,  7.1070,   1.9531 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(-34.6161,  5.7396,  16.2978 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(-25.2172,  5.7298,  26.8965 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(- 6.3491,  6.5599,  30.1369 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3( 12.771 , 15.5824,  34.0232 ),glm::vec3(-0.573223,0.78033,-0.25));
+    SettingRails.emplace_back(glm::vec3(- 5.8817, 42.5551,  28.3654 ),glm::vec3(0,-1,0));
+    SettingRails.emplace_back(glm::vec3(-29.2402, 14.3613,  20.3836 ),glm::vec3(1,0,0));
+    SettingRails.emplace_back(glm::vec3(- 0.7366,  25.792,  23.7124 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3( 15.6581,  54.71 ,  24.4367 ),glm::vec3(0,0.707107,-0.707107));
+    SettingRails.emplace_back(glm::vec3( 24.6502,  38.518,  13.7291 ),glm::vec3(0.707107,0,0.707107));
+    SettingRails.emplace_back(glm::vec3( 25.0052, 39.7606, - 2.6705 ),glm::vec3(0.5,-0.5,0.707107));
+    SettingRails.emplace_back(glm::vec3( 40.3765, 34.1784,  25.3005 ),glm::vec3(0.5,0.5,-0.707107));
+    SettingRails.emplace_back(glm::vec3( 38.959 , 14.3604,  17.3599 ),glm::vec3(0,1,0));
+
 
 
 
@@ -77,7 +90,7 @@ void RollerSystem::init() {
     }
 
 //    float minLength = 3.0f, maxLength = 4.0f;
-    float minLength = 0.5f, maxLength = 0.6f;
+    float minLength = 0.2f, maxLength = 0.3f;
     vector<RailPoint> copy = VirtualRails;
     copy.push_back(copy[0]);
     vector<RailPoint> arcPoints;
