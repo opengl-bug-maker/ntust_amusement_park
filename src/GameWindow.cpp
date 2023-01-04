@@ -52,6 +52,7 @@ GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : Ren
 }
 
 void GameWindow::InitObjects() {
+    cylinder::init_data();
 //region object
     gpu_obj_t* plane = new cube();
     plane->setName("plane");
