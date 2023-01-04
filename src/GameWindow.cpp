@@ -38,6 +38,7 @@ GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : Ren
 //endregion
 
 //region setting
+    window_size = make_pair(mode.width ,mode.height);
     prevTime = deltaClock.getElapsedTime();
 
     arcBall.setup(40, 100, -0.5, 0, 0);
@@ -57,8 +58,8 @@ void GameWindow::InitObjects() {
 //region object
     gpu_obj_t* plane = new cube();
     plane->setName("plane");
-    plane->SettingTransform(glm::vec3(0, -11.7, 0));
-    plane->SettingScale(glm::vec3(50, 2, 50));
+    plane->SettingTransform(glm::vec3(0, -10.5, 0));
+    plane->SettingScale(glm::vec3(50, 0.5, 50));
     plane->SetGravity(false);
     plane->SetTexture("../Images/skybox/top.jpg");
     gpuObjs.push_back(plane);
@@ -71,12 +72,12 @@ void GameWindow::InitObjects() {
 //    Player->SettingTransform(glm::vec3(0, 10, 0));
     gpuObjs.push_back(Player);
 
-
-    gpu_obj_t* piece = new Piece();
-    piece->setName("piece");
-    piece->SettingTransform(glm::vec3(3, 0, 3));
-    piece->SetGravity(false);
-    gpuObjs.push_back(piece);
+//
+//    gpu_obj_t* piece = new Piece();
+//    piece->setName("piece");
+//    piece->SettingTransform(glm::vec3(3, 0, 3));
+//    piece->SetGravity(false);
+//    gpuObjs.push_back(piece);
 
 //    gpu_obj_t* ball = new Ball();
 //    ball->setName("ball");
@@ -84,19 +85,19 @@ void GameWindow::InitObjects() {
 //    ball->SetGravity(false);
 //    gpuObjs.push_back(ball);
 
-    gpu_obj_t* smallCube = new cube();
-    smallCube->SetGravity(false);
-    smallCube->SettingTransform(glm::vec3(0, -3, 0));
-    smallCube->SetTexture("../Images/particle.png");
-    smallCube->setName("smallCube");
-
-    gpu_obj_t* bigCube = new cube();
-    bigCube->setName("bigCube");
-    bigCube->SettingTransform(glm::vec3(5, 0, 0));
-    bigCube->SetGravity(false);
-    bigCube->SetTexture("../Images/uvtemplate.jpg");
-    bigCube->addChildren(smallCube);
-    gpuObjs.push_back(bigCube);
+//    gpu_obj_t* smallCube = new cube();
+//    smallCube->SetGravity(false);
+//    smallCube->SettingTransform(glm::vec3(0, -3, 0));
+//    smallCube->SetTexture("../Images/particle.png");
+//    smallCube->setName("smallCube");
+//
+//    gpu_obj_t* bigCube = new cube();
+//    bigCube->setName("bigCube");
+//    bigCube->SettingTransform(glm::vec3(5, 0, 0));
+//    bigCube->SetGravity(false);
+//    bigCube->SetTexture("../Images/uvtemplate.jpg");
+//    bigCube->addChildren(smallCube);
+//    gpuObjs.push_back(bigCube);
 
 //    gpu_obj_t* cc = new cube();
 //    cc->setName("big cube");
@@ -108,14 +109,14 @@ void GameWindow::InitObjects() {
 
     gpu_obj_t* c;
 
-    for(int i = 0; i < 10; i++){
-        c = new cube();
-        c->SettingTransform(glm::vec3 (5, -i, 5));
-        c->SettingScale(glm::vec3(0.2f, 0.2f, 0.2f));
-        c->SetGravity(false);
-        c->SetTexture("../Images/uvtemplate.jpg");
-        gpuObjs.push_back(c);
-    }
+//    for(int i = 0; i < 10; i++){
+//        c = new cube();
+//        c->SettingTransform(glm::vec3 (5, -i, 5));
+//        c->SettingScale(glm::vec3(0.2f, 0.2f, 0.2f));
+//        c->SetGravity(false);
+//        c->SetTexture("../Images/uvtemplate.jpg");
+//        gpuObjs.push_back(c);
+//    }
 
 //     gpu_obj_t* c = new cube();
     /*c->setName("x cube");
@@ -127,7 +128,7 @@ void GameWindow::InitObjects() {
 
     c = new particle_t();
     c->setName("particle 0");
-    c->SettingTransform(glm::vec3(0, 0, 0));
+    c->SettingTransform(glm::vec3(0, 20, 0));
     c->SettingScale(glm::vec3(1, 1, 1));
     c->SetGravity(false);
     gpuObjs.push_back(c);
@@ -135,27 +136,27 @@ void GameWindow::InitObjects() {
 
     rs = new RollerSystem();
     rs->setName("roller system");
-    c->SettingTransform(glm::vec3(0, -9.7, 0));
+    rs->SettingTransform(glm::vec3(0, -10, 0));
     rs->SetGravity(false);
     gpuObjs.push_back(rs);
 
     c = new ferris_wheel_t;
     c->setName("ferris_wheel 0");
-    c->SettingTransform(glm::vec3(0, 0, 0));
+    c->SettingTransform(glm::vec3(0, -10, 0));
     c->SettingScale(glm::vec3(1,1,1));
     c->SetGravity(false);
     gpuObjs.push_back(c);
 
     c = new locomotive_t;
     c->setName("locomotive 0");
-    c->SettingTransform(glm::vec3(0, -10, 0));
+    c->SettingTransform(glm::vec3(-2.5, -10, 5));
     c->SettingScale(glm::vec3(1,1,1));
     c->SetGravity(false);
     gpuObjs.push_back(c);
 
     c = new coach_t;
     c->setName("coach 0");
-    c->SettingTransform(glm::vec3(5, -10, 0));
+    c->SettingTransform(glm::vec3(2.5, -10, 5));
     c->SettingScale(glm::vec3(1,1,1));
     c->SetGravity(false);
     gpuObjs.push_back(c);
@@ -248,7 +249,7 @@ void GameWindow::run() {
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_TEXTURE_2D);
 //        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glViewport(0, 0, 800, 600);
+        glViewport(0, 0, this->window_size.first, this->window_size.second);
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 

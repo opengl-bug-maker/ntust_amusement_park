@@ -29,7 +29,9 @@
 #include "Object/train/coach.h"
 #include "Object/CustomObject/explosion_test.h"
 #include "CustomObject/RollerSystem.h"
+
 class GameWindow : public sf::RenderWindow{
+    std::pair<int,int> window_size;
     ArcBallCamera arcBall;
     Camera* camera;
     gpu_obj_t* Player;
