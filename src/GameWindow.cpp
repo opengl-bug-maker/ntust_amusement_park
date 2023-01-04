@@ -76,11 +76,11 @@ void GameWindow::InitObjects() {
     piece->SetGravity(false);
     gpuObjs.push_back(piece);
 
-    gpu_obj_t* ball = new Ball();
-    ball->setName("ball");
-    ball->SettingScale(glm::vec3 (1, 0.1, 1));
-    ball->SetGravity(false);
-    gpuObjs.push_back(ball);
+//    gpu_obj_t* ball = new Ball();
+//    ball->setName("ball");
+//    ball->SettingScale(glm::vec3 (1, 0.1, 1));
+//    ball->SetGravity(false);
+//    gpuObjs.push_back(ball);
 
     gpu_obj_t* smallCube = new cube();
     smallCube->SetGravity(false);
@@ -134,7 +134,7 @@ void GameWindow::InitObjects() {
     rs = new RollerSystem();
     rs->setName("roller system");
     rs->SetGravity(false);
-//    gpuObjs.push_back(rs);
+    gpuObjs.push_back(rs);
 
     c = new ferris_wheel_t;
     c->setName("ferris_wheel 0");
@@ -151,7 +151,7 @@ void GameWindow::InitObjects() {
     gpuObjs.push_back(c);
 
     c = new coach_t;
-    c->setName("locomotive 0");
+    c->setName("coach 0");
     c->SettingTransform(glm::vec3(5, -10, 0));
     c->SettingScale(glm::vec3(1,1,1));
     c->SetGravity(false);
@@ -162,12 +162,7 @@ void GameWindow::InitObjects() {
 
 void GameWindow::run() {
     for(auto objs : gpuObjs) objs->bind();
-    //sf::Texture texture1;
-    //
-    //texture1.loadFromFile("X:/CS/2022ComputerGraphics/Projects/ntust_amusement_park/Images/uvtemplate.jpg");
 
-    
-    
     while (isOpen()) {
         nowTime = deltaClock.getElapsedTime();
         deltaTime = nowTime - prevTime;
@@ -209,10 +204,10 @@ void GameWindow::run() {
 
         for(auto objs : gpuObjs) objs->UpdatePosition(deltaTime);
 
-//        if(rs->isRunning()){
-//            firstPersonCamera.Bias(rs->GetTrainDir());
-//            Player->MoveTo(rs->GetTrainPos() - glm::vec3(0, 6, 0));
-//        }
+        if(rs->isRunning()){
+            firstPersonCamera.Bias(rs->GetTrainDir());
+            Player->MoveTo(rs->GetTrainPos() - glm::vec3(0, 6, 0));
+        }
 
         firstPersonCamera.setPosition(Player->GetPosition() + glm::vec3(0, 1, 0));
 

@@ -64,6 +64,7 @@ namespace ferwheel {
         cylinder* cyl = new cylinder;
         cyl->SettingRotate(rot(90,0,0));
         cyl->SettingScale(sca(1,5.5,1));
+        cyl->SetTexture("../Images/gray.jpg");
         this->addChildren(cyl);
     }
 

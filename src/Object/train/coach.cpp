@@ -21,24 +21,28 @@ void coach_t::init() {
     cyl->SettingTransform(train_ns::train_pos(-0.8, 0.3, 0.85));
     cyl->SettingRotate(rot(90,0,0));
     cyl->SettingScale(sca(0.3,0.05,0.3));
+    cyl->SetTexture("../Images/train_wheel.png");
     this->addChildren(cyl);
 
     cyl = new cylinder; // Left wheel 1
     cyl->SettingTransform(train_ns::train_pos(0.8, 0.3, 0.85));
     cyl->SettingRotate(rot(90,0,0));
     cyl->SettingScale(sca(0.3,0.05,0.3));
+    cyl->SetTexture("../Images/train_wheel.png");
     this->addChildren(cyl);
 
-    cyl = new cylinder; // Right wheel 3
+    cyl = new cylinder; // Right wheel 0
     cyl->SettingTransform(train_ns::train_pos(-0.8, 0.3, -0.85));
     cyl->SettingRotate(rot(90,0,0));
     cyl->SettingScale(sca(0.3,0.05,0.3));
+    cyl->SetTexture("../Images/train_wheel.png");
     this->addChildren(cyl);
 
     cyl = new cylinder; // Right wheel 1
     cyl->SettingTransform(train_ns::train_pos(0.8, 0.3, -0.85));
     cyl->SettingRotate(rot(90,0,0));
     cyl->SettingScale(sca(0.3,0.05,0.3));
+    cyl->SetTexture("../Images/train_wheel.png");
     this->addChildren(cyl);
 
     c = new cube; // bottom

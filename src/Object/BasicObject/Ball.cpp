@@ -12,12 +12,10 @@ Ball::Ball() {
 void Ball::init() {
     gpu_obj_t::init();
 
-//    this->model_matrix;
-//
     this->vertexCount = 12;
-//
+
     this->data_block_size = {3};
-//
+
     this->data = new float [36]{
             0.000f,  0.000f,  1.000f,
             0.894f,  0.000f,  0.447f,
@@ -70,18 +68,12 @@ void Ball::bind() {
             "ball/ball.frag"
     );
 
-//    this->shader = new
-//            Shader(
-//            "box.vert",
-//            nullptr, nullptr, nullptr,
-//            "box.frag");
-
     this->shader->Use();
 
     glUniform1f(glGetUniformLocation(this->shader->Program, "TessLevelInner")
-                , 3);
+                , 10);
     glUniform1f(glGetUniformLocation(this->shader->Program, "TessLevelOuter")
-                , 2);
+                , 10);
 
     glUniform3f(glGetUniformLocation(this->shader->Program, "AmbientMaterial")
                 , 0.04f, 0.04f, 0.04f);
