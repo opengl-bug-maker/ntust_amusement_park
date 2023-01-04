@@ -35,6 +35,8 @@ file(GLOB FERRIS_WHEEL_HEADER src/Object/ferris_wheel/*.h)
 file(GLOB FERRIS_WHEEL_SOURCE src/Object/ferris_wheel/*.cpp)
 file(GLOB TRAIN_HEADER src/Object/train/*.h)
 file(GLOB TRAIN_SOURCE src/Object/train/*.cpp)
+file(GLOB CREEPER_HEADER src/Object/creeper/*.h)
+file(GLOB CREEPER_SOURCE src/Object/creeper/*.cpp)
 file(GLOB CUSTOM-OBJECT_HEADER src/Object/CustomObject/*.h)
 file(GLOB CUSTOM-OBJECT_SOURCE src/Object/CustomObject/*.cpp)
 file(GLOB OBJECT-COLLIDER_HEADER src/Object/Collider/*.h)
@@ -57,6 +59,7 @@ add_executable(AmusementPark
         ${CUSTOM-OBJECT_SOURCE}
         ${FERRIS_WHEEL_SOURCE}
         ${TRAIN_SOURCE}
+        ${CREEPER_SOURCE}
         ${OBJECT-COLLIDER_SOURCE}
         ${CAMERA_SOURCE}
         ${Utilities_SOURCE}
