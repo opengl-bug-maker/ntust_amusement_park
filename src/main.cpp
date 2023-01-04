@@ -16,7 +16,7 @@ void EatInput(){
 int main() {
     srand(time(NULL));
     //GameWindow win(sf::VideoMode(1200, 900), "SFML window");
-    sf::RenderWindow final_window(sf::VideoMode(240, 180), "final");
+    sf::RenderWindow final_window(sf::VideoMode(1200, 900), "final");
     GameWindow win(sf::VideoMode(1200, 900), "SFML window", &final_window);
 //    listen.detach();
     win.run();

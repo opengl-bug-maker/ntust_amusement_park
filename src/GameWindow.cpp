@@ -91,19 +91,19 @@ void GameWindow::InitObjects() {
 //    ball->SetGravity(false);
 //    gpuObjs.push_back(ball);
 
-    gpu_obj_t* smallCube = new cube();
-    smallCube->SetGravity(false);
-    smallCube->SettingTransform(glm::vec3(0, -3, 0));
-    smallCube->SetTexture("../Images/particle.png");
-    smallCube->setName("smallCube");
-
-    gpu_obj_t* bigCube = new cube();
-    bigCube->setName("bigCube");
-    bigCube->SettingTransform(glm::vec3(5, 0, 0));
-    bigCube->SetGravity(false);
-    bigCube->SetTexture("../Images/uvtemplate.jpg");
-    bigCube->addChildren(smallCube);
-    gpuObjs.push_back(bigCube);
+//    gpu_obj_t* smallCube = new cube();
+//    smallCube->SetGravity(false);
+//    smallCube->SettingTransform(glm::vec3(0, -3, 0));
+//    smallCube->SetTexture("../Images/particle.png");
+//    smallCube->setName("smallCube");
+//
+//    gpu_obj_t* bigCube = new cube();
+//    bigCube->setName("bigCube");
+//    bigCube->SettingTransform(glm::vec3(5, 0, 0));
+//    bigCube->SetGravity(false);
+//    bigCube->SetTexture("../Images/uvtemplate.jpg");
+//    bigCube->addChildren(smallCube);
+//    gpuObjs.push_back(bigCube);
 
 //    gpu_obj_t* cc = new cube();
 //    cc->setName("big cube");
@@ -132,33 +132,33 @@ void GameWindow::InitObjects() {
     gpuObjs.push_back(c);*/
     //cc->addChildren(c);
 
-//    c = new particle_t();
-//    c->setName("particle 0");
-//    c->SettingTransform(glm::vec3(45, -15.7, 45));
-//    c->SettingScale(glm::vec3(1, 1, 1));
-//    c->SetGravity(false);
-//    gpuObjs.push_back(c);
-//
-//    c = new particle_t();
-//    c->setName("particle 1");
-//    c->SettingTransform(glm::vec3(-45, -15.7, -45));
-//    c->SettingScale(glm::vec3(1, 1, 1));
-//    c->SetGravity(false);
-//    gpuObjs.push_back(c);
-//
-//    c = new particle_t();
-//    c->setName("particle 2");
-//    c->SettingTransform(glm::vec3(-45, -15.7, 45));
-//    c->SettingScale(glm::vec3(1, 1, 1));
-//    c->SetGravity(false);
-//    gpuObjs.push_back(c);
-//
-//    c = new particle_t();
-//    c->setName("particle 3");
-//    c->SettingTransform(glm::vec3(45, -15.7, -45));
-//    c->SettingScale(glm::vec3(1, 1, 1));
-//    c->SetGravity(false);
-//    gpuObjs.push_back(c);
+    c = new particle_t();
+    c->setName("particle 0");
+    c->SettingTransform(glm::vec3(45, -15.7, 45));
+    c->SettingScale(glm::vec3(1, 1, 1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
+
+    c = new particle_t();
+    c->setName("particle 1");
+    c->SettingTransform(glm::vec3(-45, -15.7, -45));
+    c->SettingScale(glm::vec3(1, 1, 1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
+
+    c = new particle_t();
+    c->setName("particle 2");
+    c->SettingTransform(glm::vec3(-45, -15.7, 45));
+    c->SettingScale(glm::vec3(1, 1, 1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
+
+    c = new particle_t();
+    c->setName("particle 3");
+    c->SettingTransform(glm::vec3(45, -15.7, -45));
+    c->SettingScale(glm::vec3(1, 1, 1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
 
 
     rs = new RollerSystem();
@@ -166,28 +166,28 @@ void GameWindow::InitObjects() {
     rs->SettingTransform(glm::vec3(0, -10, 0));
     rs->SetGravity(false);
     gpuObjs.push_back(rs);
-//
+////
     c = new ferris_wheel_t;
     c->setName("ferris_wheel 0");
     c->SettingTransform(glm::vec3(0, -10, 0));
     c->SettingScale(glm::vec3(1,1,1));
     c->SetGravity(false);
     gpuObjs.push_back(c);
-
+//
     c = new locomotive_t;
     c->setName("locomotive 0");
     c->SettingTransform(glm::vec3(-2.5, -10, 5));
     c->SettingScale(glm::vec3(1,1,1));
     c->SetGravity(false);
     gpuObjs.push_back(c);
-
+//
     c = new coach_t;
     c->setName("coach 0");
     c->SettingTransform(glm::vec3(2.5, -10, 5));
     c->SettingScale(glm::vec3(1,1,1));
     c->SetGravity(false);
     gpuObjs.push_back(c);
-
+//
     c = new creeper_t;
     c->setName("creeper 0");
     c->SettingTransform(glm::vec3(-20,-10,20));
@@ -195,7 +195,7 @@ void GameWindow::InitObjects() {
     c->SettingRotate(glm::vec3(3,3,3));
     c->SetGravity(false);
     gpuObjs.push_back(c);
-
+//
     c = new creeper_t;
     c->setName("creeper 1");
     c->SettingTransform(glm::vec3(20,-10,20));
@@ -206,6 +206,11 @@ void GameWindow::InitObjects() {
 
 //endregion
 }
+float kernel[3][3] = {
+        {1, 1, 1},
+        {1, 2, 1},
+                {1, 1, 1}
+};
 //float kernel[5][5] = {
 //        {1, 4, 6, 4, 1},
 //        {4, 16, 24, 16, 4},
@@ -213,16 +218,16 @@ void GameWindow::InitObjects() {
 //        {4, 16, 24, 16, 4},
 //        {1, 4, 6, 4, 1}
 //};
-float kernel[7][7] = {
-        {0, 0, 0, 5, 0, 0, 0},
-        {0, 5, 18, 32, 18, 5, 0},
-        {0, 18, 64, 100, 64, 18, 0},
-        {5, 32, 100, 100, 100, 32, 5},
-        {0, 18, 64, 100, 64, 18, 0},
-        {0, 5, 18, 32, 18, 5, 0},
-        {0, 0, 0, 5, 0, 0, 0}
-
-};
+//float kernel[7][7] = {
+//        {0, 0, 0, 5, 0, 0, 0},
+//        {0, 5, 18, 32, 18, 5, 0},
+//        {0, 18, 64, 100, 64, 18, 0},
+//        {5, 32, 100, 100, 100, 32, 5},
+//        {0, 18, 64, 100, 64, 18, 0},
+//        {0, 5, 18, 32, 18, 5, 0},
+//        {0, 0, 0, 5, 0, 0, 0}
+//
+//};
 //float kernel[5][5] = {
 //        {1, 8, 12, 8, 1},
 //        {8, 16, 36, 16, 4},
@@ -252,61 +257,8 @@ void gray(sf::Image& img){
 }
 const int mxN = 256;
 int nIntensityCount[mxN], nSumR[mxN], nSumG[mxN], nSumB[mxN];
-//Paint(img, 5, 5, 900, 1200)
-void Paint(sf::Image& img, const int nRadius_i,const float fIntensityLevels_i,const int nWidth_i,const int nHeight_i)
-{
-    sf::Image ret = img;
 
-    // nRadius pixels are avoided from left, right top, and bottom edges.
-    for( int nY = nRadius_i; nY < nHeight_i - nRadius_i; nY++){
-        for( int nX = nRadius_i; nX < nWidth_i - nRadius_i; nX++){
-            // Find intensities of nearest nRadius pixels in four direction.
-            for(int i = 0; i<256; ++i){
-                nSumB[i] = nSumG[i] = nSumR[i] = nIntensityCount[i] = 0;
-            }
-            for( int nY_O = -nRadius_i; nY_O <= nRadius_i; nY_O++ ){
-                for( int nX_O = -nRadius_i; nX_O <= nRadius_i; nX_O++ ){
-                    //int nR, nG, nB;
-                    //nR = nG = nB = 0;
-                    int nR = img.getPixel(nX+nX_O, nY + nY_O).r;
-                    int nG = img.getPixel(nX+nX_O, nY + nY_O).g;
-                    int nB = img.getPixel(nX+nX_O, nY + nY_O).b;
-                    //int nR = pbyDataIn_i[( nX+nX_O) * 3  + ( nY + nY_O ) * nBytesInARow ];
-                    //int nG = pbyDataIn_i[( nX+nX_O) * 3  + ( nY + nY_O ) * nBytesInARow + 1];
-                    //int nB = pbyDataIn_i[( nX+nX_O) * 3  + ( nY + nY_O ) * nBytesInARow + 2];
 
-                    // Find intensity of RGB value and apply intensity level.
-                    int nCurIntensity =  ( ( ( nR + nG + nB ) / 3.0 ) * fIntensityLevels_i ) / 255;
-                    if( nCurIntensity > 255 )
-                        nCurIntensity = 255;
-                    int i = nCurIntensity;
-                    nIntensityCount[i]++;
-
-                    nSumR[i]+= nR;
-                    nSumG[i] +=nG;
-                    nSumB[i] +=nB;
-                }
-            }
-
-            int nCurMax = 0;
-            int nMaxIndex = 0;
-            for( int nI = 0; nI < 256; nI++ )
-            {
-                if( nIntensityCount[nI] > nCurMax )
-                {
-                    nCurMax = nIntensityCount[nI];
-                    nMaxIndex = nI;
-                }
-            }
-            sf::Color res = sf::Color(nSumR[nMaxIndex] / nCurMax, nSumG[nMaxIndex] / nCurMax, nSumB[nMaxIndex] / nCurMax);
-            ret.setPixel(nX, nY, res);
-//            pbyDataOut_o[( nX) * 3 + ( nY ) * nBytesInARow ] = nSumR[nMaxIndex] / nCurMax;
-//            pbyDataOut_o[( nX) * 3 + ( nY ) * nBytesInARow + 1] = nSumG[nMaxIndex] / nCurMax;
-//            pbyDataOut_o[( nX) * 3 + ( nY ) * nBytesInARow + 2] = nSumB[nMaxIndex] / nCurMax;
-        }
-    }
-    img = ret;
-}
 void gauss(sf::Image& img){
 
 
@@ -316,8 +268,8 @@ void gauss(sf::Image& img){
 //            kernel[i][j]*=2;
 //        }
 //    }
-    for (int i = 0; i < 7; ++i) {
-        for (int j = 0; j < 7; ++j) {
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
             d += kernel[i][j];
         }
     }
@@ -325,15 +277,15 @@ void gauss(sf::Image& img){
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
                 float sum_r = 0, sum_g = 0, sum_b = 0;
-                for (int p = -3; p <= 3; ++p) {
-                    for (int q = -3; q <= 3; ++q) {
+                for (int p = -1; p <= 1; ++p) {
+                    for (int q = -1; q <= 1; ++q) {
                         int ni = i + p, nj = j + q;
                         if (ni < 0 || nj < 0 || ni >= height || nj >= width) { continue; }
                         //sum += t[k][ni][nj] * kernel[p + 2][q + 2];
                         sf::Color c = img.getPixel(ni, nj);
-                        sum_r += c.r * kernel[p + 3][q + 3];
-                        sum_g += c.g * kernel[p + 3][q + 3];
-                        sum_b += c.b*kernel[p+3][q+3];
+                        sum_r += c.r * kernel[p  +1][q +1];
+                        sum_g += c.g * kernel[p +1][q+1 ];
+                        sum_b += c.b*kernel[p+1][q+1];
                     }
                 }
                 img.setPixel(i, j, sf::Color(sum_r/d, sum_g/d, sum_b/d));
@@ -361,21 +313,26 @@ void pencil(sf::Image& img){
     }
 
 }
+void en(sf::Image& img){
 
-void resize(const sf::Image& originalImage, sf::Image& resizedImage)
-{
-    const sf::Vector2u originalImageSize{ originalImage.getSize() };
-    const sf::Vector2u resizedImageSize{ resizedImage.getSize() };
-    for (unsigned int y{ 0u }; y < resizedImageSize.y; ++y)
-    {
-        for (unsigned int x{ 0u }; x < resizedImageSize.x; ++x)
-        {
-            unsigned int origX{ static_cast<unsigned int>(static_cast<double>(x) / resizedImageSize.x * originalImageSize.x) };
-            unsigned int origY{ static_cast<unsigned int>(static_cast<double>(y) / resizedImageSize.y * originalImageSize.y) };
-            resizedImage.setPixel(x, y, originalImage.getPixel(origX, origY));
+
+
+    //def dodge(front,back): result=blurr*255/(255-gray)  result[result>255]=255 result[back==255]=255 return result.astype(‘uint8’)
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            float R = img.getPixel(i, j).r;
+            float G = img.getPixel(i, j).g;
+            float B = img.getPixel(i, j).b;
+            R = R*R*R/255;
+            G = G*G*G/255;
+            B = B*B*B/255;
+            sf::Color c = sf::Color(R, G, B);
+            img.setPixel(i, j, c);
         }
     }
+
 }
+
 void GameWindow::run() {
     for(auto objs : gpuObjs) objs->bind();
 
@@ -405,8 +362,9 @@ void GameWindow::run() {
 //                    if(collisionVec[1] < -1){
 //                        cout <<"wtf"<<endl;
 //                    }
-                    if(gpuObjs[i]->getName() == "player" && gpuObjs[j]->getName() == "plane"){
-//                        cout << gpuObjs[i]->getName() << " phm " << gpuObjs[j]->getName() << collisionVec[1] << endl;
+                    //if(gpuObjs[i]->getName() == "player" && gpuObjs[j]->getName() == "plane"){
+                    if(gpuObjs[i]->getName() == "player"){
+                        //cout << gpuObjs[i]->getName() << " phm " << gpuObjs[j]->getName() << collisionVec[1] << endl;
 //                        ((PolygonCollider*)gpuObjs[i]->collider)->lookVertex();
 //                        ((PolygonCollider*)gpuObjs[j]->collider)->lookVertex();
                     }
@@ -503,23 +461,13 @@ void GameWindow::run() {
         //cout<< this->getSize().x<<" "<<this->getSize().y<<endl;
         win_text.update((*this), 0, 0);
         sf::Image tmpImg = win_text.copyToImage();
-        sf::Image small_img;
-        small_img.create(120, 90);
-        resize(tmpImg, small_img);
-
-        sf::Sprite fb;
-        fb = sf::Sprite(win_text);
-        //Paint(small_img, 5, 2, 120, 90);
-        //tmpImg.saveToFile ("tmp.jpg");
-        win_text.loadFromImage(small_img);
-
-
-        //fb.setTexture(win_text, true);
-        //clear();
+        en(tmpImg);
+        pencil(tmpImg);
+        win_text.loadFromImage(tmpImg);
         this->result->draw(sf::Sprite(win_text));
         //this->result->draw(fb);
         this->result->display();
-        this->draw((sf::Sprite(win_text)));
+        //this->draw((sf::Sprite(win_text)));
         display();
 //        win_text.update((*this), 0, 0);
 //        sf::Image tmpImg = win_text.copyToImage();
