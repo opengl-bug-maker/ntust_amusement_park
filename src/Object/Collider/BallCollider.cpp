@@ -16,10 +16,14 @@ bool BallCollider::IsCollision(BallCollider *collider, glm::vec3& collisionVecto
     return false;
 }
 
-void BallCollider::Translate(glm::vec3 translate) {
+//void BallCollider::Translate(glm::vec3 translate) {
+//
+//}
+//
+//void BallCollider::Scale(glm::vec3 scale) {
+//
+//}
 
-}
-
-void BallCollider::Scale(glm::vec3 scale) {
-
+bool BallCollider::IsCollision(PolygonCollider *collider, glm::vec3 &collisionVector) {
+    return false;
 }

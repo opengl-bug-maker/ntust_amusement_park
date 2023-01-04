@@ -44,7 +44,7 @@ void explosion_test_t::init() {
     element = new GLuint[1];
     for (int i = 0; i < 1; ++i) { element[i] = i; }
 
-    collider = new BoxCollider();
+    collider = new BoxCollider(this);
 }
 
 void explosion_test_t::bind() {

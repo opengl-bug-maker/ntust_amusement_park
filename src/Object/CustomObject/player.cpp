@@ -177,7 +177,7 @@ void player::init() {
     element = new GLuint[36];
     for (int i = 0; i < 36; ++i) {element[i] = i;}
 
-    collider = new BoxCollider();
+    collider = new BoxCollider(this);
 }
 
 void player::bind() {

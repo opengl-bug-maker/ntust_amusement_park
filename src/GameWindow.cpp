@@ -12,7 +12,7 @@ glm::vec3 GameWindow::FallDownVector = glm::vec3(0, -20, 0);
 
 //ostream& operator<<(ostream& os, const glm::vec3 & v)
 //{
-//    os << " x : " << v.x << " y : " << v.y << " z : " << v.z;
+//    os << "(" << v.x << "," << v.y << "," << v.z << ")";
 //    return os;
 //}
 
@@ -73,7 +73,7 @@ void GameWindow::InitObjects() {
     Player = new player();
     Player->setName("player");
 //    Player->SetGravity(false);
-    Player->SettingTransform(glm::vec3(0, 30, 8));
+    Player->SettingTransform(glm::vec3(0, -7, 20));
     Player->SettingScale(glm::vec3(1, 2, 1));
 //    Player->SettingTransform(glm::vec3(0, 10, 0));
     gpuObjs.push_back(Player);
@@ -132,33 +132,33 @@ void GameWindow::InitObjects() {
     gpuObjs.push_back(c);*/
     //cc->addChildren(c);
 
-    c = new particle_t();
-    c->setName("particle 0");
-    c->SettingTransform(glm::vec3(45, -15.7, 45));
-    c->SettingScale(glm::vec3(1, 1, 1));
-    c->SetGravity(false);
-    gpuObjs.push_back(c);
-
-    c = new particle_t();
-    c->setName("particle 1");
-    c->SettingTransform(glm::vec3(-45, -15.7, -45));
-    c->SettingScale(glm::vec3(1, 1, 1));
-    c->SetGravity(false);
-    gpuObjs.push_back(c);
-
-    c = new particle_t();
-    c->setName("particle 2");
-    c->SettingTransform(glm::vec3(-45, -15.7, 45));
-    c->SettingScale(glm::vec3(1, 1, 1));
-    c->SetGravity(false);
-    gpuObjs.push_back(c);
-
-    c = new particle_t();
-    c->setName("particle 3");
-    c->SettingTransform(glm::vec3(45, -15.7, -45));
-    c->SettingScale(glm::vec3(1, 1, 1));
-    c->SetGravity(false);
-    gpuObjs.push_back(c);
+//    c = new particle_t();
+//    c->setName("particle 0");
+//    c->SettingTransform(glm::vec3(45, -15.7, 45));
+//    c->SettingScale(glm::vec3(1, 1, 1));
+//    c->SetGravity(false);
+//    gpuObjs.push_back(c);
+//
+//    c = new particle_t();
+//    c->setName("particle 1");
+//    c->SettingTransform(glm::vec3(-45, -15.7, -45));
+//    c->SettingScale(glm::vec3(1, 1, 1));
+//    c->SetGravity(false);
+//    gpuObjs.push_back(c);
+//
+//    c = new particle_t();
+//    c->setName("particle 2");
+//    c->SettingTransform(glm::vec3(-45, -15.7, 45));
+//    c->SettingScale(glm::vec3(1, 1, 1));
+//    c->SetGravity(false);
+//    gpuObjs.push_back(c);
+//
+//    c = new particle_t();
+//    c->setName("particle 3");
+//    c->SettingTransform(glm::vec3(45, -15.7, -45));
+//    c->SettingScale(glm::vec3(1, 1, 1));
+//    c->SetGravity(false);
+//    gpuObjs.push_back(c);
 
 
     rs = new RollerSystem();
@@ -185,6 +185,22 @@ void GameWindow::InitObjects() {
     c->setName("coach 0");
     c->SettingTransform(glm::vec3(2.5, -10, 5));
     c->SettingScale(glm::vec3(1,1,1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
+
+    c = new creeper_t;
+    c->setName("creeper 0");
+    c->SettingTransform(glm::vec3(-20,-10,20));
+    c->SettingRotate(glm::vec3(0,90,0));
+    c->SettingRotate(glm::vec3(3,3,3));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
+
+    c = new creeper_t;
+    c->setName("creeper 1");
+    c->SettingTransform(glm::vec3(20,-10,20));
+    c->SettingRotate(glm::vec3(0,90,0));
+    c->SettingRotate(glm::vec3(3,3,3));
     c->SetGravity(false);
     gpuObjs.push_back(c);
 
@@ -312,13 +328,23 @@ void GameWindow::run() {
                     if(glm::length(collisionVec) > 0.1){
 //                        cout << gpuObjs[i]->getName() << " phm " << collisionVec << endl;
 //                        cout << "posi : " << gpuObjs[i]->GetPosition() << endl;
-                        gpuObjs[i]->PhysicsMove(collisionVec);
+                        gpuObjs[i]->PhysicsMove(collisionVec*0.999f);
                     }
-//                        cout << gpuObjs[i]->getName() << " phm " << collisionVec << endl;
+//                    if(collisionVec[1] < -1){
+//                        cout <<"wtf"<<endl;
+//                    }
+                    if(gpuObjs[i]->getName() == "player" && gpuObjs[j]->getName() == "plane"){
+//                        cout << gpuObjs[i]->getName() << " phm " << gpuObjs[j]->getName() << collisionVec[1] << endl;
+//                        ((PolygonCollider*)gpuObjs[i]->collider)->lookVertex();
+//                        ((PolygonCollider*)gpuObjs[j]->collider)->lookVertex();
+                    }
 //                        cout << "posi : " << gpuObjs[i]->GetPosition() << endl;
                     glm::vec3 coll = glm::normalize(collisionVec);
-                    if(glm::abs(glm::length(coll)) > 0.000000001)
-                        gpuObjs[i]->addVelocity(coll * (-glm::dot(gpuObjs[i]->getVelocity(), coll)));
+                    if(glm::abs(glm::length(coll)) > 0.000000001){
+                        float mul = glm::dot(gpuObjs[i]->getVelocity(), coll);
+//                        if(mul < 0)
+                            gpuObjs[i]->addVelocity(coll * (-mul));
+                    }
                 }
             }
         }
@@ -335,10 +361,12 @@ void GameWindow::run() {
 
         for(auto objs : gpuObjs) objs->UpdatePosition(deltaTime);
 
-//        if(rs->isRunning()){
-//            firstPersonCamera.Bias(rs->GetTrainDir());
-//            Player->MoveTo(rs->GetTrainPos() - glm::vec3(0, 6, 0));
-//        }
+        if(rs != nullptr){
+            if(rs->isRunning()){
+                firstPersonCamera.Bias(rs->GetTrainDir());
+                Player->MoveTo(rs->GetTrainPos() - glm::vec3(0, 6, 0));
+            }
+        }
 
         firstPersonCamera.setPosition(Player->GetPosition() + glm::vec3(0, 1, 0));
 

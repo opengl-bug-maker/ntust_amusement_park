@@ -106,7 +106,7 @@ void cylinder::init() {
 
     this->element = ::general_element;
 
-    collider = new BoxCollider();
+    collider = new BoxCollider(this);
 }
 
 void cylinder::bind() {
