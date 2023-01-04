@@ -20,10 +20,29 @@ void RollerSystem::init() {
     addChildren(car);
 
     SettingRails = vector<RailPoint>();
-    SettingRails.emplace_back(glm::vec3(30,0,0), glm::vec3(0,0,0));
-    SettingRails.emplace_back(glm::vec3(0,0,30), glm::vec3(0,0,0));
-    SettingRails.emplace_back(glm::vec3(-30,0,0), glm::vec3(0,0,0));
-    SettingRails.emplace_back(glm::vec3(0,0,-30), glm::vec3(0,0,0));
+//    SettingRails.emplace_back(glm::vec3(30,0,0), glm::vec3(0,0,0));
+//    SettingRails.emplace_back(glm::vec3(0,0,30), glm::vec3(0,0,0));
+//    SettingRails.emplace_back(glm::vec3(-30,0,0), glm::vec3(0,0,0));
+//    SettingRails.emplace_back(glm::vec3(0,0,-30), glm::vec3(0,0,0));
+    SettingRails.emplace_back(glm::vec3( 24.4376 , 4.60531,- 5.5879 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3( 10.119  , 4.09605,-14.5177 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(  0.61136, 3.58679,-29.5161 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(  5.82873, 3.07753,-43.9883 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3( 25.423  , 3.78877,-38.7872 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3( 23.0204 , 4.5    ,-14.6543 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(- 0.0006 ,14.1773 ,-19.0165 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(-19.7794 ,14.048  ,-18.8115 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(-37.6214 ,11.2994 ,- 6.4530 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(-34.6161 , 5.73964, 16.2978 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(-25.2172 , 5.72988, 26.8965 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(-12.1806 ,  6.55993, 31.0868),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3(  0.86990, 15.5824 , 36.1424),glm::vec3(-0.573223,0.78033,-0.25));
+    SettingRails.emplace_back(glm::vec3(- 8.21242, 29.1848 , 28.8183),glm::vec3(0,-1,0));
+    SettingRails.emplace_back(glm::vec3(-19.5402 , 14.3613 , 26.6618),glm::vec3(1,0,0));
+    SettingRails.emplace_back(glm::vec3(- 2.75134,  5.58337, 26.9809),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3( 12.42   , 5.4271 , 26.0657 ),glm::vec3(0,1,0));
+    SettingRails.emplace_back(glm::vec3( 25.2382 , 5.11456, 10.1207 ),glm::vec3(0,1,0));
+
 
 
     float checkPointsCount = 20;
@@ -128,6 +147,10 @@ void RollerSystem::GetOut() {
 
 void RollerSystem::draw(glm::mat4 modelMatrix) {
     children[0]->MoveTo(GetTrainPos());
+    glm::vec3 di = GetTrainDir();
+    children[0]->RotateTo(glm::vec3(0, atan2(di[2], -di[0]) * 57.2957795147 ,0));
+    children[0]->CleanRotate(glm::vec3(0,0, -asin(di[1]) * 57.2957795147));
+    children[0]->CleanRotate(glm::vec3(acos(glm::dot(glm::vec3(0,1,0), GetTrainTop())) * 57.2957795147,0, 0));
     gpu_obj_t::draw(modelMatrix);
 }
 
@@ -139,6 +162,17 @@ glm::vec3 RollerSystem::GetTrainDir() {
     float Index = (deltaTime / wholeTime) * (float)VirtualRails.size();
     int startIndex = (int)Index;
     return glm::vec3 (glm::normalize(VirtualRails[(startIndex + 1) % VirtualRails.size()].pos - VirtualRails[startIndex].pos));
+}
+
+glm::vec3 RollerSystem::GetTrainTop() {
+    float deltaTime = GameWindow::magic->nowTime.asSeconds() - startTime.asSeconds();
+    while(deltaTime >= wholeTime){
+        deltaTime -= wholeTime;
+    }
+    float Index = (deltaTime / wholeTime) * (float)VirtualRails.size();
+    int startIndex = (int)Index;
+    float partial = Index - (float)startIndex;
+    return glm::vec3(glm::normalize(VirtualRails[startIndex].dir * (1 - partial) + VirtualRails[(startIndex + 1) % VirtualRails.size()].dir * partial));
 }
 
 bool RollerSystem::isRunning() const {
