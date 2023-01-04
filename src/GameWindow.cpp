@@ -58,6 +58,7 @@ void GameWindow::InitObjects() {
     plane->SettingTransform(glm::vec3(0, -11.7, 0));
     plane->SettingScale(glm::vec3(10, 2, 10));
     plane->SetGravity(false);
+    plane->SetTexture("../Images/skybox/top.jpg");
     gpuObjs.push_back(plane);
 
     Player = new player();
@@ -110,6 +111,7 @@ void GameWindow::InitObjects() {
         c->SettingTransform(glm::vec3 (5, -i, 5));
         c->SettingScale(glm::vec3(0.2f, 0.2f, 0.2f));
         c->SetGravity(false);
+        c->SetTexture("../Images/uvtemplate.jpg");
         gpuObjs.push_back(c);
     }
 
@@ -132,11 +134,25 @@ void GameWindow::InitObjects() {
     rs = new RollerSystem();
     rs->setName("roller system");
     rs->SetGravity(false);
-    gpuObjs.push_back(rs);
+//    gpuObjs.push_back(rs);
 
     c = new ferris_wheel_t;
     c->setName("ferris_wheel 0");
     c->SettingTransform(glm::vec3(0, 0, 0));
+    c->SettingScale(glm::vec3(1,1,1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
+
+    c = new locomotive_t;
+    c->setName("locomotive 0");
+    c->SettingTransform(glm::vec3(0, -10, 0));
+    c->SettingScale(glm::vec3(1,1,1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
+
+    c = new coach_t;
+    c->setName("locomotive 0");
+    c->SettingTransform(glm::vec3(5, -10, 0));
     c->SettingScale(glm::vec3(1,1,1));
     c->SetGravity(false);
     gpuObjs.push_back(c);

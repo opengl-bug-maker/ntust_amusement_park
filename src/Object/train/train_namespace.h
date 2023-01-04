@@ -14,7 +14,7 @@ using rot=glm::vec3; // rotate
 namespace train_ns {
 
     inline glm::vec3 train_pos(float a, float b, float c) {
-        return glm::vec3(a, b + 0.1, c);
+        return glm::vec3(a, b + 0.3, c);
     }
 
     double deg2rad(double deg);

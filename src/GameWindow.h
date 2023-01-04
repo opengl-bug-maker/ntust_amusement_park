@@ -25,6 +25,8 @@
 #include "Object/CustomObject/player.h"
 #include "Object/PhysicsObject.h"
 #include "Object/ferris_wheel/ferris_wheel.h"
+#include "Object/train/locomotive.h"
+#include "Object/train/coach.h"
 #include "Object/CustomObject/explosion_test.h"
 #include "CustomObject/RollerSystem.h"
 class GameWindow : public sf::RenderWindow{

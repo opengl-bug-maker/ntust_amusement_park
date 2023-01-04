@@ -72,6 +72,7 @@ void locomotive_t::init() {
     c = new cube; // bottom
     c->SettingTransform(train_ns::train_pos(0, 0.5, 0));
     c->SettingScale(sca(1.8, 0.1, 0.8));
+    c->SetTexture("../Images/locomotive.png");
     this->addChildren(c);
 
     cyl = new cylinder; // boiler
@@ -115,38 +116,55 @@ void locomotive_t::init() {
     c = new cube;
     c->SettingTransform(train_ns::train_pos(0.3, 1.475, 0.7));
     c->SettingScale(sca(0.1,0.875,0.1));
+    c->SetTexture("../Images/locomotive.png");
     this->addChildren(c);
+
     c = new cube;
     c->SettingTransform(train_ns::train_pos(0.3, 1.475, -0.7));
     c->SettingScale(sca(0.1,0.875,0.1));
+    c->SetTexture("../Images/locomotive.png");
     this->addChildren(c);
+
     c = new cube;
     c->SettingTransform(train_ns::train_pos(1.7, 1.475, 0.7));
     c->SettingScale(sca(0.1,0.875,0.1));
+    c->SetTexture("../Images/locomotive.png");
     this->addChildren(c);
+
     c = new cube;
     c->SettingTransform(train_ns::train_pos(1.7, 1.475, -0.7));
     c->SettingScale(sca(0.1,0.875,0.1));
+    c->SetTexture("../Images/locomotive.png");
     this->addChildren(c);
+
     c = new cube;
     c->SettingTransform(train_ns::train_pos(1, 1, 0.7));
     c->SettingScale(sca(0.6,0.4,0.1));
+    c->SetTexture("../Images/locomotive.png");
     this->addChildren(c);
+
     c = new cube;
     c->SettingTransform(train_ns::train_pos(1, 1, -0.7));
     c->SettingScale(sca(0.6,0.4,0.1));
+    c->SetTexture("../Images/locomotive.png");
     this->addChildren(c);
+
     c = new cube;
     c->SettingTransform(train_ns::train_pos(1.7, 1, 0));
     c->SettingScale(sca(0.1,0.4,0.6));
+    c->SetTexture("../Images/locomotive.png");
     this->addChildren(c);
+
     c = new cube;
     c->SettingTransform(train_ns::train_pos(0.3, 1.2, 0));
     c->SettingScale(sca(0.1,0.6,0.6));
+    c->SetTexture("../Images/locomotive.png");
     this->addChildren(c);
+
     c = new cube;
     c->SettingTransform(train_ns::train_pos(0.825, 2.45, 0));
     c->SettingScale(sca(0.975,0.1,0.8));
+    c->SetTexture("../Images/locomotive.png");
     this->addChildren(c);
 
 }
