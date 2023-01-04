@@ -22,6 +22,7 @@ void creeper_t::init() {
     c->SettingTransform(pos(0.2, 0.2, 0.4));
     c->SettingScale(sca(0.2,0.2,0.2));
     c->SetTexture("../Images/pure_green.png");
+    c->collider = nullptr;
     this->addChildren(c);
     this->LF_feet = c;
 
@@ -29,6 +30,7 @@ void creeper_t::init() {
     c->SettingTransform(pos(0.2, 0.2, -0.4));
     c->SettingScale(sca(0.2,0.2,0.2));
     c->SetTexture("../Images/pure_green.png");
+    c->collider = nullptr;
     this->addChildren(c);
     this->LB_feet = c;
 
@@ -36,6 +38,7 @@ void creeper_t::init() {
     c->SettingTransform(pos(-0.2, 0.2, 0.4));
     c->SettingScale(sca(0.2,0.2,0.2));
     c->SetTexture("../Images/pure_green.png");
+    c->collider = nullptr;
     this->addChildren(c);
     this->RF_feet = c;
 
@@ -43,115 +46,136 @@ void creeper_t::init() {
     c->SettingTransform(pos(-0.2, 0.2, -0.4));
     c->SettingScale(sca(0.2,0.2,0.2));
     c->SetTexture("../Images/pure_green.png");
+    c->collider = nullptr;
     this->addChildren(c);
     this->RB_feet = c;
 
     c = new cube; // body
+    c->setName("body");
     c->SettingTransform(pos(0, 1, 0));
     c->SettingScale(sca(0.4,0.6,0.2));
     c->SetTexture("../Images/pure_green.png");
+//    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube; // Head 8*7
+    c->setName("Head");
     c->SettingTransform(pos(0, 2, -0.05));
     c->SettingScale(sca(0.4,0.4,0.35));
     c->SetTexture("../Images/pure_green.png");
+//    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube; // Head upper
     c->SettingTransform(pos(0, 2.3, 0.35));
     c->SettingScale(sca(0.4,0.1,0.05));
     c->SetTexture("../Images/pure_green.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube; // near Left eye
     c->SettingTransform(pos(-0.35, 2.1, 0.35));
     c->SettingScale(sca(0.05,0.1,0.05));
     c->SetTexture("../Images/pure_green.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube; // Left eye
     c->SettingTransform(pos(-0.2, 2.1, 0.35));
     c->SettingScale(sca(0.1,0.1,0.05));
     c->SetTexture("../Images/pure_gray.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube; // between eye
     c->SettingTransform(pos(0, 2.1, 0.35));
     c->SettingScale(sca(0.1,0.1,0.05));
     c->SetTexture("../Images/pure_green.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube; // Right eye
     c->SettingTransform(pos(0.2, 2.1, 0.35));
     c->SettingScale(sca(0.1,0.1,0.05));
     c->SetTexture("../Images/pure_gray.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube; // near Right eye
     c->SettingTransform(pos(0.35, 2.1, 0.35));
     c->SettingScale(sca(0.05,0.1,0.05));
     c->SetTexture("../Images/pure_green.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube; // Left face
     c->SettingTransform(pos(-0.3, 1.8, 0.35));
     c->SettingScale(sca(0.1,0.2,0.05));
     c->SetTexture("../Images/pure_green.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube; // Right face
     c->SettingTransform(pos(0.3, 1.8, 0.35));
     c->SettingScale(sca(0.1,0.2,0.05));
     c->SetTexture("../Images/pure_green.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube; // top near Left face
     c->SettingTransform(pos(-0.15, 1.95, 0.35));
     c->SettingScale(sca(0.05,0.05,0.05));
     c->SetTexture("../Images/pure_green.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube; // top near Right face
     c->SettingTransform(pos(0.15, 1.95, 0.35));
     c->SettingScale(sca(0.05,0.05,0.05));
     c->SetTexture("../Images/pure_green.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube; // bottom near Left face
     c->SettingTransform(pos(-0.15, 1.65, 0.35));
     c->SettingScale(sca(0.05,0.05,0.05));
     c->SetTexture("../Images/pure_green.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube; // bottom near Right face
     c->SettingTransform(pos(0.15, 1.65, 0.35));
     c->SettingScale(sca(0.05,0.05,0.05));
     c->SetTexture("../Images/pure_green.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube; // nose
     c->SettingTransform(pos(0, 1.9, 0.35));
     c->SettingScale(sca(0.1,0.1,0.05));
     c->SetTexture("../Images/pure_gray.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube; // Left mouce
     c->SettingTransform(pos(-0.15, 1.8, 0.35));
     c->SettingScale(sca(0.05,0.1,0.05));
     c->SetTexture("../Images/pure_gray.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube; // Right mouce
     c->SettingTransform(pos(0.15, 1.8, 0.35));
     c->SettingScale(sca(0.05,0.1,0.05));
     c->SetTexture("../Images/pure_gray.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     c = new cube; // under nose
     c->SettingTransform(pos(0, 1.7, 0.35));
     c->SettingScale(sca(0.1,0.1,0.05));
     c->SetTexture("../Images/pure_green.png");
+    c->collider = nullptr;
     this->addChildren(c);
 
     this->rand_seed = time(NULL);

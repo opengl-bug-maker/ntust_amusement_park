@@ -27,6 +27,7 @@ class RollerSystem : public gpu_obj_t {
 public:
     glm::vec3 GetTrainPos();
     glm::vec3 GetTrainDir();
+    glm::vec3 GetTrainTop();
     bool isRunning() const;
     void Run();
     void GetOut();
