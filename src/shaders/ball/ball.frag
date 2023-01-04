@@ -19,12 +19,21 @@ float amplify(float d, float scale, float offset)
 
 void main()
 {
-    vec3 N = normalize(gFacetNormal);
+    vec3 light_pos = vec3(0, 30, 30);
+
+    vec3 N = -normalize(gFacetNormal);
     vec3 L = LightPosition;
 //    float df = abs(dot(N, L));
+    float aaa = dot(N, light_pos);
+//    aaa = 1 - exp2(-2 * d * d);
+//    aaa = 1/aaa;
+
     float df = dot(N, L);
 //    vec3 color = AmbientMaterial + df * DiffuseMaterial;
-    vec3 color = AmbientMaterial + DiffuseMaterial;
+
+    //vec3 color = AmbientMaterial + df*DiffuseMaterial+aaa*vec3(color_in);
+    //color_in = 0.5, 0, 0, 1
+    vec3 color = 0.01*aaa*vec3(0.33, 0.33,0.33)+0.98*vec3(color_in);
 
     float d1 = min(min(gTriDistance.x, gTriDistance.y), gTriDistance.z);
     float d2 = min(min(gPatchDistance.x, gPatchDistance.y), gPatchDistance.z);
@@ -33,5 +42,7 @@ void main()
 //    color = amplify(d2, 60, -0.5) * color;
 
     //FragColor = color_in*vec4(color, 1.0f);
+
     FragColor = color_in;
+    FragColor = vec4(color, 1.0f);
 }
