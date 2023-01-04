@@ -132,40 +132,40 @@ void GameWindow::InitObjects() {
     gpuObjs.push_back(c);*/
     //cc->addChildren(c);
 
-//    c = new particle_t();
-//    c->setName("particle 0");
-//    c->SettingTransform(glm::vec3(45, -15.7, 45));
-//    c->SettingScale(glm::vec3(1, 1, 1));
-//    c->SetGravity(false);
-//    gpuObjs.push_back(c);
-//
-//    c = new particle_t();
-//    c->setName("particle 1");
-//    c->SettingTransform(glm::vec3(-45, -15.7, -45));
-//    c->SettingScale(glm::vec3(1, 1, 1));
-//    c->SetGravity(false);
-//    gpuObjs.push_back(c);
-//
-//    c = new particle_t();
-//    c->setName("particle 2");
-//    c->SettingTransform(glm::vec3(-45, -15.7, 45));
-//    c->SettingScale(glm::vec3(1, 1, 1));
-//    c->SetGravity(false);
-//    gpuObjs.push_back(c);
+    c = new particle_t();
+    c->setName("particle 0");
+    c->SettingTransform(glm::vec3(45, -15.7, 45));
+    c->SettingScale(glm::vec3(1, 1, 1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
 
-//    c = new particle_t();
-//    c->setName("particle 3");
-//    c->SettingTransform(glm::vec3(45, -15.7, -45));
-//    c->SettingScale(glm::vec3(1, 1, 1));
-//    c->SetGravity(false);
-//    gpuObjs.push_back(c);
-//
-//
-//    rs = new RollerSystem();
-//    rs->setName("roller system");
-//    rs->SettingTransform(glm::vec3(0, -10, 0));
-//    rs->SetGravity(false);
-//    gpuObjs.push_back(rs);
+    c = new particle_t();
+    c->setName("particle 1");
+    c->SettingTransform(glm::vec3(-45, -15.7, -45));
+    c->SettingScale(glm::vec3(1, 1, 1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
+
+    c = new particle_t();
+    c->setName("particle 2");
+    c->SettingTransform(glm::vec3(-45, -15.7, 45));
+    c->SettingScale(glm::vec3(1, 1, 1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
+
+    c = new particle_t();
+    c->setName("particle 3");
+    c->SettingTransform(glm::vec3(45, -15.7, -45));
+    c->SettingScale(glm::vec3(1, 1, 1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
+
+
+    rs = new RollerSystem();
+    rs->setName("roller system");
+    rs->SettingTransform(glm::vec3(0, -10, 0));
+    rs->SetGravity(false);
+    gpuObjs.push_back(rs);
 //
     c = new ferris_wheel_t;
     c->setName("ferris_wheel 0");
@@ -174,23 +174,120 @@ void GameWindow::InitObjects() {
     c->SetGravity(false);
     gpuObjs.push_back(c);
 
-//    c = new locomotive_t;
-//    c->setName("locomotive 0");
-//    c->SettingTransform(glm::vec3(-2.5, -10, 5));
-//    c->SettingScale(glm::vec3(1,1,1));
-//    c->SetGravity(false);
-//    gpuObjs.push_back(c);
+    c = new locomotive_t;
+    c->setName("locomotive 0");
+    c->SettingTransform(glm::vec3(-2.5, -10, 5));
+    c->SettingScale(glm::vec3(1,1,1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
 
-//    c = new coach_t;
-//    c->setName("coach 0");
-//    c->SettingTransform(glm::vec3(2.5, -10, 5));
-//    c->SettingScale(glm::vec3(1,1,1));
-//    c->SetGravity(false);
-//    gpuObjs.push_back(c);
+    c = new coach_t;
+    c->setName("coach 0");
+    c->SettingTransform(glm::vec3(2.5, -10, 5));
+    c->SettingScale(glm::vec3(1,1,1));
+    c->SetGravity(false);
+    gpuObjs.push_back(c);
 
 //endregion
 }
+//float kernel[5][5] = {
+//        {1, 4, 6, 4, 1},
+//        {4, 16, 24, 16, 4},
+//        {6, 24, 36, 24, 6},
+//        {4, 16, 24, 16, 4},
+//        {1, 4, 6, 4, 1}
+//};
+float kernel[7][7] = {
+        {0, 0, 0, 5, 0, 0, 0},
+        {0, 5, 18, 32, 18, 5, 0},
+        {0, 18, 64, 100, 64, 18, 0},
+        {5, 32, 100, 100, 100, 32, 5},
+        {0, 18, 64, 100, 64, 18, 0},
+        {0, 5, 18, 32, 18, 5, 0},
+        {0, 0, 0, 5, 0, 0, 0}
 
+};
+//float kernel[5][5] = {
+//        {1, 8, 12, 8, 1},
+//        {8, 16, 36, 16, 4},
+//        {6, 36, 72, 36, 6},
+//        {4, 16, 36, 16, 4},
+//        {1, 4, 6, 4, 1}
+//};
+const int height = 1200, width = 900;
+void gray_and_inv(sf::Image& img){
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            sf::Color c = img.getPixel(i, j);
+            int v = 0.299 *(float)c.r + 0.587*(float)c.g + 0.114*(float)c.b;
+            v = 255-v;
+            img.setPixel(i, j, sf::Color(v, v, v));
+        }
+    }
+}
+void gray(sf::Image& img){
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            sf::Color c = img.getPixel(i, j);
+            int v = 0.299 *(float)c.r + 0.587*(float)c.g + 0.114*(float)c.b;
+            img.setPixel(i, j, sf::Color(v, v, v));
+        }
+    }
+}
+void gauss(sf::Image& img){
+
+
+    float d = 0;
+//    for (int i = 0; i < 5; ++i) {
+//        for (int j = 0; j < 5; ++j) {
+//            kernel[i][j]*=2;
+//        }
+//    }
+    for (int i = 0; i < 7; ++i) {
+        for (int j = 0; j < 7; ++j) {
+            d += kernel[i][j];
+        }
+    }
+    cout<< d<<endl;
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+                float sum_r = 0, sum_g = 0, sum_b = 0;
+                for (int p = -3; p <= 3; ++p) {
+                    for (int q = -3; q <= 3; ++q) {
+                        int ni = i + p, nj = j + q;
+                        if (ni < 0 || nj < 0 || ni >= height || nj >= width) { continue; }
+                        //sum += t[k][ni][nj] * kernel[p + 2][q + 2];
+                        sf::Color c = img.getPixel(ni, nj);
+                        sum_r += c.r * kernel[p + 3][q + 3];
+                        sum_g += c.g * kernel[p + 3][q + 3];
+                        sum_b += c.b*kernel[p+3][q+3];
+                    }
+                }
+                img.setPixel(i, j, sf::Color(sum_r/d, sum_g/d, sum_b/d));
+        }
+    }
+}
+void pencil(sf::Image& img){
+
+    sf::Image gray_img = img;
+    sf::Image blurr_img = img;
+    gray(gray_img);
+    gray_and_inv(blurr_img);
+
+    gauss(blurr_img);
+    //def dodge(front,back): result=blurr*255/(255-gray)  result[result>255]=255 result[back==255]=255 return result.astype(‘uint8’)
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            float blurr_v = blurr_img.getPixel(i, j).r;
+            float gray_v = gray_img.getPixel(i, j).r;
+            if(255.0f-gray_v==0){gray_v+=2;}
+            int v = blurr_v*255.0f/(255.0f-gray_v);
+            v = std::min(255, v);
+            img.setPixel(i, j, sf::Color(v, v, v));
+        }
+    }
+
+}
 void GameWindow::run() {
     for(auto objs : gpuObjs) objs->bind();
 
@@ -295,6 +392,7 @@ void GameWindow::run() {
 
 
         for(auto objs : gpuObjs) objs->draw();
+
 //  fancy mirror (don't open, gpu killer)
 //        for(auto& obj:gpuObjs){
 //            if(obj->getName()=="plane"){
@@ -305,21 +403,18 @@ void GameWindow::run() {
         //cout<< this->getSize().x<<" "<<this->getSize().y<<endl;
         win_text.update((*this), 0, 0);
         sf::Image tmpImg = win_text.copyToImage();
-        for(int i = 0; i<1200; ++i){
-            for(int j = 0; j<900; ++j){
-                sf::Color c = (tmpImg.getPixel(i, j));
-                int grs = ((int)c.r+(int)c.g+(int)c.b)/3;
-                tmpImg.setPixel(i, j, sf::Color(grs, grs, grs));
-            }
-        }
+        pencil(tmpImg);
+//        gray_and_inv(tmpImg);
+//        gauss(tmpImg);
         //tmpImg.saveToFile ("tmp.jpg");
         win_text.loadFromImage(tmpImg);
         sf::Sprite fb;
 
         //fb.setTexture(win_text, true);
-        clear();
+        //clear();
         this->result->draw(sf::Sprite(win_text));
         this->result->display();
+        this->draw((sf::Sprite(win_text)));
         display();
 //        win_text.update((*this), 0, 0);
 //        sf::Image tmpImg = win_text.copyToImage();

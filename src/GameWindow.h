@@ -31,6 +31,7 @@
 #include "CustomObject/RollerSystem.h"
 
 class GameWindow : public sf::RenderWindow{
+public:
     std::pair<int,int> window_size;
     ArcBallCamera arcBall;
     Camera* camera;
@@ -49,13 +50,14 @@ class GameWindow : public sf::RenderWindow{
     void MoveEvent();
 
 
-public:
+
     FirstPersonCamera firstPersonCamera;
     static GameWindow* magic;
     static glm::vec3 FallDownVector;
     sf::Time nowTime;
     sf::Texture win_text;
     sf::RenderWindow* result;
+    sf::RenderTarget* fbo = nullptr;
     GameWindow();
 
     GameWindow(const sf::VideoMode &mode, const sf::String &title, sf::RenderWindow*);
@@ -63,6 +65,10 @@ public:
     void ConsoleEvent(string input);
 
     void run();
+};
+class output_window{
+    GameWindow* gw;
+    output_window();
 };
 
 
