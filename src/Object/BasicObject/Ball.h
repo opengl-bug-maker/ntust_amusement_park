@@ -12,9 +12,8 @@ class Ball : public gpu_obj_t {
 
 public:
     void bind() override;
-
     void draw(glm::mat4 modelMatrix) override;
-
+    glm::vec4 color;
     Ball();
 
 };

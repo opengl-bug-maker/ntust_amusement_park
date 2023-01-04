@@ -8,7 +8,7 @@ in float gPrimitive;
 uniform vec3 LightPosition;
 uniform vec3 DiffuseMaterial;
 uniform vec3 AmbientMaterial;
-
+uniform vec4 color_in;
 float amplify(float d, float scale, float offset)
 {
     d = scale * d + offset;
@@ -28,9 +28,10 @@ void main()
 
     float d1 = min(min(gTriDistance.x, gTriDistance.y), gTriDistance.z);
     float d2 = min(min(gPatchDistance.x, gPatchDistance.y), gPatchDistance.z);
-    color = amplify(d1, 40, -0.5) * amplify(d2, 60, -0.5) * color;
+    //color = amplify(d1, 40, -0.5) * amplify(d2, 60, -0.5) * color;
 //    color = amplify(d1, 40, -0.5) * color;
 //    color = amplify(d2, 60, -0.5) * color;
 
-    FragColor = vec4(color, 1.0);
+    //FragColor = color_in*vec4(color, 1.0f);
+    FragColor = color_in;
 }

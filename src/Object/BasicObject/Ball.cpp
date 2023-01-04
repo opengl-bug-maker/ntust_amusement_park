@@ -135,7 +135,8 @@ void Ball::draw(glm::mat4 modelMatrix) {
     if(this->shader)
         this->shader->Use();
     else { return; }
-
+    //color = glm::vec4(1.0f, 1.0f, 0.0f, 1.0f);
+    glUniform4f(glGetUniformLocation(this->shader->Program, "color_in"), color[0], color[1], color[2], color[3]);
     glUniformMatrix4fv(
             glGetUniformLocation(this->shader->Program, "u_projection"), 1, GL_FALSE, glm::value_ptr(gpu_obj_t::projection_matrix));
 
