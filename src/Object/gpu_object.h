@@ -18,6 +18,8 @@ protected:
     bool visible = true;
     bool faceToCamera = false;
 
+    gpu_obj_t* parent = nullptr;
+
     Texture2D* texture = nullptr; //init
     sf::Texture* sf_texture = nullptr;
     VAO* vao = new VAO; //multiple vbos and 1 ebo
@@ -59,4 +61,16 @@ public:
     void setFaceToCamera(bool faceToCamera);
 
     bool IsCollision(PhysicsObject *obj, glm::vec3 &collisionVector) override;
+
+    glm::mat4 GetRootMatrix();
+
+    void SettingTransform(glm::vec3 transform) override;
+
+    void SettingScale(glm::vec3 scale) override;
+
+    void Move(glm::vec3 distance) override;
+
+    void PhysicsMove(glm::vec3 distance) override;
+
+    void MoveTo(glm::vec3 position) override;
 };

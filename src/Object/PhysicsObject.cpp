@@ -45,16 +45,17 @@ void PhysicsObject::Move(glm::vec3 distance) {
     this->model_matrix[3][0] += distance[0];
     this->model_matrix[3][1] += distance[1];
     this->model_matrix[3][2] += distance[2];
-    if(collider)
-        this->collider->Translate(distance);
+//    if(collider){
+//        this->collider->Translate(distance);
+//    }
 }
 
 void PhysicsObject::MoveTo(glm::vec3 position) {
     this->model_matrix[3][0] = position[0];
     this->model_matrix[3][1] = position[1];
     this->model_matrix[3][2] = position[2];
-    if(collider)
-        this->collider->SetPosition(position);
+//    if(collider)
+//        this->collider->SetPosition(position);
 }
 
 void PhysicsObject::PhysicsMove(glm::vec3 distance) {
@@ -62,8 +63,8 @@ void PhysicsObject::PhysicsMove(glm::vec3 distance) {
         this->model_matrix[3][0] += distance[0];
         this->model_matrix[3][1] += distance[1];
         this->model_matrix[3][2] += distance[2];
-        if(collider)
-            this->collider->Translate(distance);
+//        if(collider)
+//            this->collider->Translate(distance);
     }
 }
 
@@ -151,14 +152,14 @@ bool PhysicsObject::isGravityObject() const {
 
 void PhysicsObject::SettingTransform(glm::vec3 transform) {
     this->model_matrix = glm::translate(model_matrix, transform);
-    if(collider)
-        collider->Translate(transform);
+//    if(collider)
+//        collider->Translate(transform);
 }
 
 void PhysicsObject::SettingScale(glm::vec3 scale) {
     this->model_matrix = glm::scale(model_matrix, scale);
-    if(collider)
-        collider->Scale(scale);
+//    if(collider)
+//        collider->Scale(scale);
 }
 
 void PhysicsObject::SettingRotate(glm::vec3 rotate) {
@@ -177,4 +178,31 @@ glm::vec3 PhysicsObject::GetPosition() {
             this->model_matrix[3][1],
             this->model_matrix[3][2]
             );
+}
+
+void PhysicsObject::CollTransform(glm::vec3 transform) {
+//    if(collider)
+//        collider->Translate(transform);
+}
+
+void PhysicsObject::CollScale(glm::vec3 scale) {
+//    if(collider)
+//        collider->Scale(scale);
+}
+
+void PhysicsObject::CollMove(glm::vec3 distance) {
+//    if(collider)
+//        this->collider->Translate(distance);
+}
+
+void PhysicsObject::CollPhysicsMove(glm::vec3 distance) {
+//    if(GravityObject){
+//        if(collider)
+//            this->collider->Translate(distance);
+//    }
+}
+
+void PhysicsObject::CollMoveTo(glm::vec3 position) {
+//    if(collider)
+//        this->collider->SetPosition(position);
 }

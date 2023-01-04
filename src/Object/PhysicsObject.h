@@ -14,12 +14,11 @@
 using std::string;
 
 class PhysicsObject {
-protected:
+public:
     glm::mat4 model_matrix = glm::mat4(1); //for scale, rotation, translation
+protected:
 
     string name = "";
-
-    ICollider* collider = nullptr;
 
     bool lastCollision = false;
     bool Collision = false;
@@ -31,15 +30,21 @@ protected:
 
 public:
 
+    ICollider* collider = nullptr;
+
     const string &getName() const;
 
     void setName(const string &name);
 
     glm::vec3 GetPosition();
 
-    void SettingTransform(glm::vec3 transform);
+    virtual void SettingTransform(glm::vec3 transform);
 
-    void SettingScale(glm::vec3 scale);
+    void CollTransform(glm::vec3 transform);
+
+    virtual void SettingScale(glm::vec3 scale);
+
+    void CollScale(glm::vec3 scale);
 
     void SettingRotate(glm::vec3 rotate);
 
@@ -60,11 +65,17 @@ public:
 
     const glm::vec3 &getLastVelocity() const;
 
-    void Move(glm::vec3 distance);
+    virtual void Move(glm::vec3 distance);
 
-    void PhysicsMove(glm::vec3 distance);
+    void CollMove(glm::vec3 distance);
 
-    void MoveTo(glm::vec3 position);
+    virtual void PhysicsMove(glm::vec3 distance);
+
+    void CollPhysicsMove(glm::vec3 distance);
+
+    virtual void MoveTo(glm::vec3 position);
+
+    void CollMoveTo(glm::vec3 position);
 
     void CleanRotate(glm::vec3 rotate);
 

@@ -15,9 +15,11 @@ public:
 
     bool IsCollision(BallCollider *collider, glm::vec3& collisionVector) override;
 
-    void Translate(glm::vec3 translate) override;
+    bool IsCollision(PolygonCollider *collider, glm::vec3 &collisionVector) override;
 
-    void Scale(glm::vec3 scale) override;
+//    void Translate(glm::vec3 translate) override;
+//
+//    void Scale(glm::vec3 scale) override;
 };
 
 

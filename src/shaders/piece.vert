@@ -2,15 +2,14 @@
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec2 texture_coordinate;
 
-out vec2 tc;
+out VS_OUT {
+    vec2 VStc;
+} v_out;
+
 uniform vec3 cameraPosition;
 uniform mat4 u_model;
 uniform mat4 u_projection;
 uniform mat4 u_view;
-
-//uniform float start_time;
-//uniform float now_time;
-//uniform vec3 explodeCenter;
 
 void main() {
     vec3 dir = vec3((u_model * vec4(position, 1.0f))) - cameraPosition;
@@ -31,6 +30,6 @@ void main() {
     0,        0,       0,1
     );
 
-    tc = texture_coordinate;
+    v_out.VStc = texture_coordinate;
     gl_Position = u_projection * u_view * u_model * inverse(face) * vec4(position, 1.0f);
 }
