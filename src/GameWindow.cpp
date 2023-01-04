@@ -18,7 +18,7 @@ glm::vec3 GameWindow::FallDownVector = glm::vec3(0, -20, 0);
 
 GameWindow::GameWindow() {}
 
-GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : RenderWindow(mode, title, sf::Style::Default, sf::ContextSettings(
+GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title, sf::RenderWindow* result_win) : RenderWindow(mode, title, sf::Style::Default, sf::ContextSettings(
         24, // depthBits
         8,  // stencilBits
         4,  // antialiasingLevel
@@ -26,6 +26,7 @@ GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : Ren
         3,   // minorVersion
         sf::ContextSettings::Core
 )) {
+    result = result_win;
     GameWindow::magic = this;
 //region glSetting
     if (!gladLoadGL()) {
@@ -50,6 +51,9 @@ GameWindow::GameWindow(const sf::VideoMode &mode, const sf::String &title) : Ren
 //endregion
 
     InitObjects();
+
+
+    win_text.create(getSize().x, getSize().y);
 }
 
 void GameWindow::InitObjects() {
@@ -62,8 +66,10 @@ void GameWindow::InitObjects() {
     plane->SettingScale(glm::vec3(50, 0.5, 50));
     plane->SetGravity(false);
     plane->SetTexture("../Images/skybox/top.jpg");
-    gpuObjs.push_back(plane);
 
+
+
+    gpuObjs.push_back(plane);
     Player = new player();
     Player->setName("player");
 //    Player->SetGravity(false);
@@ -85,19 +91,19 @@ void GameWindow::InitObjects() {
 //    ball->SetGravity(false);
 //    gpuObjs.push_back(ball);
 
-//    gpu_obj_t* smallCube = new cube();
-//    smallCube->SetGravity(false);
-//    smallCube->SettingTransform(glm::vec3(0, -3, 0));
-//    smallCube->SetTexture("../Images/particle.png");
-//    smallCube->setName("smallCube");
-//
-//    gpu_obj_t* bigCube = new cube();
-//    bigCube->setName("bigCube");
-//    bigCube->SettingTransform(glm::vec3(5, 0, 0));
-//    bigCube->SetGravity(false);
-//    bigCube->SetTexture("../Images/uvtemplate.jpg");
-//    bigCube->addChildren(smallCube);
-//    gpuObjs.push_back(bigCube);
+    gpu_obj_t* smallCube = new cube();
+    smallCube->SetGravity(false);
+    smallCube->SettingTransform(glm::vec3(0, -3, 0));
+    smallCube->SetTexture("../Images/particle.png");
+    smallCube->setName("smallCube");
+
+    gpu_obj_t* bigCube = new cube();
+    bigCube->setName("bigCube");
+    bigCube->SettingTransform(glm::vec3(5, 0, 0));
+    bigCube->SetGravity(false);
+    bigCube->SetTexture("../Images/uvtemplate.jpg");
+    bigCube->addChildren(smallCube);
+    gpuObjs.push_back(bigCube);
 
 //    gpu_obj_t* cc = new cube();
 //    cc->setName("big cube");
@@ -126,41 +132,41 @@ void GameWindow::InitObjects() {
     gpuObjs.push_back(c);*/
     //cc->addChildren(c);
 
-    c = new particle_t();
-    c->setName("particle 0");
-    c->SettingTransform(glm::vec3(45, -15.7, 45));
-    c->SettingScale(glm::vec3(1, 1, 1));
-    c->SetGravity(false);
-    gpuObjs.push_back(c);
+//    c = new particle_t();
+//    c->setName("particle 0");
+//    c->SettingTransform(glm::vec3(45, -15.7, 45));
+//    c->SettingScale(glm::vec3(1, 1, 1));
+//    c->SetGravity(false);
+//    gpuObjs.push_back(c);
+//
+//    c = new particle_t();
+//    c->setName("particle 1");
+//    c->SettingTransform(glm::vec3(-45, -15.7, -45));
+//    c->SettingScale(glm::vec3(1, 1, 1));
+//    c->SetGravity(false);
+//    gpuObjs.push_back(c);
+//
+//    c = new particle_t();
+//    c->setName("particle 2");
+//    c->SettingTransform(glm::vec3(-45, -15.7, 45));
+//    c->SettingScale(glm::vec3(1, 1, 1));
+//    c->SetGravity(false);
+//    gpuObjs.push_back(c);
 
-    c = new particle_t();
-    c->setName("particle 1");
-    c->SettingTransform(glm::vec3(-45, -15.7, -45));
-    c->SettingScale(glm::vec3(1, 1, 1));
-    c->SetGravity(false);
-    gpuObjs.push_back(c);
-
-    c = new particle_t();
-    c->setName("particle 2");
-    c->SettingTransform(glm::vec3(-45, -15.7, 45));
-    c->SettingScale(glm::vec3(1, 1, 1));
-    c->SetGravity(false);
-    gpuObjs.push_back(c);
-
-    c = new particle_t();
-    c->setName("particle 3");
-    c->SettingTransform(glm::vec3(45, -15.7, -45));
-    c->SettingScale(glm::vec3(1, 1, 1));
-    c->SetGravity(false);
-    gpuObjs.push_back(c);
-
-
-    rs = new RollerSystem();
-    rs->setName("roller system");
-    rs->SettingTransform(glm::vec3(0, -10, 0));
-    rs->SetGravity(false);
-    gpuObjs.push_back(rs);
-
+//    c = new particle_t();
+//    c->setName("particle 3");
+//    c->SettingTransform(glm::vec3(45, -15.7, -45));
+//    c->SettingScale(glm::vec3(1, 1, 1));
+//    c->SetGravity(false);
+//    gpuObjs.push_back(c);
+//
+//
+//    rs = new RollerSystem();
+//    rs->setName("roller system");
+//    rs->SettingTransform(glm::vec3(0, -10, 0));
+//    rs->SetGravity(false);
+//    gpuObjs.push_back(rs);
+//
     c = new ferris_wheel_t;
     c->setName("ferris_wheel 0");
     c->SettingTransform(glm::vec3(0, -10, 0));
@@ -168,19 +174,19 @@ void GameWindow::InitObjects() {
     c->SetGravity(false);
     gpuObjs.push_back(c);
 
-    c = new locomotive_t;
-    c->setName("locomotive 0");
-    c->SettingTransform(glm::vec3(-2.5, -10, 5));
-    c->SettingScale(glm::vec3(1,1,1));
-    c->SetGravity(false);
-    gpuObjs.push_back(c);
+//    c = new locomotive_t;
+//    c->setName("locomotive 0");
+//    c->SettingTransform(glm::vec3(-2.5, -10, 5));
+//    c->SettingScale(glm::vec3(1,1,1));
+//    c->SetGravity(false);
+//    gpuObjs.push_back(c);
 
-    c = new coach_t;
-    c->setName("coach 0");
-    c->SettingTransform(glm::vec3(2.5, -10, 5));
-    c->SettingScale(glm::vec3(1,1,1));
-    c->SetGravity(false);
-    gpuObjs.push_back(c);
+//    c = new coach_t;
+//    c->setName("coach 0");
+//    c->SettingTransform(glm::vec3(2.5, -10, 5));
+//    c->SettingScale(glm::vec3(1,1,1));
+//    c->SetGravity(false);
+//    gpuObjs.push_back(c);
 
 //endregion
 }
@@ -189,6 +195,9 @@ void GameWindow::run() {
     for(auto objs : gpuObjs) objs->bind();
 
     while (isOpen()) {
+
+
+
         nowTime = deltaClock.getElapsedTime();
         deltaTime = nowTime - prevTime;
 
@@ -229,10 +238,10 @@ void GameWindow::run() {
 
         for(auto objs : gpuObjs) objs->UpdatePosition(deltaTime);
 
-        if(rs->isRunning()){
-            firstPersonCamera.Bias(rs->GetTrainDir());
-            Player->MoveTo(rs->GetTrainPos() - glm::vec3(0, 6, 0));
-        }
+//        if(rs->isRunning()){
+//            firstPersonCamera.Bias(rs->GetTrainDir());
+//            Player->MoveTo(rs->GetTrainPos() - glm::vec3(0, 6, 0));
+//        }
 
         firstPersonCamera.setPosition(Player->GetPosition() + glm::vec3(0, 1, 0));
 
@@ -264,6 +273,8 @@ void GameWindow::run() {
 
         clear();
 
+
+        //display();
         glClearStencil(0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
         glEnable(GL_DEPTH);
@@ -277,17 +288,42 @@ void GameWindow::run() {
         if(camera == &arcBall) Player->setVisible(true);
         else Player->setVisible(false);
         
-        //draw(sprite1);
-        //draw(sprite2);
+
 
         gpu_obj_t::projection_matrix = camera->getPerspectiveMatrix();
         gpu_obj_t::view_matrix = camera->getModelViewMatrix();
 
+
         for(auto objs : gpuObjs) objs->draw();
+//  fancy mirror (don't open, gpu killer)
+//        for(auto& obj:gpuObjs){
+//            if(obj->getName()=="plane"){
+//                (*obj->sf_texture) = win_text;
+//            }
+//        }
 
+        //cout<< this->getSize().x<<" "<<this->getSize().y<<endl;
+        win_text.update((*this), 0, 0);
+        sf::Image tmpImg = win_text.copyToImage();
+        for(int i = 0; i<1200; ++i){
+            for(int j = 0; j<900; ++j){
+                sf::Color c = (tmpImg.getPixel(i, j));
+                int grs = ((int)c.r+(int)c.g+(int)c.b)/3;
+                tmpImg.setPixel(i, j, sf::Color(grs, grs, grs));
+            }
+        }
+        //tmpImg.saveToFile ("tmp.jpg");
+        win_text.loadFromImage(tmpImg);
+        sf::Sprite fb;
 
+        //fb.setTexture(win_text, true);
+        clear();
+        this->result->draw(sf::Sprite(win_text));
+        this->result->display();
         display();
-
+//        win_text.update((*this), 0, 0);
+//        sf::Image tmpImg = win_text.copyToImage();
+//        tmpImg.saveToFile ("tmp.jpg");
         prevTime = nowTime;
     }
 

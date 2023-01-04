@@ -54,10 +54,11 @@ public:
     static GameWindow* magic;
     static glm::vec3 FallDownVector;
     sf::Time nowTime;
-
+    sf::Texture win_text;
+    sf::RenderWindow* result;
     GameWindow();
 
-    GameWindow(const sf::VideoMode &mode, const sf::String &title);
+    GameWindow(const sf::VideoMode &mode, const sf::String &title, sf::RenderWindow*);
 
     void ConsoleEvent(string input);
 
