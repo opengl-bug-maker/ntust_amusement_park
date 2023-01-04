@@ -57,7 +57,7 @@ void RollerSystem::init() {
         );
     }
 
-    float minLength = 0.03f, maxLength = 0.04f;
+    float minLength = 3.0f, maxLength = 4.0f;
 //    float minLength = 1.0f, maxLength = 1.3f;
     vector<RailPoint> copy = VirtualRails;
     copy.push_back(copy[0]);
@@ -91,7 +91,7 @@ void RollerSystem::init() {
         gpu_obj_t* c = new cube();
         c->setName("roll " + to_string(i));
         c->SettingTransform(VirtualRails[i].pos);
-        c->SettingScale(glm::vec3(0.03f,0.03f,0.03f));
+        c->SettingScale(glm::vec3(0.3f,0.3f,0.3f));
         c->SetTexture("../Images/steel.png");
         addChildren(c);
     }

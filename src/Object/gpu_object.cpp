@@ -147,14 +147,16 @@ void gpu_obj_t::setFaceToCamera(bool faceToCamera) {
 }
 
 bool gpu_obj_t::IsCollision(PhysicsObject *obj, glm::vec3 &collisionVector) {
-    for(auto child : children){
+    if(getName() == "player"){
+        for(auto child : children){
+            for(auto objChild : ((gpu_obj_t*)obj)->children)
+                if(child->IsCollision(objChild, collisionVector))
+                    return true;
+        }
         for(auto objChild : ((gpu_obj_t*)obj)->children)
-            if(child->IsCollision(objChild, collisionVector))
+            if(this->IsCollision(objChild, collisionVector))
                 return true;
     }
-    for(auto objChild : ((gpu_obj_t*)obj)->children)
-        if(this->IsCollision(objChild, collisionVector))
-            return true;
     bool bbb = PhysicsObject::IsCollision(obj, collisionVector);
     if(getName() == "player" && obj->getName() == "rollCar"){
 //        cout << getName() << " " << to_string(children.size()) << " " << obj->getName() << "   " << to_string(bbb) << endl;
